@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.hyperledger.fabric-sdk</groupId>
+    <artifactId>answer-fabric-sdk</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <fabric.sdk.version>1.0.2-SNAPSHOT</fabric.sdk.version>
+    </properties>
+
+
+
+    <dependencies>
+        <!-- 引入官方 fabric-sdk-java 包 -->
+        <dependency>
+            <groupId>org.hyperledger.fabric-sdk-java</groupId>
+            <artifactId>fabric-sdk-java</artifactId>
+            <version>${fabric.sdk.version}</version>
+        </dependency>
+
+        <!-- 引入junit包, 方便单元测试 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
