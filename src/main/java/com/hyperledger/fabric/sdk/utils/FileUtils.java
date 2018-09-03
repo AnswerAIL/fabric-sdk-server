@@ -33,7 +33,7 @@ public class FileUtils {
             }
 
             if (files == null || files.length <= 0) {
-                throw new FabricSDKException("file...");
+                throw new FabricSDKException("none files under direction, path: " + file.getPath());
             }
             return files[0];
         }

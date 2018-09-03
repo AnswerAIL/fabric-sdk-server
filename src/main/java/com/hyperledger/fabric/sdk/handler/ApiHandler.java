@@ -83,6 +83,13 @@ public class ApiHandler {
     }
 
 
+    public static Channel createChannel(HFClient client) throws Exception {
+        Channel channel = client.deSerializeChannel(jedis.get("mychannel".getBytes()));
+        channel.initialize();
+        return channel;
+    }
+
+
     /**
      * Answer - 初始化智能合约
      * @param client 客户端实例
@@ -99,9 +106,7 @@ public class ApiHandler {
 
         Collection<ProposalResponse> initProposals = channel.sendInstantiationProposal(instantiateProposalRequest, channel.getPeers());
 
-        if (checkResult(initProposals)) {
-
-        }
+        orderConsensus(channel, initProposals);
 
         debug("初始化智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), initCCDTO.getFuncName(), Arrays.asList(initCCDTO.getParams()));
     }
@@ -147,7 +152,7 @@ public class ApiHandler {
 
         orderConsensus(channel, invokeProposals);
 
-        debug("交易智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), invokeCCDTO.getFuncName(), Arrays.asList(invokeCCDTO.getParams()));
+        debug("交易智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), invokeCCDTO.getFuncName(), Arrays.asList(invokeCCDTO.getParams()));
     }
 
 
@@ -188,32 +193,5 @@ public class ApiHandler {
         return flag;
     }
 
-
-    public static void main(String[] args) throws Exception {
-        String chaincodeVersion = "1.0";
-        String chaincodePath = "github.com/chaincode_example02";
-        ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName("mycc").setVersion(chaincodeVersion).setPath(chaincodePath).build();
-
-
-        String mspPath = "crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/";
-        BuildClientDTO buildClientDTO = new BuildClientDTO.Builder()
-                .name("org1.example.com").mspId("Org1MSP").mspPath(mspPath).build();
-        HFClient client = clientBuild(buildClientDTO);
-
-        Channel channel = client.deSerializeChannel(jedis.get("mychannel".getBytes()));
-        channel.initialize();
-
-        ExecuteCCDTO querybCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"b"}).chaincodeID(chaincodeID).build();
-        queryChainCode(client, channel, querybCCDTO);
-
-        ExecuteCCDTO invokeCCDTO = new ExecuteCCDTO.Builder().funcName("invoke").params(new String[] {"a", "b", "7"}).chaincodeID(chaincodeID).build();
-        invokeChainCode(client, channel, invokeCCDTO);
-
-        queryChainCode(client, channel, querybCCDTO);
-
-        ExecuteCCDTO queryaCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"a"}).chaincodeID(chaincodeID).build();
-        invokeChainCode(client, channel, queryaCCDTO);
-
-    }
 
 }
