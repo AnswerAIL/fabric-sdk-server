@@ -9,6 +9,8 @@ import java.util.Date;
 public class Logger {
     private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
+    private static LogLevel loggerLevel = LogLevel.INFO;
+
     public static void debug(String log) {
         logger(LogLevel.DEBUG, Thread.currentThread().getStackTrace()[2], log);
     }
@@ -42,7 +44,9 @@ public class Logger {
     }
 
     private static void logger(LogLevel logLevel, StackTraceElement stackTraceElement, String log) {
-        System.out.println(logPrefix(logLevel) + stackTraceElement.getClassName() + ":[" + stackTraceElement.getLineNumber() + "] " + log);
+        if (loggerLevel.getLevel() <= logLevel.getLevel()) {
+            System.out.println(logPrefix(logLevel) + stackTraceElement.getClassName() + ":[" + stackTraceElement.getLineNumber() + "] " + log);
+        }
     }
 
     private static String logPrefix(LogLevel logLevel) {
