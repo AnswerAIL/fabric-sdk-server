@@ -4,10 +4,7 @@ import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
 import com.hyperledger.fabric.sdk.exception.FabricSDKException;
 import org.apache.commons.io.IOUtils;
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openssl.PEMParser;
-import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 import org.hyperledger.fabric.sdk.*;
 import org.hyperledger.fabric.sdk.helper.Config;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
@@ -20,7 +17,7 @@ import java.security.Security;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static com.hyperledger.fabric.sdk.utils.FileUtils.getFile;
+import static com.hyperledger.fabric.sdk.utils.FileUtils.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 
@@ -78,7 +75,7 @@ public class SDKClient {
     }
 
 
-    private static void queryChainCode(HFClient client, Channel channel) throws Exception {
+    public static void queryChainCode(HFClient client, Channel channel) throws Exception {
         QueryByChaincodeRequest queryByChaincodeRequest = client.newQueryProposalRequest();
         queryByChaincodeRequest.setArgs(new String[] {"b"});
         queryByChaincodeRequest.setFcn("query");
@@ -97,12 +94,12 @@ public class SDKClient {
         System.out.println("发起查询账户B的交易提议完成!!!");
     }
 
-    private static void invokeChainCode(HFClient client, Channel channel) throws Exception {
+    public static void invokeChainCode(HFClient client, Channel channel) throws Exception {
         TransactionProposalRequest transactionProposalRequest = client.newTransactionProposalRequest();
         transactionProposalRequest.setChaincodeID(chaincodeID);
         transactionProposalRequest.setFcn("invoke");
         transactionProposalRequest.setProposalWaitTime(30000);
-        transactionProposalRequest.setArgs(new String[] {"a", "b", "150"});
+        transactionProposalRequest.setArgs(new String[] {"a", "b", "5"});
         /**Map<String, byte[]> tm2 = new HashMap<>();
          tm2.put("HyperLedgerFabric", "TransactionProposalRequest:JavaSDK".getBytes(UTF_8));
          tm2.put("method", "TransactionProposalRequest".getBytes(UTF_8));
@@ -424,13 +421,5 @@ public class SDKClient {
 
 
 
-    private static PrivateKey getPrivateKeyFromBytes(byte[] data) throws Exception {
-        final Reader pemReader = new StringReader(new String(data));
-        final PrivateKeyInfo pemPair;
-        try (PEMParser pemParser = new PEMParser(pemReader)) {
-            pemPair = (PrivateKeyInfo) pemParser.readObject();
-        }
-        return new JcaPEMKeyConverter().setProvider(BouncyCastleProvider.PROVIDER_NAME).getPrivateKey(pemPair);
-    }
 
 }

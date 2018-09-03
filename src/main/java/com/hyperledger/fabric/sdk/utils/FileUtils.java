@@ -3,8 +3,16 @@ package com.hyperledger.fabric.sdk.utils;
 import com.hyperledger.fabric.sdk.exception.FabricSDKException;
 import com.hyperledger.fabric.sdk.test.SDKClient;
 import org.apache.commons.lang3.StringUtils;
+import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.openssl.PEMParser;
+import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 
 import java.io.File;
+import java.io.Reader;
+import java.io.StringReader;
+import java.security.PrivateKey;
+import java.security.Security;
 
 /**
  * Created by answer on 2018-08-28 17:43
@@ -29,6 +37,17 @@ public class FileUtils {
             }
             return files[0];
         }
+    }
+
+
+    public static PrivateKey getPrivateKeyFromBytes(byte[] data) throws Exception {
+        Security.addProvider(new BouncyCastleProvider());
+        final Reader pemReader = new StringReader(new String(data));
+        final PrivateKeyInfo pemPair;
+        try (PEMParser pemParser = new PEMParser(pemReader)) {
+            pemPair = (PrivateKeyInfo) pemParser.readObject();
+        }
+        return new JcaPEMKeyConverter().setProvider(BouncyCastleProvider.PROVIDER_NAME).getPrivateKey(pemPair);
     }
 
 
