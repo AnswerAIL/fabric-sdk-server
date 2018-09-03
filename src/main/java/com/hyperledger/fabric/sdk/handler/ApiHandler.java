@@ -119,8 +119,13 @@ public class ApiHandler {
         Collection<ProposalResponse> invokeProposals = channel.sendTransactionProposal(transactionProposalRequest, channel.getPeers());
 
         if (checkResult(invokeProposals)) {
+            debug("提交到orderer节点进行共识 Start...");
             // 将背书结果提交到 orderer 节点进行排序打块
-            channel.sendTransaction(invokeProposals).get(TIME_OUT, TimeUnit.SECONDS);
+            BlockEvent.TransactionEvent transactionEvent = channel.sendTransaction(invokeProposals).get(TIME_OUT, TimeUnit.SECONDS);
+            debug("提交到orderer共识 End, Type: %s, TransactionActionInfoCount: %d, isValid: %b, ValidationCode: %d.",
+                    transactionEvent.getType().name(), transactionEvent.getTransactionActionInfoCount(), transactionEvent.isValid(), transactionEvent.getValidationCode());
+        } else {
+            error("交易智能合约操作失败, 交易响应的结果集存在异常响应.");
         }
 
         debug("交易智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), executeCCDTO.getFuncName(), Arrays.asList(executeCCDTO.getParams()));
