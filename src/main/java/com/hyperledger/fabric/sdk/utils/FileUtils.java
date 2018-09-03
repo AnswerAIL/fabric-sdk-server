@@ -1,6 +1,5 @@
 package com.hyperledger.fabric.sdk.utils;
 
-import com.hyperledger.fabric.sdk.test.SDKClient;
 import com.hyperledger.fabric.sdk.exception.FabricSDKException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -33,7 +32,7 @@ public class FileUtils {
 
 
     private static String getResourcePath() {
-        return getResourcePath(SDKClient.class);
+        return getResourcePath(FileUtils.class);
     }
 
     private static String getResourcePath(Class clz) {

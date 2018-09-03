@@ -1,7 +1,4 @@
-package com.hyperledger.fabric.sdk.test;
-
-import static com.hyperledger.fabric.sdk.utils.FileUtils.*;
-import static java.nio.charset.StandardCharsets.UTF_8;
+package com.hyperledger.fabric.sdk.handler;
 
 import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
@@ -14,51 +11,123 @@ import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 import org.hyperledger.fabric.sdk.*;
 import org.hyperledger.fabric.sdk.helper.Config;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
+import redis.clients.jedis.Jedis;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.Security;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.TimeUnit;
+
+import static com.hyperledger.fabric.sdk.utils.FileUtils.getFile;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 /**
  * Created by answer on 2018-08-28 09:27
  */
-public class SDKClient {
-    static String cxtPath = SDKClient.class.getClassLoader().getResource("").getPath();
+public class SDKCacheClient2 {
+    static Jedis jedis = new Jedis("127.0.0.1");
+    static String cxtPath = SDKCacheClient2.class.getClassLoader().getResource("").getPath();
     static {
+        jedis.select(0);
         Security.addProvider(new BouncyCastleProvider());
         System.setProperty(Config.ORG_HYPERLEDGER_FABRIC_SDK_CONFIGURATION, cxtPath + "config.properties");
     }
 
-    public static void main(String[] args) {
+    static String chaincodeName = "mycc";
+    static String chaincodeVersion = "1.0";
+    static String chaincodePath = "github.com/chaincode_example02";
+    static ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(chaincodeName).setVersion(chaincodeVersion).setPath(chaincodePath).build();
 
+    public static void main(String[] args) {
         try {
             HFClient client = clientBuild();
 
-            Channel channel = createChannel(client);
+//            Channel channel = createChannel(client);
+//
+//            jedis.set("mychannel".getBytes(), channel.serializeChannel());
+//
+//            installChainCode(client);
+//
+//            instantiateChainCode(client);
+//
+//            queryChainCode(client, channel);
 
-            installChainCode(client);
+//            channel.serializeChannel(new File("C:\\soft\\channel.txt"));
 
-            instantiateChainCode(client, channel);
+
+
+           /* Channel channel = client.deSerializeChannel(new File("C:\\soft\\channel.txt"));
+            System.out.println(channel.getName());
+            channel.initialize();
+            queryChainCode(client, channel);*/
+
+
+           Channel channel = client.deSerializeChannel(jedis.get("mychannel".getBytes()));
+            channel.initialize();
+            queryChainCode(client, channel);
+            invokeChainCode(client, channel);
+            queryChainCode(client, channel);
+
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
     }
 
 
+    private static void queryChainCode(HFClient client, Channel channel) throws Exception {
+        QueryByChaincodeRequest queryByChaincodeRequest = client.newQueryProposalRequest();
+        queryByChaincodeRequest.setArgs(new String[] {"b"});
+        queryByChaincodeRequest.setFcn("query");
+        queryByChaincodeRequest.setChaincodeID(chaincodeID);
+
+        Collection<ProposalResponse> queryProposals = channel.queryByChaincode(queryByChaincodeRequest, channel.getPeers());
+
+        for (ProposalResponse proposalResponse: queryProposals) {
+            String payload = proposalResponse.getProposalResponse().getResponse().getPayload().toStringUtf8();
+            System.out.println("response status: " + proposalResponse.getStatus() + ", isVerified: " + proposalResponse.isVerified() + " from peer: " + proposalResponse.getPeer().getName() + ", payload: " + payload);
+
+            if (proposalResponse.getStatus() == ProposalResponse.Status.FAILURE) {
+                System.out.println("failed message: " + proposalResponse.getMessage() + ", isVerified: " + proposalResponse.isVerified() + " from peer: " + proposalResponse.getPeer().getName());
+            }
+        }
+        System.out.println("发起查询账户B的交易提议完成!!!");
+    }
+
+    private static void invokeChainCode(HFClient client, Channel channel) throws Exception {
+        TransactionProposalRequest transactionProposalRequest = client.newTransactionProposalRequest();
+        transactionProposalRequest.setChaincodeID(chaincodeID);
+        transactionProposalRequest.setFcn("invoke");
+        transactionProposalRequest.setProposalWaitTime(30000);
+        transactionProposalRequest.setArgs(new String[] {"a", "b", "150"});
+        /**Map<String, byte[]> tm2 = new HashMap<>();
+         tm2.put("HyperLedgerFabric", "TransactionProposalRequest:JavaSDK".getBytes(UTF_8));
+         tm2.put("method", "TransactionProposalRequest".getBytes(UTF_8));
+         tm2.put("result", ":)".getBytes(UTF_8));
+         transactionProposalRequest.setTransientMap(tm2);*/
+        Collection<ProposalResponse> transactionPropResp = channel.sendTransactionProposal(transactionProposalRequest, channel.getPeers());
+        for (ProposalResponse proposalResponse: transactionPropResp) {
+            System.out.println("response status: " + proposalResponse.getStatus() + ", isVerified: " + proposalResponse.isVerified() + " from peer: " + proposalResponse.getPeer().getName());
+
+            if (proposalResponse.getStatus() == ProposalResponse.Status.FAILURE) {
+                System.out.println("failed message: " + proposalResponse.getMessage() + ", isVerified: " + proposalResponse.isVerified() + " from peer: " + proposalResponse.getPeer().getName());
+            }
+        }
+        // TODO： 交易交易成功即没有failed响应
+
+        System.out.println("转账提议: A->B转150结束!!!");
+        // 提交到orderer共识
+        channel.sendTransaction(transactionPropResp).get(50, TimeUnit.SECONDS);
+    }
+
     /**
      * 初始化智能合约
      * */
-    private static void instantiateChainCode(HFClient client, Channel channel) throws Exception {
+    private static void instantiateChainCode(HFClient client) throws Exception {
         System.out.println("初始化智能合约 Start...");
-        String chaincodeName = "mycc";
-        String chaincodeVersion = "1.0";
-        String chaincodePath = "github.com/chaincode_example02";
-        ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(chaincodeName).setVersion(chaincodeVersion).setPath(chaincodePath).build();
 
         Map<String, byte[]> map = new HashMap<String, byte[]>() {
             {
@@ -77,7 +146,7 @@ public class SDKClient {
         /**ChaincodeEndorsementPolicy chaincodeEndorsementPolicy = new ChaincodeEndorsementPolicy();
         chaincodeEndorsementPolicy.fromYamlFile(new File(cxtPath + "chaincodeendorsementpolicy.yaml"));
         instantiateProposalRequest.setChaincodeEndorsementPolicy(chaincodeEndorsementPolicy);*/
-
+        Channel channel = client.getChannel("mychannel");
         Collection<ProposalResponse> responses = channel.sendInstantiationProposal(instantiateProposalRequest, channel.getPeers());
 
         Collection<ProposalResponse> failed = new ArrayList<>();
@@ -112,7 +181,8 @@ public class SDKClient {
                 tm2.put("method", "TransactionProposalRequest".getBytes(UTF_8));
                 tm2.put("result", ":)".getBytes(UTF_8));
                 transactionProposalRequest.setTransientMap(tm2);*/
-                Collection<ProposalResponse> transactionPropResp = channel.sendTransactionProposal(transactionProposalRequest, channel.getPeers());
+                Channel channel1 = client.getChannel("mychannel");
+                Collection<ProposalResponse> transactionPropResp = channel1.sendTransactionProposal(transactionProposalRequest, channel1.getPeers());
                 for (ProposalResponse proposalResponse: transactionPropResp) {
                     System.out.println("response status: " + proposalResponse.getStatus() + ", isVerified: " + proposalResponse.isVerified() + " from peer: " + proposalResponse.getPeer().getName());
 
@@ -148,7 +218,8 @@ public class SDKClient {
                     }
                 };
                 queryByChaincodeRequest.setTransientMap(param);*/
-                Collection<ProposalResponse> queryProposals = channel.queryByChaincode(queryByChaincodeRequest, channel.getPeers());
+                Channel channel1 = client.getChannel("mychannel");
+                Collection<ProposalResponse> queryProposals = channel1.queryByChaincode(queryByChaincodeRequest, channel1.getPeers());
 
                 for (ProposalResponse proposalResponse: queryProposals) {
                     String payload = proposalResponse.getProposalResponse().getResponse().getPayload().toStringUtf8();
@@ -177,7 +248,7 @@ public class SDKClient {
     /**
      * 安装智能合约
      * */
-    private static void installChainCode(HFClient client/*, Channel channel*/) throws Exception {
+    private static void installChainCode(HFClient client) throws Exception {
         System.out.println("安装智能合约 Start...");
         /** 给哪些节点部署智能合约 */
         Collection<Peer> peers = new ArrayList<>();
@@ -202,11 +273,6 @@ public class SDKClient {
         peerProperties1.put("grpc.NettyChannelBuilderOption.maxInboundMessageSize", 9000000);
         Peer peer1 = client.newPeer("peer1.org1.example.com", "grpc://119.23.106.146:8051", peerProperties1);
         peers.add(peer1);
-
-        String chaincodeName = "mycc";
-        String chaincodeVersion = "1.0";
-        String chaincodePath = "github.com/chaincode_example02";
-        ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(chaincodeName).setVersion(chaincodeVersion).setPath(chaincodePath).build();
 
         InstallProposalRequest installProposalRequest = client.newInstallProposalRequest();
         installProposalRequest.setChaincodeID(chaincodeID);
