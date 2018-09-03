@@ -4,6 +4,7 @@ import static com.hyperledger.fabric.sdk.logger.Logger.*;
 import static com.hyperledger.fabric.sdk.utils.FileUtils.getFile;
 import static com.hyperledger.fabric.sdk.utils.FileUtils.getPrivateKeyFromBytes;
 import static com.hyperledger.fabric.sdk.common.Constants.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
@@ -21,7 +22,6 @@ import redis.clients.jedis.Jedis;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 
 /**
@@ -61,7 +61,7 @@ public class ApiHandler {
         }
 
         InputStream certFileIS = new FileInputStream(certFile);
-        String cert = new String(IOUtils.toByteArray(certFileIS), StandardCharsets.UTF_8);
+        String cert = new String(IOUtils.toByteArray(certFileIS), UTF_8);
 
         InputStream keyFileIS = new FileInputStream(keyFile);
         PrivateKey key = getPrivateKeyFromBytes(IOUtils.toByteArray(keyFileIS));
@@ -82,8 +82,6 @@ public class ApiHandler {
         BuildClientDTO buildClientDTO = new BuildClientDTO.Builder()
                 .name("org1.example.com").mspId("Org1MSP").mspPath(mspPath).build();
         HFClient client = clientBuild(buildClientDTO);
-
-        /*HFClient client = SDKClient.clientBuild();*/
 
         Channel channel = client.deSerializeChannel(jedis.get("mychannel".getBytes()));
         channel.initialize();
