@@ -123,7 +123,7 @@ public class SDKClient {
     /**
      * 初始化智能合约
      * */
-    private static void instantiateChainCode(HFClient client) throws Exception {
+    public static void instantiateChainCode(HFClient client) throws Exception {
         System.out.println("初始化智能合约 Start...");
 
         Map<String, byte[]> map = new HashMap<String, byte[]>() {
@@ -245,7 +245,7 @@ public class SDKClient {
     /**
      * 安装智能合约
      * */
-    private static void installChainCode(HFClient client) throws Exception {
+    public static void installChainCode(HFClient client) throws Exception {
         System.out.println("安装智能合约 Start...");
         /** 给哪些节点部署智能合约 */
         Collection<Peer> peers = new ArrayList<>();
@@ -292,7 +292,7 @@ public class SDKClient {
     /**
      * 创建客户端实例
      * */
-    private static HFClient clientBuild() throws Exception {
+    public static HFClient clientBuild() throws Exception {
         System.out.println("创建客户端实例 Start...");
         HFClient client = HFClient.createNewInstance();
         client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());
@@ -323,7 +323,7 @@ public class SDKClient {
      *  userContext
      *  orderer node
      * */
-    private static Channel createChannel(HFClient client) throws Exception {
+    public static Channel createChannel(HFClient client) throws Exception {
         System.out.println("创建通道 Start...");
         /**
          * ############################################################################################################################################################

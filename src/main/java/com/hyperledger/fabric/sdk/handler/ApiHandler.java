@@ -53,18 +53,21 @@ public class ApiHandler {
 
 
     public static void main(String[] args) throws Exception {
-        String mspPath = SDKClient.class.getClassLoader().getResource("").getPath() + "crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/";
+        /*String mspPath = SDKClient.class.getClassLoader().getResource("").getPath() + "crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/";
         BuildClientDTO buildClientDTO = new BuildClientDTO.Builder()
                 .cert(mspPath + "signcerts/Admin@org1.example.com-cert.pem")
                 .key(mspPath + "keystore/9bdc2feefab31f9293e0acbc08c569d898f23a872e457eb542db032dd8417092_sk")
                 .mspId("Org1MSP")
                 .name("org1.example.com").build();
-        HFClient client = createChannel(buildClientDTO);
+        HFClient client = createChannel(buildClientDTO);*/
+
+        HFClient client = SDKClient.clientBuild();
 
         Jedis jedis = new Jedis("127.0.0.1");
         jedis.select(0);
 
         Channel channel = client.deSerializeChannel(jedis.get("mychannel".getBytes()));
+        System.out.println(channel.getName());
         channel.initialize();
         SDKClient.queryChainCode(client, channel);
         SDKClient.invokeChainCode(client, channel);
