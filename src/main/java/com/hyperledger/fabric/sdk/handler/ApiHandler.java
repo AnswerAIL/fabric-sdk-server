@@ -35,17 +35,18 @@ public class ApiHandler {
         HFClient client = HFClient.createNewInstance();
         client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());
 
-        InputStream certFileIS = new FileInputStream(buildClientDTO.getCert());
+        String mspPath = buildClientDTO.getMspPath();
+        InputStream certFileIS = new FileInputStream(getFile(mspPath + "signcerts", null));
         String cert = new String(IOUtils.toByteArray(certFileIS), StandardCharsets.UTF_8);
 
-        InputStream keyFileIS = new FileInputStream(buildClientDTO.getKey());
+        InputStream keyFileIS = new FileInputStream(getFile(mspPath + "keystore", "_sk"));
         PrivateKey key = getPrivateKeyFromBytes(IOUtils.toByteArray(keyFileIS));
 
-        String orgName = buildClientDTO.getName();
+        String name = buildClientDTO.getName();
         String mspid = buildClientDTO.getMspId();
         Enrollment enrollmentDTO = new EnrollmentDTO(cert, key);
 
-        User user = new UserContextDTO(orgName, mspid, enrollmentDTO);
+        User user = new UserContextDTO(name, mspid, enrollmentDTO);
         client.setUserContext(user);
 
         return client;
@@ -53,15 +54,15 @@ public class ApiHandler {
 
 
     public static void main(String[] args) throws Exception {
-        /*String mspPath = SDKClient.class.getClassLoader().getResource("").getPath() + "crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/";
+        String mspPath = "crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/";
         BuildClientDTO buildClientDTO = new BuildClientDTO.Builder()
-                .cert(mspPath + "signcerts/Admin@org1.example.com-cert.pem")
-                .key(mspPath + "keystore/9bdc2feefab31f9293e0acbc08c569d898f23a872e457eb542db032dd8417092_sk")
+                .name("org1.example.com")
                 .mspId("Org1MSP")
-                .name("org1.example.com").build();
-        HFClient client = createChannel(buildClientDTO);*/
+                .mspPath(mspPath)
+                .build();
+        HFClient client = createChannel(buildClientDTO);
 
-        HFClient client = SDKClient.clientBuild();
+        /*HFClient client = SDKClient.clientBuild();*/
 
         Jedis jedis = new Jedis("127.0.0.1");
         jedis.select(0);

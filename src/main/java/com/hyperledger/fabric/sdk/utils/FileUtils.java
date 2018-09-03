@@ -1,7 +1,7 @@
 package com.hyperledger.fabric.sdk.utils;
 
 import com.hyperledger.fabric.sdk.exception.FabricSDKException;
-import com.hyperledger.fabric.sdk.test.SDKClient;
+import com.hyperledger.fabric.sdk.handler.ApiHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -52,13 +52,13 @@ public class FileUtils {
 
 
     private static String getResourcePath() {
-        return getResourcePath(SDKClient.class);
+        return getResourcePath(ApiHandler.class);
     }
 
     private static String getResourcePath(Class clz) {
         String path = clz.getClassLoader().getResource("").getPath();
         if (StringUtils.isEmpty(path)) {
-            throw new FabricSDKException();
+            throw new FabricSDKException("path is invalid.");
         }
         return path;
     }

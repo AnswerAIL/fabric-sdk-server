@@ -10,24 +10,14 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class BuildClientDTO {
 
-    private String cert;
-    private String key;
     private String name;
     private String mspId;
+    private String mspPath;
 
     private BuildClientDTO(Builder builder) {
-        this.cert = builder.cert;
-        this.key = builder.key;
+        this.mspPath = builder.mspPath;
         this.name = builder.name;
         this.mspId = builder.mspId;
-    }
-
-    public String getCert() {
-        return cert;
-    }
-
-    public String getKey() {
-        return key;
     }
 
     public String getName() {
@@ -38,6 +28,10 @@ public class BuildClientDTO {
         return mspId;
     }
 
+    public String getMspPath() {
+        return mspPath;
+    }
+
 
     /**
      * path: crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/
@@ -45,20 +39,9 @@ public class BuildClientDTO {
      * key: path + keystore
      * */
     public static class Builder {
-        private String cert;
-        private String key;
         private String name;
         private String mspId;
-
-        public Builder cert(String cert) {
-            this.cert = cert;
-            return this;
-        }
-
-        public Builder key(String key) {
-            this.key = key;
-            return this;
-        }
+        private String mspPath;
 
         public Builder name(String name) {
             this.name = name;
@@ -70,10 +53,14 @@ public class BuildClientDTO {
             return this;
         }
 
+        public Builder mspPath(String mspPath) {
+            this.mspPath = mspPath;
+            return this;
+        }
+
         public BuildClientDTO build() {
-            if (StringUtils.isEmpty(cert) || StringUtils.isEmpty(key) ||
-                    StringUtils.isEmpty(name)|| StringUtils.isEmpty(mspId)) {
-                throw new IllegalArgumentException("cert | key | name | mspId must not be empty.");
+            if (StringUtils.isEmpty(mspPath) || StringUtils.isEmpty(name)|| StringUtils.isEmpty(mspId)) {
+                throw new IllegalArgumentException("name | mspId | mspPath must not be empty.");
             }
             return new BuildClientDTO(this);
         }
