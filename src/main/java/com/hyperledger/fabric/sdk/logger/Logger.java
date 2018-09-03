@@ -9,7 +9,7 @@ import java.util.Date;
 public class Logger {
     private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
-    private static LogLevel loggerLevel = LogLevel.INFO;
+    private static LogLevel loggerLevel = LogLevel.DEBUG;
 
     public static void debug(String log) {
         logger(LogLevel.DEBUG, Thread.currentThread().getStackTrace()[2], log);
