@@ -11,7 +11,6 @@ import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.BuildClientDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.QueryCCDTO;
-import com.hyperledger.fabric.sdk.test.SDKClient;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.*;
@@ -107,6 +106,7 @@ public class ApiHandler {
         boolean flag = true;
         for (ProposalResponse proposalResponse: proposalResponses) {
             String payload = proposalResponse.getProposalResponse().getResponse().getPayload().toStringUtf8();
+            payload = StringUtils.isEmpty(payload) ? "nil" : payload;
             info("response status: %s, isVerified: %b from peer: %s, payload: %s.", proposalResponse.getStatus(), proposalResponse.isVerified(), proposalResponse.getPeer().getName(), payload);
 
             if (proposalResponse.getStatus() == ProposalResponse.Status.FAILURE) {
