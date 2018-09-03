@@ -13,6 +13,7 @@ public class ExecuteCCDTO {
     private String funcName;
     private String[] params;
     private ChaincodeID chaincodeID;
+    // 单位: ms
     private Integer proposalWaitTime;
 
     private ExecuteCCDTO(Builder builder) {

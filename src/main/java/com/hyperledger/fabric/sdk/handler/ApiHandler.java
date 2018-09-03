@@ -81,24 +81,43 @@ public class ApiHandler {
     }
 
 
+    public static void initializeChainCode(HFClient client, Channel channel, ExecuteCCDTO initCCDTO) throws Exception {
+        debug("初始化智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), initCCDTO.getFuncName(), Arrays.asList(initCCDTO.getParams()));
+        InstantiateProposalRequest instantiateProposalRequest = client.newInstantiationProposalRequest();
+        instantiateProposalRequest.setProposalWaitTime(initCCDTO.getProposalWaitTime());
+        instantiateProposalRequest.setChaincodeID(initCCDTO.getChaincodeID());
+        instantiateProposalRequest.setFcn(initCCDTO.getFuncName());
+        instantiateProposalRequest.setArgs(initCCDTO.getParams());
+
+        Collection<ProposalResponse> initProposals = channel.sendInstantiationProposal(instantiateProposalRequest, channel.getPeers());
+
+        if (checkResult(initProposals)) {
+
+        }
+
+        debug("初始化智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), initCCDTO.getFuncName(), Arrays.asList(initCCDTO.getParams()));
+    }
+
+
     /**
      * Answer - 查询智能合约
      * @param client 客户端实例
      * @param channel 通道对象
-     * @param executeCCDTO {@link ExecuteCCDTO}
+     * @param queryCCDTO {@link ExecuteCCDTO}
      * */
-    public static void queryChainCode(HFClient client, Channel channel, ExecuteCCDTO executeCCDTO) throws Exception {
-        debug("查询智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), executeCCDTO.getFuncName(), Arrays.asList(executeCCDTO.getParams()));
+    public static void queryChainCode(HFClient client, Channel channel, ExecuteCCDTO queryCCDTO) throws Exception {
+        debug("查询智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), queryCCDTO.getFuncName(), Arrays.asList(queryCCDTO.getParams()));
         QueryByChaincodeRequest queryByChaincodeRequest = client.newQueryProposalRequest();
-        queryByChaincodeRequest.setArgs(executeCCDTO.getParams());
-        queryByChaincodeRequest.setFcn(executeCCDTO.getFuncName());
-        queryByChaincodeRequest.setChaincodeID(executeCCDTO.getChaincodeID());
-        queryByChaincodeRequest.setProposalWaitTime(executeCCDTO.getProposalWaitTime());
+        queryByChaincodeRequest.setArgs(queryCCDTO.getParams());
+        queryByChaincodeRequest.setFcn(queryCCDTO.getFuncName());
+        queryByChaincodeRequest.setChaincodeID(queryCCDTO.getChaincodeID());
+        queryByChaincodeRequest.setProposalWaitTime(queryCCDTO.getProposalWaitTime());
 
         Collection<ProposalResponse> queryProposals = channel.queryByChaincode(queryByChaincodeRequest, channel.getPeers());
 
-        checkResult(queryProposals);
-        debug("查询智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), executeCCDTO.getFuncName(), Arrays.asList(executeCCDTO.getParams()));
+        orderConsensus(channel, queryProposals);
+
+        debug("查询智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), queryCCDTO.getFuncName(), Arrays.asList(queryCCDTO.getParams()));
     }
 
 
@@ -106,31 +125,40 @@ public class ApiHandler {
      * Answer - 交易智能合约
      * @param client 客户端实例
      * @param channel 通道对象
-     * @param executeCCDTO {@link ExecuteCCDTO}
+     * @param invokeCCDTO {@link ExecuteCCDTO}
      * */
-    public static void invokeChainCode(HFClient client, Channel channel, ExecuteCCDTO executeCCDTO) throws Exception {
-        debug("交易智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), executeCCDTO.getFuncName(), Arrays.asList(executeCCDTO.getParams()));
+    public static void invokeChainCode(HFClient client, Channel channel, ExecuteCCDTO invokeCCDTO) throws Exception {
+        debug("交易智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), invokeCCDTO.getFuncName(), Arrays.asList(invokeCCDTO.getParams()));
         TransactionProposalRequest transactionProposalRequest = client.newTransactionProposalRequest();
-        transactionProposalRequest.setChaincodeID(executeCCDTO.getChaincodeID());
-        transactionProposalRequest.setFcn(executeCCDTO.getFuncName());
-        transactionProposalRequest.setProposalWaitTime(executeCCDTO.getProposalWaitTime());
-        transactionProposalRequest.setArgs(executeCCDTO.getParams());
+        transactionProposalRequest.setChaincodeID(invokeCCDTO.getChaincodeID());
+        transactionProposalRequest.setFcn(invokeCCDTO.getFuncName());
+        transactionProposalRequest.setProposalWaitTime(invokeCCDTO.getProposalWaitTime());
+        transactionProposalRequest.setArgs(invokeCCDTO.getParams());
 
         Collection<ProposalResponse> invokeProposals = channel.sendTransactionProposal(transactionProposalRequest, channel.getPeers());
 
-        if (checkResult(invokeProposals)) {
+        orderConsensus(channel, invokeProposals);
+
+        debug("交易智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), invokeCCDTO.getFuncName(), Arrays.asList(invokeCCDTO.getParams()));
+    }
+
+
+    /**
+     * 将响应结果提交到orderer节点进行共识
+     * @param channel 通道对象
+     * @param proposalResponses 提议响应集
+     * */
+    private static void orderConsensus(Channel channel, Collection<ProposalResponse> proposalResponses) throws Exception {
+        if (checkResult(proposalResponses)) {
             debug("提交到orderer节点进行共识 Start...");
             // 将背书结果提交到 orderer 节点进行排序打块
-            BlockEvent.TransactionEvent transactionEvent = channel.sendTransaction(invokeProposals).get(TIME_OUT, TimeUnit.SECONDS);
+            BlockEvent.TransactionEvent transactionEvent = channel.sendTransaction(proposalResponses).get(TIME_OUT, TimeUnit.SECONDS);
             debug("提交到orderer共识 End, Type: %s, TransactionActionInfoCount: %d, isValid: %b, ValidationCode: %d.",
                     transactionEvent.getType().name(), transactionEvent.getTransactionActionInfoCount(), transactionEvent.isValid(), transactionEvent.getValidationCode());
         } else {
             error("交易智能合约操作失败, 交易响应的结果集存在异常响应.");
         }
-
-        debug("交易智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), executeCCDTO.getFuncName(), Arrays.asList(executeCCDTO.getParams()));
     }
-
 
     /**
      * 校验链码响应结果
