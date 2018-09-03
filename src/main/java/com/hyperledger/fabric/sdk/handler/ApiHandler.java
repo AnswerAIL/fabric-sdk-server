@@ -30,7 +30,12 @@ public class ApiHandler {
 
 
 
-    private static HFClient createChannel(BuildClientDTO buildClientDTO) throws Exception {
+    /**
+     * 构建客户端实例
+     * @param buildClientDTO {@link BuildClientDTO}
+     * @return HFClient
+     * */
+    private static HFClient clientBuild(BuildClientDTO buildClientDTO) throws Exception {
         info("准备初始化客户端实例...");
         HFClient client = HFClient.createNewInstance();
         client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());
@@ -56,11 +61,8 @@ public class ApiHandler {
     public static void main(String[] args) throws Exception {
         String mspPath = "crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/";
         BuildClientDTO buildClientDTO = new BuildClientDTO.Builder()
-                .name("org1.example.com")
-                .mspId("Org1MSP")
-                .mspPath(mspPath)
-                .build();
-        HFClient client = createChannel(buildClientDTO);
+                .name("org1.example.com").mspId("Org1MSP").mspPath(mspPath).build();
+        HFClient client = clientBuild(buildClientDTO);
 
         /*HFClient client = SDKClient.clientBuild();*/
 
@@ -68,7 +70,6 @@ public class ApiHandler {
         jedis.select(0);
 
         Channel channel = client.deSerializeChannel(jedis.get("mychannel".getBytes()));
-        System.out.println(channel.getName());
         channel.initialize();
         SDKClient.queryChainCode(client, channel);
         SDKClient.invokeChainCode(client, channel);
