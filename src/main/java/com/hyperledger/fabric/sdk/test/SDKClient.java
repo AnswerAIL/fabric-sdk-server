@@ -1,4 +1,4 @@
-package com.hyperledger.fabric.sdk.handler;
+package com.hyperledger.fabric.sdk.test;
 
 import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
@@ -27,9 +27,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 /**
  * Created by answer on 2018-08-28 09:27
  */
-public class SDKCacheClient2 {
+public class SDKClient {
     static Jedis jedis = new Jedis("127.0.0.1");
-    static String cxtPath = SDKCacheClient2.class.getClassLoader().getResource("").getPath();
+    static String cxtPath = SDKClient.class.getClassLoader().getResource("").getPath();
     static {
         jedis.select(0);
         Security.addProvider(new BouncyCastleProvider());
