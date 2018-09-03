@@ -3,12 +3,14 @@ package com.hyperledger.fabric.sdk.handler;
 import static com.hyperledger.fabric.sdk.logger.Logger.*;
 import static com.hyperledger.fabric.sdk.utils.FileUtils.getFile;
 import static com.hyperledger.fabric.sdk.utils.FileUtils.getPrivateKeyFromBytes;
+import static com.hyperledger.fabric.sdk.common.Constants.*;
 
 import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.BuildClientDTO;
 import com.hyperledger.fabric.sdk.test.SDKClient;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.Enrollment;
 import org.hyperledger.fabric.sdk.HFClient;
@@ -25,8 +27,14 @@ import java.security.PrivateKey;
  * Created by answer on 2018-09-03 11:16
  */
 public class ApiHandler {
+    private static Jedis jedis = new Jedis(JEDIS_IP);
+    static {
+        jedis.select(JEDIS_INDEX);
 
-
+        if (StringUtils.isNotEmpty(JEDIS_PASSWD)) {
+            jedis.auth(JEDIS_PASSWD);
+        }
+    }
 
 
 
@@ -36,7 +44,7 @@ public class ApiHandler {
      * @return HFClient
      * */
     private static HFClient clientBuild(BuildClientDTO buildClientDTO) throws Exception {
-        info("准备初始化客户端实例...");
+        info("构建Hyperledger Fabric客户端实例 Start...");
         HFClient client = HFClient.createNewInstance();
         client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());
 
@@ -53,7 +61,7 @@ public class ApiHandler {
 
         User user = new UserContextDTO(name, mspid, enrollmentDTO);
         client.setUserContext(user);
-
+        info("构建Hyperledger Fabric客户端实例 End!!!");
         return client;
     }
 
@@ -65,9 +73,6 @@ public class ApiHandler {
         HFClient client = clientBuild(buildClientDTO);
 
         /*HFClient client = SDKClient.clientBuild();*/
-
-        Jedis jedis = new Jedis("127.0.0.1");
-        jedis.select(0);
 
         Channel channel = client.deSerializeChannel(jedis.get("mychannel".getBytes()));
         channel.initialize();
