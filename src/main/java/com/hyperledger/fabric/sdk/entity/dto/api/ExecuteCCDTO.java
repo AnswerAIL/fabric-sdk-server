@@ -1,22 +1,25 @@
 package com.hyperledger.fabric.sdk.entity.dto.api;
 
+import com.hyperledger.fabric.sdk.common.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.ChaincodeID;
 
 /**
  * Created by answer on 2018-09-03 16:20
  *
- * 查询智能合约数据传输对象
+ * 操作(查询|交易)智能合约数据传输对象
  */
-public class QueryCCDTO {
+public class ExecuteCCDTO {
     private String funcName;
     private String[] params;
     private ChaincodeID chaincodeID;
+    private Integer proposalWaitTime;
 
-    private QueryCCDTO(Builder builder) {
+    private ExecuteCCDTO(Builder builder) {
         this.funcName = builder.funcName;
         this.params = builder.params;
         this.chaincodeID = builder.chaincodeID;
+        this.proposalWaitTime = builder.proposalWaitTime;
     }
 
     public String getFuncName() {
@@ -31,10 +34,18 @@ public class QueryCCDTO {
         return chaincodeID;
     }
 
+    public Integer getProposalWaitTime() {
+        if (proposalWaitTime == null || proposalWaitTime <= 0) {
+            proposalWaitTime = Constants.PROPOSAL_WAIT_TIME;
+        }
+        return proposalWaitTime;
+    }
+
     public static class Builder {
         private String funcName;
         private String[] params;
         private ChaincodeID chaincodeID;
+        private Integer proposalWaitTime;
 
         public Builder funcName(String funcName) {
             this.funcName = funcName;
@@ -51,11 +62,16 @@ public class QueryCCDTO {
             return this;
         }
 
-        public QueryCCDTO build() {
+        public Builder proposalWaitTime(Integer proposalWaitTime) {
+            this.proposalWaitTime = proposalWaitTime;
+            return this;
+        }
+
+        public ExecuteCCDTO build() {
             if (StringUtils.isEmpty(funcName) || params == null || chaincodeID == null) {
                 throw new IllegalArgumentException("funcName | params | chaincodeID must not be empty.");
             }
-            return new QueryCCDTO(this);
+            return new ExecuteCCDTO(this);
         }
     }
 

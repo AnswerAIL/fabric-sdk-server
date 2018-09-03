@@ -10,4 +10,7 @@ public class Constants {
     public static final String JEDIS_PASSWD = "";
 
 
+    /** 交易等待时间, 单位: ms */
+    public static final int PROPOSAL_WAIT_TIME = 3000;
+
 }

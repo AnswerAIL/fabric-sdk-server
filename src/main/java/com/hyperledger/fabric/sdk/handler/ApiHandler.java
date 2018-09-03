@@ -10,7 +10,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.BuildClientDTO;
-import com.hyperledger.fabric.sdk.entity.dto.api.QueryCCDTO;
+import com.hyperledger.fabric.sdk.entity.dto.api.ExecuteCCDTO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.*;
@@ -23,11 +23,15 @@ import java.io.InputStream;
 import java.security.PrivateKey;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by answer on 2018-09-03 11:16
  */
 public class ApiHandler {
+    /** 超时时间, 单位: S */
+    private static final Integer TIME_OUT = 50;
+
     private static Jedis jedis = new Jedis(JEDIS_IP);
     static {
         jedis.select(JEDIS_INDEX);
@@ -81,19 +85,45 @@ public class ApiHandler {
      * Answer - 查询智能合约
      * @param client 客户端实例
      * @param channel 通道对象
-     * @param queryCCDTO {@link QueryCCDTO}
+     * @param executeCCDTO {@link ExecuteCCDTO}
      * */
-    public static void queryChainCode(HFClient client, Channel channel, QueryCCDTO queryCCDTO) throws Exception {
-        debug("查询智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), queryCCDTO.getFuncName(), Arrays.asList(queryCCDTO.getParams()));
+    public static void queryChainCode(HFClient client, Channel channel, ExecuteCCDTO executeCCDTO) throws Exception {
+        debug("查询智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), executeCCDTO.getFuncName(), Arrays.asList(executeCCDTO.getParams()));
         QueryByChaincodeRequest queryByChaincodeRequest = client.newQueryProposalRequest();
-        queryByChaincodeRequest.setArgs(queryCCDTO.getParams());
-        queryByChaincodeRequest.setFcn(queryCCDTO.getFuncName());
-        queryByChaincodeRequest.setChaincodeID(queryCCDTO.getChaincodeID());
+        queryByChaincodeRequest.setArgs(executeCCDTO.getParams());
+        queryByChaincodeRequest.setFcn(executeCCDTO.getFuncName());
+        queryByChaincodeRequest.setChaincodeID(executeCCDTO.getChaincodeID());
+        queryByChaincodeRequest.setProposalWaitTime(executeCCDTO.getProposalWaitTime());
 
         Collection<ProposalResponse> queryProposals = channel.queryByChaincode(queryByChaincodeRequest, channel.getPeers());
 
         checkResult(queryProposals);
-        debug("查询智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), queryCCDTO.getFuncName(), Arrays.asList(queryCCDTO.getParams()));
+        debug("查询智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), executeCCDTO.getFuncName(), Arrays.asList(executeCCDTO.getParams()));
+    }
+
+
+    /**
+     * Answer - 交易智能合约
+     * @param client 客户端实例
+     * @param channel 通道对象
+     * @param executeCCDTO {@link ExecuteCCDTO}
+     * */
+    public static void invokeChainCode(HFClient client, Channel channel, ExecuteCCDTO executeCCDTO) throws Exception {
+        debug("交易智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), executeCCDTO.getFuncName(), Arrays.asList(executeCCDTO.getParams()));
+        TransactionProposalRequest transactionProposalRequest = client.newTransactionProposalRequest();
+        transactionProposalRequest.setChaincodeID(executeCCDTO.getChaincodeID());
+        transactionProposalRequest.setFcn(executeCCDTO.getFuncName());
+        transactionProposalRequest.setProposalWaitTime(executeCCDTO.getProposalWaitTime());
+        transactionProposalRequest.setArgs(executeCCDTO.getParams());
+
+        Collection<ProposalResponse> invokeProposals = channel.sendTransactionProposal(transactionProposalRequest, channel.getPeers());
+
+        if (checkResult(invokeProposals)) {
+            // 将背书结果提交到 orderer 节点进行排序打块
+            channel.sendTransaction(invokeProposals).get(TIME_OUT, TimeUnit.SECONDS);
+        }
+
+        debug("交易智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), executeCCDTO.getFuncName(), Arrays.asList(executeCCDTO.getParams()));
     }
 
 
@@ -119,10 +149,9 @@ public class ApiHandler {
 
 
     public static void main(String[] args) throws Exception {
-        String chaincodeName = "mycc";
         String chaincodeVersion = "1.0";
         String chaincodePath = "github.com/chaincode_example02";
-        ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(chaincodeName).setVersion(chaincodeVersion).setPath(chaincodePath).build();
+        ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName("mycc").setVersion(chaincodeVersion).setPath(chaincodePath).build();
 
 
         String mspPath = "crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/";
@@ -133,12 +162,17 @@ public class ApiHandler {
         Channel channel = client.deSerializeChannel(jedis.get("mychannel".getBytes()));
         channel.initialize();
 
-        QueryCCDTO queryCCDTO = new QueryCCDTO.Builder().funcName("query").params(new String[] {"b"}).chaincodeID(chaincodeID).build();
-        queryChainCode(client, channel, queryCCDTO);
+        ExecuteCCDTO querybCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"b"}).chaincodeID(chaincodeID).build();
+        queryChainCode(client, channel, querybCCDTO);
 
-//        SDKClient.queryChainCode(client, channel);
-//        SDKClient.invokeChainCode(client, channel);
-//        SDKClient.queryChainCode(client, channel);
+        ExecuteCCDTO invokeCCDTO = new ExecuteCCDTO.Builder().funcName("invoke").params(new String[] {"a", "b", "7"}).chaincodeID(chaincodeID).build();
+        invokeChainCode(client, channel, invokeCCDTO);
+
+        queryChainCode(client, channel, querybCCDTO);
+
+        ExecuteCCDTO queryaCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"a"}).chaincodeID(chaincodeID).build();
+        invokeChainCode(client, channel, queryaCCDTO);
+
     }
 
 }
