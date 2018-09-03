@@ -26,7 +26,9 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by answer on 2018-09-03 11:16
+ * Created by L.Answer on 2018-09-03 11:16
+ *
+ * 操作区块链链码API
  */
 public class ApiHandler {
     /** 超时时间, 单位: S */
@@ -81,6 +83,12 @@ public class ApiHandler {
     }
 
 
+    /**
+     * Answer - 初始化智能合约
+     * @param client 客户端实例
+     * @param channel 通道对象
+     * @param initCCDTO {@link ExecuteCCDTO}
+     * */
     public static void initializeChainCode(HFClient client, Channel channel, ExecuteCCDTO initCCDTO) throws Exception {
         debug("初始化智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), initCCDTO.getFuncName(), Arrays.asList(initCCDTO.getParams()));
         InstantiateProposalRequest instantiateProposalRequest = client.newInstantiationProposalRequest();

@@ -1,7 +1,7 @@
 package com.hyperledger.fabric.sdk.entity;
 
 /**
- * Created by answer on 2018-09-03 10:56
+ * Created by L.Answer on 2018-09-03 10:56
  */
 public enum ExecuteTypeEnum {
     /** 创建通道 */

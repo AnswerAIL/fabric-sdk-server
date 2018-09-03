@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.ChaincodeID;
 
 /**
- * Created by answer on 2018-09-03 16:20
+ * Created by L.Answer on 2018-09-03 16:20
  *
  * 操作(查询|交易)智能合约数据传输对象
  */

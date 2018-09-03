@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * Created by answer on 2018-08-28 15:18
+ * Created by L.Answer on 2018-08-28 15:18
  */
 public class UserContextDTO implements User, Serializable {
 

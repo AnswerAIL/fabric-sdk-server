@@ -5,7 +5,7 @@ import org.hyperledger.fabric.sdk.Enrollment;
 import java.security.PrivateKey;
 
 /**
- * Created by answer on 2018-08-28 15:20
+ * Created by L.Answer on 2018-08-28 15:20
  */
 public class EnrollmentDTO implements Enrollment {
     private String cert;

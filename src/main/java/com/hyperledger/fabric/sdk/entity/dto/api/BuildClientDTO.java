@@ -4,7 +4,7 @@ package com.hyperledger.fabric.sdk.entity.dto.api;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Created by answer on 2018-09-03 14:31
+ * Created by L.Answer on 2018-09-03 14:31
  *
  * 构建客户端需要传入操作员区块的用户信息
  *
