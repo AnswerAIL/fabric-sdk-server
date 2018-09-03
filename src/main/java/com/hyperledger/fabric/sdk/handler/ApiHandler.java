@@ -18,6 +18,7 @@ import org.hyperledger.fabric.sdk.User;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
 import redis.clients.jedis.Jedis;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -49,10 +50,20 @@ public class ApiHandler {
         client.setCryptoSuite(CryptoSuite.Factory.getCryptoSuite());
 
         String mspPath = buildClientDTO.getMspPath();
-        InputStream certFileIS = new FileInputStream(getFile(mspPath + "signcerts", null));
+
+        File certFile, keyFile;
+        if (StringUtils.isNotEmpty(mspPath)) {
+            certFile = getFile(mspPath + "signcerts", null);
+            keyFile = getFile(mspPath + "keystore", "_sk");
+        } else {
+            certFile = new File(buildClientDTO.getCertPath());
+            keyFile = new File(buildClientDTO.getKeyPath());
+        }
+
+        InputStream certFileIS = new FileInputStream(certFile);
         String cert = new String(IOUtils.toByteArray(certFileIS), StandardCharsets.UTF_8);
 
-        InputStream keyFileIS = new FileInputStream(getFile(mspPath + "keystore", "_sk"));
+        InputStream keyFileIS = new FileInputStream(keyFile);
         PrivateKey key = getPrivateKeyFromBytes(IOUtils.toByteArray(keyFileIS));
 
         String name = buildClientDTO.getName();
