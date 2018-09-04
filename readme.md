@@ -20,9 +20,19 @@
 ```
 
 
-### 证书生成
+### Fabric V1.0 通道配置信息及证书手动生成
 ```bash
+    # 加入脚本目录
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
+    
+    # 备份已有配置信息
+    mkdir bak
+    cp -R channel-artifacts  crypto-config bak/
+    
+    # 移除已有配置信息, (如果现有配置信息还有用, 请先备份)
+    rm -rf channel-artifacts/* crypto-config/*
+    
+    # 执行脚本, $channelName 为通道名称变量名
     source generateArtifacts.sh $channelName  
     
     # 验证
@@ -30,6 +40,14 @@
     ll crypto-config                 
 ```
 
+
+### 关闭每次重启fabric服务重新生成通道及配置文件信息
+```bash
+    vim network_setup.sh
+    # 删除以下脚本代码
+    #    function networkUp   -> source generateArtifacts.sh $CH_NAME
+    #    function networkDown -> rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config
+```
 
 
 ### 注意事项
