@@ -1,11 +1,12 @@
 package com.hyperledger.fabric.sdk.entity.dto.api;
 
+import java.io.Serializable;
 import java.util.Properties;
 
 /**
  * Created by L.Answer on 2018-09-03 19:03
  */
-public class PeerNodeDTO extends NodeDTO {
+public class PeerNodeDTO extends NodeDTO implements Serializable {
 
     private String evenHubUrl;
 

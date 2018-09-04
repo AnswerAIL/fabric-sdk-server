@@ -3,6 +3,8 @@ package com.hyperledger.fabric.sdk.entity.dto.api;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
+
 /**
  * Created by L.Answer on 2018-09-03 14:31
  *
@@ -11,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
  * mspPath 和 certPath & keyPath 任选一个
  * 选择 mspPath 必须有 signcerts 和 keystore 两个文件夹
  */
-public class BuildClientDTO {
+public class BuildClientDTO implements Serializable {
 
     private String name;
     private String mspId;

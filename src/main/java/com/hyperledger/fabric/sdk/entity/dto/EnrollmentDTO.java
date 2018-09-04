@@ -2,12 +2,13 @@ package com.hyperledger.fabric.sdk.entity.dto;
 
 import org.hyperledger.fabric.sdk.Enrollment;
 
+import java.io.Serializable;
 import java.security.PrivateKey;
 
 /**
  * Created by L.Answer on 2018-08-28 15:20
  */
-public class EnrollmentDTO implements Enrollment {
+public class EnrollmentDTO implements Enrollment, Serializable {
     private String cert;
     private PrivateKey key;
 

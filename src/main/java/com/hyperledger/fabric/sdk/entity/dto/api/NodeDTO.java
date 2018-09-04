@@ -1,12 +1,13 @@
 package com.hyperledger.fabric.sdk.entity.dto.api;
 
+import java.io.Serializable;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by L.Answer on 2018-09-03 19:01
  */
-public class NodeDTO {
+public class NodeDTO implements Serializable {
 
     private String nodeName;
     private String grpcUrl;

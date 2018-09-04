@@ -18,13 +18,15 @@ import java.util.Collection;
 public class APITest {
 
     public static void main(String[] args) throws Exception {
-        String channelName = "mychannel";
-
         String cxtPath = APITest.class.getClassLoader().getResource("").getPath();
 
+
+        String channelName = "mychannel";
+
+        String chaincodeName = "mycc";
         String chaincodeVersion = "1.0";
         String chaincodePath = "github.com/chaincode_example02";
-        ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName("mycc").setVersion(chaincodeVersion).setPath(chaincodePath).build();
+        ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(chaincodeName).setVersion(chaincodeVersion).setPath(chaincodePath).build();
 
 
 

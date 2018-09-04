@@ -1,11 +1,12 @@
 package com.hyperledger.fabric.sdk.entity.dto.api;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
  * Created by L.Answer on 2018-09-03 14:26
  */
-public class CreateChannelDTO {
+public class CreateChannelDTO implements Serializable {
 
     private String channelConfigPath;
 

@@ -4,12 +4,14 @@ import com.hyperledger.fabric.sdk.common.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.ChaincodeID;
 
+import java.io.Serializable;
+
 /**
  * Created by L.Answer on 2018-09-03 16:20
  *
  * 操作(查询|交易)智能合约数据传输对象
  */
-public class ExecuteCCDTO {
+public class ExecuteCCDTO implements Serializable {
     private String funcName;
     private String[] params;
     private ChaincodeID chaincodeID;
