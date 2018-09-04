@@ -1,4 +1,5 @@
-# Fabric-SDK Java封装版项目
+# Fabric-SDK-Java 封装版项目
+- [x] 适用对象: 入门 Hyperledger Fabric
 
 
 
@@ -6,6 +7,9 @@
 ```bash
     # 链码存放目录
     chaincodes
+        EG: /resources/chaincodes/sample/src/github.com/chaincode_example02/chaincode_example02.go
+            chaincodePath: github.com/chaincode_example02
+            chaincodeSourceLocation: .../chaincodes/sample
     
     # 通道配置及证书信息
     channel-artifacts
