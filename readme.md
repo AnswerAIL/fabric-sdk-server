@@ -10,14 +10,6 @@
     # 通道配置及证书信息
     channel-artifacts
     crypto-config
-    
-    # 协议文件
-    protocol
-    
-    # 配置信息
-    config.properties
-    
-    chaincodeendorsementpolicy.yaml
 ```
 
 
