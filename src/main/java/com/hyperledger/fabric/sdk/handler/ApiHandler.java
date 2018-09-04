@@ -245,7 +245,7 @@ public class ApiHandler {
 
         Collection<ProposalResponse> queryProposals = channel.queryByChaincode(queryByChaincodeRequest, channel.getPeers());
 
-        orderConsensus(channel, queryProposals);
+        checkResult(queryProposals);
 
         debug("查询智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), queryCCDTO.getFuncName(), Arrays.asList(queryCCDTO.getParams()));
     }
