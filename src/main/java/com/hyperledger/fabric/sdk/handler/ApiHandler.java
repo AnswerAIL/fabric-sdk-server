@@ -10,7 +10,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.BuildClientDTO;
+import com.hyperledger.fabric.sdk.entity.dto.api.CreateChannelDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.ExecuteCCDTO;
+import com.hyperledger.fabric.sdk.entity.dto.api.OrderNodeDTO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.*;
@@ -23,6 +25,7 @@ import java.io.InputStream;
 import java.security.PrivateKey;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -34,12 +37,12 @@ public class ApiHandler {
     /** 超时时间, 单位: S */
     private static final Integer TIME_OUT = 50;
 
-    private static Jedis jedis = new Jedis(JEDIS_IP);
+    private static Jedis jedis = new Jedis(REDIS_IP);
     static {
-        jedis.select(JEDIS_INDEX);
+        jedis.select(REDIS_INDEX);
 
-        if (StringUtils.isNotEmpty(JEDIS_PASSWD)) {
-            jedis.auth(JEDIS_PASSWD);
+        if (StringUtils.isNotEmpty(REDIS_PASSWD)) {
+            jedis.auth(REDIS_PASSWD);
         }
     }
 
@@ -83,9 +86,47 @@ public class ApiHandler {
     }
 
 
-    public static Channel createChannel(HFClient client) throws Exception {
-        Channel channel = client.deSerializeChannel(jedis.get("mychannel".getBytes()));
-        channel.initialize();
+    /**
+     * Answer - 创建通道
+     * @param client 客户端实例
+     * @param channelName 通道名称
+     * @param createChannelDTO {@link CreateChannelDTO}
+     * @return {@link Channel}
+     * */
+    public static Channel createChannel(HFClient client, String channelName, CreateChannelDTO createChannelDTO) throws Exception {
+        return createChannel(client, channelName, createChannelDTO, true);
+    }
+
+
+    /**
+     * Answer - 创建通道
+     * @param client 客户端实例
+     * @param channelName 通道名称
+     * @param createChannelDTO {@link CreateChannelDTO}
+     * @param useCache 是否优先使用已缓存的通道对象
+     * @return {@link Channel}
+     * */
+    public static Channel createChannel(HFClient client, String channelName, CreateChannelDTO createChannelDTO, boolean useCache) throws Exception {
+        debug("创建通道 Start, channelName: %s.", channelName);
+
+        Channel channel;
+        // 优先使用缓存中已缓存的通道对象
+        if (useCache) {
+            byte[] bytes = jedis.get(channelName.getBytes());
+            if (bytes != null) {
+                warn("缓存中已存在通道名称为: %s 的通道对象, 使用缓存中的通道对象.", channelName);
+                channel = client.deSerializeChannel(bytes);
+                channel.initialize();
+                debug("创建通道 End, channelName: %s.", channelName);
+                return channel;
+            }
+        }
+
+        File channelFile = new File(createChannelDTO.getChannelConfigPath());
+        ChannelConfiguration channelConfiguration = new ChannelConfiguration(channelFile);
+        Orderer orderer = client.newOrderer(createChannelDTO.getOrderNodeDTO().getNodeName(), createChannelDTO.getOrderNodeDTO().getGrpcUrl(), createChannelDTO.getOrderNodeDTO().getProperties());
+        channel = client.newChannel(channelName, orderer, channelConfiguration, client.getChannelConfigurationSignature(channelConfiguration, client.getUserContext()));
+        debug("创建通道 End, channelName: %s.", channelName);
         return channel;
     }
 
