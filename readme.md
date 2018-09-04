@@ -1,5 +1,5 @@
 # Fabric-SDK-Java 封装版项目
-- [x] 适用对象: 入门 Hyperledger Fabric
+- [x] 适用对象: 入门 Hyperledger Fabric SDK
 
 
 
