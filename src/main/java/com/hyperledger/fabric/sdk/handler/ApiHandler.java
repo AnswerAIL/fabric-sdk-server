@@ -9,9 +9,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
-import com.hyperledger.fabric.sdk.entity.dto.api.BuildClientDTO;
-import com.hyperledger.fabric.sdk.entity.dto.api.CreateChannelDTO;
-import com.hyperledger.fabric.sdk.entity.dto.api.ExecuteCCDTO;
+import com.hyperledger.fabric.sdk.entity.dto.api.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.*;
@@ -22,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.PrivateKey;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -52,6 +51,7 @@ public class ApiHandler {
      * Answer - 构建客户端实例
      * @param buildClientDTO {@link BuildClientDTO}
      * @return HFClient
+     * @throws Exception e
      * */
     public static HFClient clientBuild(BuildClientDTO buildClientDTO) throws Exception {
         debug("构建Hyperledger Fabric客户端实例 Start...");
@@ -92,6 +92,7 @@ public class ApiHandler {
      * @param channelName 通道名称
      * @param createChannelDTO {@link CreateChannelDTO}
      * @return {@link Channel}
+     * @throws Exception e
      * */
     public static Channel createChannel(HFClient client, String channelName, CreateChannelDTO createChannelDTO) throws Exception {
         return createChannel(client, channelName, createChannelDTO, true);
@@ -105,6 +106,7 @@ public class ApiHandler {
      * @param createChannelDTO {@link CreateChannelDTO}
      * @param useCache 是否优先使用已缓存的通道对象
      * @return {@link Channel}
+     * @throws Exception e
      * */
     public static Channel createChannel(HFClient client, String channelName, CreateChannelDTO createChannelDTO, boolean useCache) throws Exception {
         debug("创建通道 Start, channelName: %s.", channelName);
@@ -117,7 +119,7 @@ public class ApiHandler {
                 warn("缓存中已存在通道名称为: %s 的通道对象, 使用缓存中的通道对象.", channelName);
                 channel = client.deSerializeChannel(bytes);
                 channel.initialize();
-                debug("创建通道 End, channelName: %s.", channelName);
+                debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
                 return channel;
             }
         }
@@ -126,8 +128,58 @@ public class ApiHandler {
         ChannelConfiguration channelConfiguration = new ChannelConfiguration(channelFile);
         Orderer orderer = client.newOrderer(createChannelDTO.getOrderNodeDTO().getNodeName(), createChannelDTO.getOrderNodeDTO().getGrpcUrl(), createChannelDTO.getOrderNodeDTO().getProperties());
         channel = client.newChannel(channelName, orderer, channelConfiguration, client.getChannelConfigurationSignature(channelConfiguration, client.getUserContext()));
-        debug("创建通道 End, channelName: %s.", channelName);
+        // 把 orderer 节点加入通道
+        channel.addOrderer(orderer);
+        debug("order节点: %s 已成功加入通道.", orderer.getName());
+
+        // 把 peer 节点加入通道
+        Collection<PeerNodeDTO> peerNodeDTOS = createChannelDTO.getPeerNodeDTOS();
+        for (PeerNodeDTO peerNodeDTO : peerNodeDTOS) {
+            Peer peer = client.newPeer(peerNodeDTO.getNodeName(), peerNodeDTO.getGrpcUrl(), peerNodeDTO.getProperties());
+            channel.joinPeer(peer);
+            debug("peer节点: %s 已成功加入通道.", peerNodeDTO.getNodeName());
+
+            EventHub eventHub = client.newEventHub(peerNodeDTO.getNodeName(), peerNodeDTO.getEvenHubUrl(), peerNodeDTO.getProperties());
+            channel.addEventHub(eventHub);
+            debug("eventHub节点: %s 已成功加入通道.", peerNodeDTO.getNodeName());
+        }
+
+        channel.initialize();
+        debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
         return channel;
+    }
+
+
+    /**
+     * Answer - 安装智能合约
+     * @param client 客户端实例
+     * @param installCCDTO {@link InstallCCDTO}
+     * @throws Exception e
+     * */
+    public static void installChainCode(HFClient client, InstallCCDTO installCCDTO) throws Exception {
+        ChaincodeID chaincodeID = installCCDTO.getChaincodeID();
+        debug("安装智能合约 Start, chaincode name: %s, chaincode path: %s.", chaincodeID.getName(), chaincodeID.getPath());
+        InstallProposalRequest installProposalRequest = client.newInstallProposalRequest();
+        installProposalRequest.setChaincodeID(installCCDTO.getChaincodeID());
+        installProposalRequest.setChaincodeSourceLocation(new File(installCCDTO.getChaincodeSourceLocation()));
+        installProposalRequest.setChaincodeVersion(installCCDTO.getChaincodeID().getVersion());
+
+        Collection<Peer> peers = new ArrayList<>();
+        Collection<PeerNodeDTO> peerNodeDTOS = installCCDTO.getPeerNodeDTOS();
+        /** 给指定节点部署智能合约 */
+        for (PeerNodeDTO peerNodeDTO : peerNodeDTOS) {
+            Peer peer0 = client.newPeer(peerNodeDTO.getNodeName(), peerNodeDTO.getGrpcUrl(), peerNodeDTO.getProperties());
+            peers.add(peer0);
+        }
+
+        Collection<ProposalResponse> installProposals = client.sendInstallProposal(installProposalRequest, peers);
+
+        if (checkResult(installProposals)) {
+            debug("安装智能合约 End, chaincode name: %s, chaincode path: %s.", chaincodeID.getName(), chaincodeID.getPath());
+        } else {
+            debug("安装智能合约失败啦, chaincode name: %s, chaincode path: %s.", chaincodeID.getName(), chaincodeID.getPath());
+        }
+
     }
 
 
@@ -136,6 +188,7 @@ public class ApiHandler {
      * @param client 客户端实例
      * @param channel 通道对象
      * @param initCCDTO {@link ExecuteCCDTO}
+     * @throws Exception e
      * */
     public static void initializeChainCode(HFClient client, Channel channel, ExecuteCCDTO initCCDTO) throws Exception {
         debug("初始化智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), initCCDTO.getFuncName(), Arrays.asList(initCCDTO.getParams()));
@@ -158,6 +211,7 @@ public class ApiHandler {
      * @param client 客户端实例
      * @param channel 通道对象
      * @param queryCCDTO {@link ExecuteCCDTO}
+     * @throws Exception e
      * */
     public static void queryChainCode(HFClient client, Channel channel, ExecuteCCDTO queryCCDTO) throws Exception {
         debug("查询智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), queryCCDTO.getFuncName(), Arrays.asList(queryCCDTO.getParams()));
@@ -180,6 +234,7 @@ public class ApiHandler {
      * @param client 客户端实例
      * @param channel 通道对象
      * @param invokeCCDTO {@link ExecuteCCDTO}
+     * @throws Exception e
      * */
     public static void invokeChainCode(HFClient client, Channel channel, ExecuteCCDTO invokeCCDTO) throws Exception {
         debug("交易智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), invokeCCDTO.getFuncName(), Arrays.asList(invokeCCDTO.getParams()));
@@ -201,6 +256,7 @@ public class ApiHandler {
      * 将响应结果提交到orderer节点进行共识
      * @param channel 通道对象
      * @param proposalResponses 提议响应集
+     * @throws Exception e
      * */
     private static void orderConsensus(Channel channel, Collection<ProposalResponse> proposalResponses) throws Exception {
         if (checkResult(proposalResponses)) {

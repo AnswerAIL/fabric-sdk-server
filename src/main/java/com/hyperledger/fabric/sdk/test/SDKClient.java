@@ -274,7 +274,7 @@ public class SDKClient {
         InstallProposalRequest installProposalRequest = client.newInstallProposalRequest();
         installProposalRequest.setChaincodeID(chaincodeID);
         installProposalRequest.setChaincodeSourceLocation(new File(cxtPath + "chaincodes/sample"));
-        installProposalRequest.setChaincodeVersion(chaincodeVersion);
+        installProposalRequest.setChaincodeVersion(chaincodeID.getVersion());
 
         Collection<ProposalResponse> responses = client.sendInstallProposal(installProposalRequest, peers);
 

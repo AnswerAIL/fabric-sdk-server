@@ -1,5 +1,7 @@
 package com.hyperledger.fabric.sdk.entity.dto.api;
 
+import java.util.Collection;
+
 /**
  * Created by L.Answer on 2018-09-03 14:26
  */
@@ -8,6 +10,8 @@ public class CreateChannelDTO {
     private String channelConfigPath;
 
     private OrderNodeDTO orderNodeDTO;
+
+    private Collection<PeerNodeDTO> peerNodeDTOS;
 
     public String getChannelConfigPath() {
         return channelConfigPath;
@@ -23,5 +27,13 @@ public class CreateChannelDTO {
 
     public void setOrderNodeDTO(OrderNodeDTO orderNodeDTO) {
         this.orderNodeDTO = orderNodeDTO;
+    }
+
+    public Collection<PeerNodeDTO> getPeerNodeDTOS() {
+        return peerNodeDTOS;
+    }
+
+    public void setPeerNodeDTOS(Collection<PeerNodeDTO> peerNodeDTOS) {
+        this.peerNodeDTOS = peerNodeDTOS;
     }
 }

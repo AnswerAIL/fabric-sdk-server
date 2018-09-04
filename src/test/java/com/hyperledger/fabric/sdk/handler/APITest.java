@@ -1,12 +1,13 @@
 package com.hyperledger.fabric.sdk.handler;
 
-import com.hyperledger.fabric.sdk.entity.dto.api.BuildClientDTO;
-import com.hyperledger.fabric.sdk.entity.dto.api.CreateChannelDTO;
-import com.hyperledger.fabric.sdk.entity.dto.api.ExecuteCCDTO;
-import com.hyperledger.fabric.sdk.entity.dto.api.OrderNodeDTO;
+import com.hyperledger.fabric.sdk.entity.dto.api.*;
 import org.hyperledger.fabric.sdk.ChaincodeID;
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.HFClient;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by L.Answer on 2018-09-03 17:42
@@ -17,7 +18,7 @@ import org.hyperledger.fabric.sdk.HFClient;
  */
 public class APITest {
 
-    static String cxtPath = com.hyperledger.fabric.sdk.test.SDKClient.class.getClassLoader().getResource("").getPath();
+    static String cxtPath = APITest.class.getClassLoader().getResource("").getPath();
     static String channelName = "mychannel";
 
     public static void main(String[] args) throws Exception {
@@ -32,9 +33,14 @@ public class APITest {
         HFClient client = ApiHandler.clientBuild(buildClientDTO);
 
         OrderNodeDTO orderNodeDTO = new OrderNodeDTO("orderer.example.com", "grpc://119.23.106.146:7050");
+        Collection<PeerNodeDTO> peerNodeDTOS = new ArrayList<>();
+        peerNodeDTOS.add(new PeerNodeDTO("peer0.org1.example.com", "grpc://119.23.106.146:7051", "grpc://119.23.106.146:7053"));
+        peerNodeDTOS.add(new PeerNodeDTO("peer1.org1.example.com", "grpc://119.23.106.146:8051", "grpc://119.23.106.146:8053"));
+
         CreateChannelDTO createChannelDTO = new CreateChannelDTO();
         createChannelDTO.setChannelConfigPath(cxtPath + "channel-artifacts/channel.tx");
         createChannelDTO.setOrderNodeDTO(orderNodeDTO);
+        createChannelDTO.setPeerNodeDTOS(peerNodeDTOS);
         Channel channel = ApiHandler.createChannel(client, channelName, createChannelDTO);
 
         ExecuteCCDTO querybCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"b"}).chaincodeID(chaincodeID).build();
