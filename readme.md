@@ -20,6 +20,17 @@
 ```
 
 
+### 证书生成
+```bash
+    cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
+    source generateArtifacts.sh $channelName  
+    
+    # 验证
+    ll channel-artifacts
+    ll crypto-config                 
+```
+
+
 
 ### 注意事项
 ```bash
