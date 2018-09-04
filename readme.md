@@ -1,5 +1,6 @@
 # Fabric-SDK-Java 封装版项目
-- [x] 适用对象: 入门 Hyperledger Fabric SDK
+  - [x] 适用对象: 入门 Hyperledger Fabric SDK
+  - [x] 如需使用缓存请先安装Redis, 配置服务信息请参见: Constants 类
 
 
 
