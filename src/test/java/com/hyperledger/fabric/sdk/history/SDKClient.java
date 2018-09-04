@@ -1,4 +1,4 @@
-package com.hyperledger.fabric.sdk.handler;
+package com.hyperledger.fabric.sdk.history;
 
 import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
