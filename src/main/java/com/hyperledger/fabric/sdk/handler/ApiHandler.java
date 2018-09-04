@@ -118,7 +118,7 @@ public class ApiHandler {
             if (bytes != null) {
                 warn("缓存中已存在通道名称为: %s 的通道对象, 使用缓存中的通道对象.", channelName);
                 channel = client.deSerializeChannel(bytes);
-                channel.initialize();
+                if (!channel.isInitialized()) channel.initialize();
                 debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
                 return channel;
             }
@@ -134,6 +134,20 @@ public class ApiHandler {
 
         // 把 peer 节点加入通道
         Collection<PeerNodeDTO> peerNodeDTOS = createChannelDTO.getPeerNodeDTOS();
+        joinPeers(client, channel, peerNodeDTOS);
+
+        debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
+        return channel;
+    }
+
+
+    /**
+     * Answer - 将指定peer节点加入通道
+     * @param client 客户端实例
+     * @param channel 通道对象
+     * @param peerNodeDTOS 节点信息
+     * */
+    public static void joinPeers(HFClient client, Channel channel, Collection<PeerNodeDTO> peerNodeDTOS) throws Exception {
         for (PeerNodeDTO peerNodeDTO : peerNodeDTOS) {
             Peer peer = client.newPeer(peerNodeDTO.getNodeName(), peerNodeDTO.getGrpcUrl(), peerNodeDTO.getProperties());
             channel.joinPeer(peer);
@@ -143,10 +157,9 @@ public class ApiHandler {
             channel.addEventHub(eventHub);
             debug("eventHub节点: %s 已成功加入通道.", peerNodeDTO.getNodeName());
         }
-
-        channel.initialize();
-        debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
-        return channel;
+        if (!channel.isInitialized()) {
+            channel.initialize();
+        }
     }
 
 
@@ -166,7 +179,7 @@ public class ApiHandler {
 
         Collection<Peer> peers = new ArrayList<>();
         Collection<PeerNodeDTO> peerNodeDTOS = installCCDTO.getPeerNodeDTOS();
-        /** 给指定节点部署智能合约 */
+        /* 给指定节点部署智能合约 */
         for (PeerNodeDTO peerNodeDTO : peerNodeDTOS) {
             Peer peer0 = client.newPeer(peerNodeDTO.getNodeName(), peerNodeDTO.getGrpcUrl(), peerNodeDTO.getProperties());
             peers.add(peer0);
