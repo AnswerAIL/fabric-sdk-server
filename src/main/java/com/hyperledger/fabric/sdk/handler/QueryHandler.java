@@ -35,6 +35,7 @@ public class QueryHandler {
         BlockchainInfo blockchainInfo = channel.queryBlockchainInfo();
         System.out.println(blockchainInfo.getHeight());
 
+        /* 块号索引为0的为创世纪块 */
         for (long blockNum = 0; blockNum < blockchainInfo.getHeight(); blockNum++) {
             info("==================== Block Number: %s ====================", blockNum);
             BlockInfo blockInfo = channel.queryBlockByNumber(blockNum);
@@ -44,21 +45,22 @@ public class QueryHandler {
             info("previous block hash: %s.", Hex.encodeHexString(blockInfo.getPreviousHash()));
             info("blockNumber: %d, envelopeCount: %d, channelId: %s.", blockInfo.getBlockNumber(), blockInfo.getEnvelopeCount(), blockInfo.getChannelId());
 
+            /* EnvelopeInfo对象中存储的是具体的交易信息 */
             for (BlockInfo.EnvelopeInfo envelopeInfo: blockInfo.getEnvelopeInfos()) {
                 info("----------------------- 【Envelope】 ------------------------");
-                info("ChannelId: %s.", envelopeInfo.getChannelId());
-                info("TransactionID: %s.", envelopeInfo.getTransactionID());
-                info("Type: %s.", envelopeInfo.getType().name());
-                info("ValidationCode: %s.", String.valueOf(envelopeInfo.getValidationCode()));
-                info("Timestamp: %s.", SDF.format(envelopeInfo.getTimestamp()));
-                info("Epoch: %s.", envelopeInfo.getEpoch());
+                info("EnvelopeInfo -> ChannelId: %s.", envelopeInfo.getChannelId());
+                info("EnvelopeInfo -> TransactionID: %s.", envelopeInfo.getTransactionID());
+                info("EnvelopeInfo -> Type: %s.", envelopeInfo.getType().name());
+                info("EnvelopeInfo -> ValidationCode: %s.", String.valueOf(envelopeInfo.getValidationCode()));
+                info("EnvelopeInfo -> Timestamp: %s.", SDF.format(envelopeInfo.getTimestamp()));
+                info("EnvelopeInfo -> Epoch: %s.", envelopeInfo.getEpoch());
 
-                // 交易块
+                /* TRANSACTION_ENVELOPE: 交易块, ENVELOPE: 传世纪块 */
                 if (envelopeInfo.getType() == TRANSACTION_ENVELOPE) {
                     BlockInfo.TransactionEnvelopeInfo transactionEnvelopeInfo = (BlockInfo.TransactionEnvelopeInfo) envelopeInfo;
 
                     for (BlockInfo.TransactionEnvelopeInfo.TransactionActionInfo transactionActionInfo : transactionEnvelopeInfo.getTransactionActionInfos()) {
-                        info("背书个数: %d.", transactionActionInfo.getEndorsementsCount());
+                        info("背书节点个数: %d.", transactionActionInfo.getEndorsementsCount());
 
                         /* 背书节点信息 */
                         info("----------------------- 【背书节点信息】  -----------------------");
