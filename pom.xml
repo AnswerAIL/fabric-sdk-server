@@ -112,20 +112,20 @@
             <id></id>
             <name>L.Answer</name>
             <email>answer_ljm@163.com</email>
-            <url>https://github.com/AnswerCoder</url>
+            <url>https://github.com/AnswerCoder/answer-fabric-sdk</url>
             <roles>
                 <role>developer</role>
             </roles>
             <organization>xiwei</organization>
-            <organizationUrl>http://www.tiannongtech.com</organizationUrl>
+            <organizationUrl>https://www.lrscft.com/</organizationUrl>
         </developer>
     </developers>
 
     <!-- 项目的其他贡献者列表 -->
     <contributors>
         <contributor>
-            <name>none</name>
-            <email>none</email>
+            <name>XiWei Group</name>
+            <email>XiWei Group</email>
         </contributor>
     </contributors>
 

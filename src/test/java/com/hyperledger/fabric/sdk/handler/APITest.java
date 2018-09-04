@@ -68,24 +68,24 @@ public class APITest {
 
 
 
-        // 5. 查询智能合约
+        // 5. 查询智能合约, 账户b的余额
         ExecuteCCDTO querybCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"b"}).chaincodeID(chaincodeID).build();
         ApiHandler.queryChainCode(client, channel, querybCCDTO);
 
 
 
-        // 6. 转账
+        // 6. 转账, 账户a转7 RMVB到账户b
         ExecuteCCDTO invokeCCDTO = new ExecuteCCDTO.Builder().funcName("invoke").params(new String[] {"a", "b", "7"}).chaincodeID(chaincodeID).build();
         ApiHandler.invokeChainCode(client, channel, invokeCCDTO);
 
 
 
-        // 7. 查询智能合约
+        // 7. 查询智能合约, 账户b的余额
         ApiHandler.queryChainCode(client, channel, querybCCDTO);
 
 
 
-        // 8. 查询智能合约
+        // 8. 查询智能合约, 账户a的余额
         ExecuteCCDTO queryaCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"a"}).chaincodeID(chaincodeID).build();
         ApiHandler.queryChainCode(client, channel, queryaCCDTO);
 
