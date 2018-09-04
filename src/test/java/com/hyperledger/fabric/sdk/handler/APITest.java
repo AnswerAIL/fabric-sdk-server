@@ -50,19 +50,19 @@ public class APITest {
         createChannelDTO.setChannelConfigPath(cxtPath + "channel-artifacts/channel.tx");
         createChannelDTO.setOrderNodeDTO(orderNodeDTO);
         createChannelDTO.setPeerNodeDTOS(peerNodeDTOS);
-        Channel channel = ApiHandler.createChannel(client, channelName, createChannelDTO, false);
+        Channel channel = ApiHandler.createChannel(client, channelName, createChannelDTO);
 
 
 
         // 3. 安装智能合约
-        InstallCCDTO installCCDTO = new InstallCCDTO.Builder().chaincodeID(chaincodeID).chaincodeSourceLocation(cxtPath + "chaincodes/sample").peerNodeDTOS(peerNodeDTOS).build();
-        ApiHandler.installChainCode(client, installCCDTO);
+//        InstallCCDTO installCCDTO = new InstallCCDTO.Builder().chaincodeID(chaincodeID).chaincodeSourceLocation(cxtPath + "chaincodes/sample").peerNodeDTOS(peerNodeDTOS).build();
+//        ApiHandler.installChainCode(client, installCCDTO);
 
 
 
         // 4. 初始化智能合约
-        ExecuteCCDTO initCCDTO = new ExecuteCCDTO.Builder().funcName("init").params(new String[] {"a", "2300", "b", "" + 2400}).chaincodeID(chaincodeID).build();
-        ApiHandler.initializeChainCode(client, channel, initCCDTO);
+//        ExecuteCCDTO initCCDTO = new ExecuteCCDTO.Builder().funcName("init").params(new String[] {"a", "2300", "b", "" + 2400}).chaincodeID(chaincodeID).build();
+//        ApiHandler.initializeChainCode(client, channel, initCCDTO);
 
 
 

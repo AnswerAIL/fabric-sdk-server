@@ -28,6 +28,8 @@ import java.util.concurrent.TimeUnit;
  * Created by L.Answer on 2018-09-03 11:16
  *
  * 操作区块链链码API
+ *
+ * 单元测试类: APITest
  */
 public class ApiHandler {
     /** 超时时间, 单位: S */
