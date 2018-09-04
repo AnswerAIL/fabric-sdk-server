@@ -10,6 +10,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.*;
+import com.hyperledger.fabric.sdk.exception.FabricSDKException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.*;
@@ -20,9 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.PrivateKey;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,6 +32,8 @@ import java.util.concurrent.TimeUnit;
 public class ApiHandler {
     /** 超时时间, 单位: S */
     private static final Integer TIME_OUT = 50;
+    /** channel redis中的key的前缀 */
+    public static final String CHANNEL_CACHE = REDIS_PREFIX + "channel:";
 
     private static Jedis jedis = new Jedis(REDIS_IP);
     static {
@@ -100,7 +101,7 @@ public class ApiHandler {
 
 
     /**
-     * Answer - 创建通道
+     * Answer - 创建通道, 包含了加入的peer节点
      * @param client 客户端实例
      * @param channelName 通道名称
      * @param createChannelDTO {@link CreateChannelDTO}
@@ -114,7 +115,7 @@ public class ApiHandler {
         Channel channel;
         // 优先使用缓存中已缓存的通道对象
         if (useCache) {
-            byte[] bytes = jedis.get(channelName.getBytes());
+            byte[] bytes = jedis.get((CHANNEL_CACHE + channelName).getBytes());
             if (bytes != null) {
                 warn("缓存中已存在通道名称为: %s 的通道对象, 使用缓存中的通道对象.", channelName);
                 channel = client.deSerializeChannel(bytes);
@@ -137,6 +138,12 @@ public class ApiHandler {
         joinPeers(client, channel, peerNodeDTOS);
 
         debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
+        // 如果已连接redis, 则将 channel 对象存储进缓存
+        if (jedis.isConnected()) {
+            String key = CHANNEL_CACHE + channelName;
+            jedis.set(key.getBytes(), channel.serializeChannel());
+            info("通道对象已放入redis缓存, key: %s.", key);
+        }
         return channel;
     }
 
@@ -187,7 +194,7 @@ public class ApiHandler {
 
         Collection<ProposalResponse> installProposals = client.sendInstallProposal(installProposalRequest, peers);
 
-        if (checkResult(installProposals)) {
+        if (checkResult(installProposals, false)) {
             debug("安装智能合约 End, chaincode name: %s, chaincode path: %s.", chaincodeID.getName(), chaincodeID.getPath());
         } else {
             debug("安装智能合约失败啦, chaincode name: %s, chaincode path: %s.", chaincodeID.getName(), chaincodeID.getPath());
@@ -210,10 +217,11 @@ public class ApiHandler {
         instantiateProposalRequest.setChaincodeID(initCCDTO.getChaincodeID());
         instantiateProposalRequest.setFcn(initCCDTO.getFuncName());
         instantiateProposalRequest.setArgs(initCCDTO.getParams());
+        instantiateProposalRequest.setTransientMap(transientMap("InstantiateProposalRequest"));
 
         Collection<ProposalResponse> initProposals = channel.sendInstantiationProposal(instantiateProposalRequest, channel.getPeers());
 
-        orderConsensus(channel, initProposals);
+        orderConsensus(channel, initProposals, false);
 
         debug("初始化智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), initCCDTO.getFuncName(), Arrays.asList(initCCDTO.getParams()));
     }
@@ -233,6 +241,7 @@ public class ApiHandler {
         queryByChaincodeRequest.setFcn(queryCCDTO.getFuncName());
         queryByChaincodeRequest.setChaincodeID(queryCCDTO.getChaincodeID());
         queryByChaincodeRequest.setProposalWaitTime(queryCCDTO.getProposalWaitTime());
+        queryByChaincodeRequest.setTransientMap(transientMap("QueryByChaincodeRequest"));
 
         Collection<ProposalResponse> queryProposals = channel.queryByChaincode(queryByChaincodeRequest, channel.getPeers());
 
@@ -256,6 +265,7 @@ public class ApiHandler {
         transactionProposalRequest.setFcn(invokeCCDTO.getFuncName());
         transactionProposalRequest.setProposalWaitTime(invokeCCDTO.getProposalWaitTime());
         transactionProposalRequest.setArgs(invokeCCDTO.getParams());
+        transactionProposalRequest.setTransientMap(transientMap("TransactionProposalRequest"));
 
         Collection<ProposalResponse> invokeProposals = channel.sendTransactionProposal(transactionProposalRequest, channel.getPeers());
 
@@ -265,33 +275,47 @@ public class ApiHandler {
     }
 
 
+
+    private static void orderConsensus(Channel channel, Collection<ProposalResponse> proposalResponses) throws Exception {
+        orderConsensus(channel, proposalResponses, true);
+    }
     /**
      * 将响应结果提交到orderer节点进行共识
      * @param channel 通道对象
      * @param proposalResponses 提议响应集
+     * @param usePayload 是否需要显示账户余额
      * @throws Exception e
      * */
-    private static void orderConsensus(Channel channel, Collection<ProposalResponse> proposalResponses) throws Exception {
-        if (checkResult(proposalResponses)) {
+    private static void orderConsensus(Channel channel, Collection<ProposalResponse> proposalResponses, boolean usePayload) throws Exception {
+        if (checkResult(proposalResponses, usePayload)) {
             debug("提交到orderer节点进行共识 Start...");
             // 将背书结果提交到 orderer 节点进行排序打块
             BlockEvent.TransactionEvent transactionEvent = channel.sendTransaction(proposalResponses).get(TIME_OUT, TimeUnit.SECONDS);
             debug("提交到orderer共识 End, Type: %s, TransactionActionInfoCount: %d, isValid: %b, ValidationCode: %d.",
                     transactionEvent.getType().name(), transactionEvent.getTransactionActionInfoCount(), transactionEvent.isValid(), transactionEvent.getValidationCode());
         } else {
-            error("交易智能合约操作失败, 交易响应的结果集存在异常响应.");
+            error("操作智能合约操作失败, 交易响应的结果集存在异常响应.");
+            throw new FabricSDKException("操作智能合约操作失败, 交易响应的结果集存在异常响应.");
         }
+    }
+
+
+    private static boolean checkResult(Collection<ProposalResponse> proposalResponses) {
+        return checkResult(proposalResponses, true);
     }
 
     /**
      * 校验链码响应结果
      * @param proposalResponses 提议响应集
+     * @param usePayload 是否需要显示账户余额
      * @return flag boolean
      * */
-    private static boolean checkResult(Collection<ProposalResponse> proposalResponses) {
+    private static boolean checkResult(Collection<ProposalResponse> proposalResponses, boolean usePayload) {
         boolean flag = true;
         for (ProposalResponse proposalResponse: proposalResponses) {
-            String payload = proposalResponse.getProposalResponse().getResponse().getPayload().toStringUtf8();
+            String payload;
+            if (usePayload) payload = proposalResponse.getProposalResponse().getResponse().getPayload().toStringUtf8();
+            else payload = "【nil】";
             payload = StringUtils.isEmpty(payload) ? "nil" : payload;
             info("response status: %s, isVerified: %b from peer: %s, payload: %s.", proposalResponse.getStatus(), proposalResponse.isVerified(), proposalResponse.getPeer().getName(), payload);
 
@@ -301,6 +325,15 @@ public class ApiHandler {
             }
         }
         return flag;
+    }
+
+    private static Map<String, byte[]> transientMap(String typeName) {
+        return new HashMap<String, byte[]>() {
+            {
+                put("HyperLedgerFabric", String.format("%s:JavaSDK", typeName).getBytes(UTF_8));
+                put("method", String.format("%s", typeName).getBytes(UTF_8));
+            }
+        };
     }
 
 

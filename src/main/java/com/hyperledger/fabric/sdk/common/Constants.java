@@ -11,10 +11,10 @@ public class Constants {
     public static final int REDIS_INDEX = 0;
     public static final String REDIS_PASSWD = "";
     /** redis缓存中key的前缀 */
-    public static final String REDIS_PREFIX = "hyperledger.fabric.cache";
+    public static final String REDIS_PREFIX = "hyperledger:fabric:cache:";
 
 
     /** 交易等待时间, 单位: ms */
-    public static final int PROPOSAL_WAIT_TIME = 3000;
+    public static final int PROPOSAL_WAIT_TIME = 30000;
 
 }
