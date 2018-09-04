@@ -1,5 +1,0 @@
-client
-    
-    channel
-    
-        chaincode
