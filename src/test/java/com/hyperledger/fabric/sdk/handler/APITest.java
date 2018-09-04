@@ -21,8 +21,10 @@ public class APITest {
         String cxtPath = APITest.class.getClassLoader().getResource("").getPath();
 
 
+        /* 通道名称 */
         String channelName = "mychannel";
 
+        /* 智能合约配置信息 */
         String chaincodeName = "mycc";
         String chaincodeVersion = "1.0";
         String chaincodePath = "github.com/chaincode_example02";
