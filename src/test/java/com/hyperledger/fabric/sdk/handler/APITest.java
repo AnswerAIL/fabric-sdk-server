@@ -41,14 +41,16 @@ public class APITest {
 
 
         // 2. 创建通道
-        OrderNodeDTO orderNodeDTO = new OrderNodeDTO("orderer.example.com", "grpc://119.23.106.146:7050");
+        Collection<OrderNodeDTO> orderNodeDTOS = new ArrayList<>();
+        orderNodeDTOS.add(new OrderNodeDTO("orderer.example.com", "grpc://119.23.106.146:7050"));
+
         Collection<PeerNodeDTO> peerNodeDTOS = new ArrayList<>();
         peerNodeDTOS.add(new PeerNodeDTO("peer0.org1.example.com", "grpc://119.23.106.146:7051", "grpc://119.23.106.146:7053"));
         peerNodeDTOS.add(new PeerNodeDTO("peer1.org1.example.com", "grpc://119.23.106.146:8051", "grpc://119.23.106.146:8053"));
 
         CreateChannelDTO createChannelDTO = new CreateChannelDTO();
         createChannelDTO.setChannelConfigPath(cxtPath + "channel-artifacts/channel.tx");
-        createChannelDTO.setOrderNodeDTO(orderNodeDTO);
+        createChannelDTO.setOrderNodeDTOS(orderNodeDTOS);
         createChannelDTO.setPeerNodeDTOS(peerNodeDTOS);
         Channel channel = ApiHandler.createChannel(client, channelName, createChannelDTO, false);
 

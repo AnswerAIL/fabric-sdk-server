@@ -129,7 +129,10 @@ public class ApiHandler {
 
         File channelFile = new File(createChannelDTO.getChannelConfigPath());
         ChannelConfiguration channelConfiguration = new ChannelConfiguration(channelFile);
-        Orderer orderer = client.newOrderer(createChannelDTO.getOrderNodeDTO().getNodeName(), createChannelDTO.getOrderNodeDTO().getGrpcUrl(), createChannelDTO.getOrderNodeDTO().getProperties());
+
+        Collection<OrderNodeDTO> orderNodeDTOS = createChannelDTO.getOrderNodeDTOS();
+        OrderNodeDTO orderNodeDTO = orderNodeDTOS.iterator().next();
+        Orderer orderer = client.newOrderer(orderNodeDTO.getNodeName(), orderNodeDTO.getGrpcUrl(), orderNodeDTO.getProperties());
         channel = client.newChannel(channelName, orderer, channelConfiguration, client.getChannelConfigurationSignature(channelConfiguration, client.getUserContext()));
         // 把 orderer 节点加入通道
         channel.addOrderer(orderer);

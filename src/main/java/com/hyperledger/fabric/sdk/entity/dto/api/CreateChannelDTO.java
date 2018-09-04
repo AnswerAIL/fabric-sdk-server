@@ -10,7 +10,7 @@ public class CreateChannelDTO implements Serializable {
 
     private String channelConfigPath;
 
-    private OrderNodeDTO orderNodeDTO;
+    private Collection<OrderNodeDTO> orderNodeDTOS;
 
     private Collection<PeerNodeDTO> peerNodeDTOS;
 
@@ -22,12 +22,12 @@ public class CreateChannelDTO implements Serializable {
         this.channelConfigPath = channelConfigPath;
     }
 
-    public OrderNodeDTO getOrderNodeDTO() {
-        return orderNodeDTO;
+    public Collection<OrderNodeDTO> getOrderNodeDTOS() {
+        return orderNodeDTOS;
     }
 
-    public void setOrderNodeDTO(OrderNodeDTO orderNodeDTO) {
-        this.orderNodeDTO = orderNodeDTO;
+    public void setOrderNodeDTOS(Collection<OrderNodeDTO> orderNodeDTOS) {
+        this.orderNodeDTOS = orderNodeDTOS;
     }
 
     public Collection<PeerNodeDTO> getPeerNodeDTOS() {
