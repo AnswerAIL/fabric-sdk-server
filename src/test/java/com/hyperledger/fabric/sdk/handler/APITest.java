@@ -4,12 +4,9 @@ import com.hyperledger.fabric.sdk.entity.dto.api.BuildClientDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.CreateChannelDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.ExecuteCCDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.OrderNodeDTO;
-import com.hyperledger.fabric.sdk.test.*;
 import org.hyperledger.fabric.sdk.ChaincodeID;
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.HFClient;
-
-import java.util.Properties;
 
 /**
  * Created by L.Answer on 2018-09-03 17:42
@@ -21,6 +18,7 @@ import java.util.Properties;
 public class APITest {
 
     static String cxtPath = com.hyperledger.fabric.sdk.test.SDKClient.class.getClassLoader().getResource("").getPath();
+    static String channelName = "mychannel";
 
     public static void main(String[] args) throws Exception {
         String chaincodeVersion = "1.0";
@@ -33,17 +31,11 @@ public class APITest {
 
         HFClient client = ApiHandler.clientBuild(buildClientDTO);
 
-        Properties properties = new Properties();
-        properties.setProperty("hostnameOverride", "orderer.example.com");
-
-        OrderNodeDTO orderNodeDTO = new OrderNodeDTO();
-        orderNodeDTO.setNodeName("orderer.example.com");
-        orderNodeDTO.setGrpcUrl("grpc://119.23.106.146:7050");
-        orderNodeDTO.setProperties(properties);
+        OrderNodeDTO orderNodeDTO = new OrderNodeDTO("orderer.example.com", "grpc://119.23.106.146:7050");
         CreateChannelDTO createChannelDTO = new CreateChannelDTO();
         createChannelDTO.setChannelConfigPath(cxtPath + "channel-artifacts/channel.tx");
         createChannelDTO.setOrderNodeDTO(orderNodeDTO);
-        Channel channel = ApiHandler.createChannel(client, "mychannel", createChannelDTO);
+        Channel channel = ApiHandler.createChannel(client, channelName, createChannelDTO);
 
         ExecuteCCDTO querybCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"b"}).chaincodeID(chaincodeID).build();
         ApiHandler.queryChainCode(client, channel, querybCCDTO);
