@@ -13,7 +13,7 @@ import java.util.Collection;
  *
  * SDK-API 测试用例
  *
- * 测试时需要把resources目录赋值到test目录下
+ * 测试时需要把resources目录复制到test目录下
  */
 public class APITest {
 
