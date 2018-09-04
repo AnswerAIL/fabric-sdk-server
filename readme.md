@@ -22,6 +22,7 @@
 
 ### 注意事项
 ```bash
+    # 注释掉tls配置
     1. vim base/peer-base.yaml
         CORE_PEER_TLS_ENABLED=true 
             改为
