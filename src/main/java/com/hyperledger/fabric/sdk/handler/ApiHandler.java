@@ -12,7 +12,6 @@ import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.BuildClientDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.CreateChannelDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.ExecuteCCDTO;
-import com.hyperledger.fabric.sdk.entity.dto.api.OrderNodeDTO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.*;
@@ -25,7 +24,6 @@ import java.io.InputStream;
 import java.security.PrivateKey;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,6 +37,8 @@ public class ApiHandler {
 
     private static Jedis jedis = new Jedis(REDIS_IP);
     static {
+        jedis = (REDIS_PORT <= 0) ? new Jedis(REDIS_IP) : new Jedis(REDIS_IP, REDIS_PORT);
+
         jedis.select(REDIS_INDEX);
 
         if (StringUtils.isNotEmpty(REDIS_PASSWD)) {
