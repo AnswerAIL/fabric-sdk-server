@@ -1,7 +1,7 @@
 # Fabric-SDK-Java 封装版项目
   - [x] **适用对象**: 入门 Hyperledger Fabric SDK
   - [x] **缓存说明**: 如需使用缓存请先安装Redis, 配置服务信息请参见: Constants 类
-  - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest
+  - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest
   - [x] **Fabric版本**： release-1.0 
 
 

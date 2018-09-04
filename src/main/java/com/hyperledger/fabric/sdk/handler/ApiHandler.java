@@ -209,6 +209,40 @@ public class ApiHandler {
 
 
     /**
+     * Answer - 升级智能合约
+     * @param client 客户端实例
+     * @param channel 通道对象
+     * @param upgradeCCDTO {@link ExecuteCCDTO}
+     * @throws Exception e
+     * @apiNote 升级智能合约前需要先安装新的智能合约代码, 即先调用 installChainCode 方法
+     * */
+    public static void upgradeChainCode(HFClient client, Channel channel, ExecuteCCDTO upgradeCCDTO) throws Exception {
+        debug("升级智能合约 Start, channelName: %s, fcn: %s, args: %s", channel.getName(), upgradeCCDTO.getFuncName(), Arrays.asList(upgradeCCDTO.getParams()));
+        UpgradeProposalRequest upgradeProposalRequest = client.newUpgradeProposalRequest();
+
+        upgradeProposalRequest.setChaincodeID(upgradeCCDTO.getChaincodeID());
+        upgradeProposalRequest.setFcn(upgradeCCDTO.getFuncName());
+        upgradeProposalRequest.setArgs(upgradeCCDTO.getParams());
+        upgradeProposalRequest.setProposalWaitTime(upgradeCCDTO.getProposalWaitTime());
+        // 设置背书策略
+        String chaincodeEndorsementPolicyPath = upgradeCCDTO.getPolicyPath();
+        if (StringUtils.isNotEmpty(chaincodeEndorsementPolicyPath)) {
+            ChaincodeEndorsementPolicy chaincodeEndorsementPolicy = new ChaincodeEndorsementPolicy();
+            chaincodeEndorsementPolicy.fromYamlFile(new File(chaincodeEndorsementPolicyPath));
+            upgradeProposalRequest.setChaincodeEndorsementPolicy(chaincodeEndorsementPolicy);
+        }
+
+        upgradeProposalRequest.setTransientMap(transientMap("UpgradeProposalRequest"));
+
+        Collection<ProposalResponse> initProposals = channel.sendUpgradeProposal(upgradeProposalRequest, channel.getPeers());
+
+        orderConsensus(channel, initProposals, false);
+
+        debug("升级智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), upgradeCCDTO.getFuncName(), Arrays.asList(upgradeCCDTO.getParams()));
+    }
+
+
+    /**
      * Star - 初始化智能合约
      * @param client 客户端实例
      * @param channel 通道对象
@@ -222,6 +256,13 @@ public class ApiHandler {
         instantiateProposalRequest.setChaincodeID(initCCDTO.getChaincodeID());
         instantiateProposalRequest.setFcn(initCCDTO.getFuncName());
         instantiateProposalRequest.setArgs(initCCDTO.getParams());
+        // 设置背书策略
+        String chaincodeEndorsementPolicyPath = initCCDTO.getPolicyPath();
+        if (StringUtils.isNotEmpty(chaincodeEndorsementPolicyPath)) {
+            ChaincodeEndorsementPolicy chaincodeEndorsementPolicy = new ChaincodeEndorsementPolicy();
+            chaincodeEndorsementPolicy.fromYamlFile(new File(chaincodeEndorsementPolicyPath));
+            instantiateProposalRequest.setChaincodeEndorsementPolicy(chaincodeEndorsementPolicy);
+        }
         instantiateProposalRequest.setTransientMap(transientMap("InstantiateProposalRequest"));
 
         Collection<ProposalResponse> initProposals = channel.sendInstantiationProposal(instantiateProposalRequest, channel.getPeers());

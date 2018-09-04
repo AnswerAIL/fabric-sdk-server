@@ -17,12 +17,15 @@ public class ExecuteCCDTO implements Serializable {
     private ChaincodeID chaincodeID;
     // 单位: ms
     private Integer proposalWaitTime;
+    // 背书策略文件地址
+    private String policyPath;
 
     private ExecuteCCDTO(Builder builder) {
         this.funcName = builder.funcName;
         this.params = builder.params;
         this.chaincodeID = builder.chaincodeID;
         this.proposalWaitTime = builder.proposalWaitTime;
+        this.policyPath = builder.policyPath;
     }
 
     public String getFuncName() {
@@ -44,11 +47,16 @@ public class ExecuteCCDTO implements Serializable {
         return proposalWaitTime;
     }
 
+    public String getPolicyPath() {
+        return policyPath;
+    }
+
     public static class Builder {
         private String funcName;
         private String[] params;
         private ChaincodeID chaincodeID;
         private Integer proposalWaitTime;
+        private String policyPath;
 
         public Builder funcName(String funcName) {
             this.funcName = funcName;
@@ -67,6 +75,11 @@ public class ExecuteCCDTO implements Serializable {
 
         public Builder proposalWaitTime(Integer proposalWaitTime) {
             this.proposalWaitTime = proposalWaitTime;
+            return this;
+        }
+
+        public Builder policyPath(String policyPath) {
+            this.policyPath = policyPath;
             return this;
         }
 
