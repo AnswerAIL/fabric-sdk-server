@@ -49,7 +49,7 @@ public class ApiHandler {
 
 
     /**
-     * Answer - 构建客户端实例
+     * Star - 构建客户端实例
      * @param buildClientDTO {@link BuildClientDTO}
      * @return HFClient
      * @throws Exception e
@@ -88,7 +88,7 @@ public class ApiHandler {
 
 
     /**
-     * Answer - 创建通道
+     * Star - 创建通道
      * @param client 客户端实例
      * @param channelName 通道名称
      * @param createChannelDTO {@link CreateChannelDTO}
@@ -101,7 +101,7 @@ public class ApiHandler {
 
 
     /**
-     * Answer - 创建通道, 包含了加入的peer节点
+     * Star - 创建通道, 包含了加入的peer节点
      * @param client 客户端实例
      * @param channelName 通道名称
      * @param createChannelDTO {@link CreateChannelDTO}
@@ -149,7 +149,7 @@ public class ApiHandler {
 
 
     /**
-     * Answer - 将指定peer节点加入通道
+     * Star - 将指定peer节点加入通道
      * @param client 客户端实例
      * @param channel 通道对象
      * @param peerNodeDTOS 节点信息
@@ -171,7 +171,7 @@ public class ApiHandler {
 
 
     /**
-     * Answer - 安装智能合约
+     * Star - 安装智能合约
      * @param client 客户端实例
      * @param installCCDTO {@link InstallCCDTO}
      * @throws Exception e
@@ -204,7 +204,7 @@ public class ApiHandler {
 
 
     /**
-     * Answer - 初始化智能合约
+     * Star - 初始化智能合约
      * @param client 客户端实例
      * @param channel 通道对象
      * @param initCCDTO {@link ExecuteCCDTO}
@@ -228,7 +228,7 @@ public class ApiHandler {
 
 
     /**
-     * Answer - 查询智能合约
+     * Star - 查询智能合约
      * @param client 客户端实例
      * @param channel 通道对象
      * @param queryCCDTO {@link ExecuteCCDTO}
@@ -252,7 +252,7 @@ public class ApiHandler {
 
 
     /**
-     * Answer - 交易智能合约
+     * Star - 交易智能合约
      * @param client 客户端实例
      * @param channel 通道对象
      * @param invokeCCDTO {@link ExecuteCCDTO}
@@ -273,6 +273,10 @@ public class ApiHandler {
 
         debug("交易智能合约 End, channelName: %s, fcn: %s, args: %s", channel.getName(), invokeCCDTO.getFuncName(), Arrays.asList(invokeCCDTO.getParams()));
     }
+
+
+
+
 
 
 
