@@ -2,6 +2,11 @@
   - [x] **适用对象**: 入门 Hyperledger Fabric SDK
   - [x] **缓存说明**: 如需使用缓存请先安装Redis, 配置服务信息请参见: Constants 类
   - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest
+    - [x] **APITest**: 全流程测试案例
+    - [x] **BlockChainTest**: 查询块信息测试案例
+    - [x] **InvokeTest**: 转账测试案例
+    - [x] **QueryTest**: 查询测试案例
+    - [x] **UpgradeTest**: 升级智能合约测试案例
   - [x] **Fabric版本**： release-1.0 
 
 
