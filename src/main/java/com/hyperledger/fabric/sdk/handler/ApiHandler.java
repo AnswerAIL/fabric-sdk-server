@@ -168,6 +168,7 @@ public class ApiHandler {
         joinPeers(client, channelName, orderNodeDTOS, peerNodeDTOS, true);
     }
 
+
     /**
      * Star - 将指定peer节点加入通道
      * @param client 客户端实例
@@ -203,7 +204,6 @@ public class ApiHandler {
             channel.initialize();
         }
 
-
         // 加入新节点
         joinPeers(client, channel, peerNodeDTOS);
 
@@ -214,6 +214,7 @@ public class ApiHandler {
         }
         debug("往通道加入新节点 End, channelName: %s.", channelName);
     }
+
 
     /**
      * Star - 将指定peer节点加入通道
@@ -440,6 +441,7 @@ public class ApiHandler {
         return flag;
     }
 
+
     private static Map<String, byte[]> transientMap(String typeName) {
         return new HashMap<String, byte[]>() {
             {
@@ -448,6 +450,5 @@ public class ApiHandler {
             }
         };
     }
-
 
 }
