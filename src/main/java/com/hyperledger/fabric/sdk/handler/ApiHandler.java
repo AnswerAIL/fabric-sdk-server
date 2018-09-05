@@ -195,7 +195,7 @@ public class ApiHandler {
         }
 
         if (channel == null || channel.isShutdown() || !channel.isInitialized()) {
-            /* 建立通道连接 */
+            /* 建立通道连接, 通道已建立情况下, 使用该方式返回一个通道实例 */
             channel = client.newChannel(channelName);
             OrderNodeDTO orderNodeDTO = orderNodeDTOS.iterator().next();
             Orderer orderer = client.newOrderer(orderNodeDTO.getNodeName(), orderNodeDTO.getGrpcUrl(), orderNodeDTO.getProperties());
