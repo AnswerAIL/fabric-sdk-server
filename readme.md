@@ -8,10 +8,17 @@
     - [x] **QueryTest**: 查询测试案例
     - [x] **UpgradeTest**: 升级智能合约测试案例
     - [x] **JoinPeerTest**: 加入新节点测试案例
+    
   - [x] **测试用例操作建议**: APITest -> JoinPeerTest -> QueryTest -> InvokeTest -> QueryTest -> UpgradeTest -> QueryTest
     - [x] **友情提示**: 测试前请先配置好服务器信息: Config
     
-  - [x] **Fabric版本**: release-1.0  [Fabric Link](https://github.com/hyperledger/fabric)
+  - [x] **适用Fabric版本**: release-1.0  [Fabric Link](https://github.com/hyperledger/fabric)
+  
+  - [x] **官方SDK**: [hyperledger](https://github.com/hyperledger)
+    - [x] **fabric-sdk-java**: [fabric-sdk-java](https://github.com/hyperledger/fabric-sdk-java)
+    - [x] **fabric-sdk-node**: [fabric-sdk-node](https://github.com/hyperledger/fabric-sdk-node)
+    - [x] **fabric-sdk-go**: [fabric-sdk-go](https://github.com/hyperledger/fabric-sdk-go)
+    - [x] **fabric-sdk-python**: [fabric-sdk-python](https://github.com/hyperledger/fabric-sdk-py)                      
 
 
 
