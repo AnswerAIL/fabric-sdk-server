@@ -56,6 +56,7 @@
 
 ### 关闭每次重启fabric服务重新生成通道及配置文件信息
 ```bash
+    # 首次启动 network_setup.sh 脚本后, 修改以下代码, 重启 Fabric 服务
     vim network_setup.sh
     # 删除以下脚本代码
     #    function networkUp   -> source generateArtifacts.sh $CH_NAME
