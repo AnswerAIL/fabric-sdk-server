@@ -13,15 +13,23 @@
 
 ### resources 目录结构说明
 ```bash
-    # 链码存放目录
+    # 1. 链码存放目录
     chaincodes
         EG: /resources/chaincodes/sample/src/github.com/chaincode_example02/chaincode_example02.go
             chaincodePath: github.com/chaincode_example02
             chaincodeSourceLocation: .../chaincodes/sample
     
-    # 通道配置及证书信息
+    # 2. 通道配置信息目录
     channel-artifacts
+    
+    # 3. 证书信息目录
     crypto-config
+    
+    # 4. 背书策略目录
+    policy
+    
+    # 5. 协议文件目录(此版本暂无用到)
+    protocol
 ```
 
 

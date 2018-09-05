@@ -63,7 +63,8 @@ public class APITest {
 
 
         // 4. 初始化智能合约
-        ExecuteCCDTO initCCDTO = new ExecuteCCDTO.Builder().funcName("init").params(new String[] {"a", "2300", "b", "2400"}).chaincodeID(chaincodeID).build();
+        ExecuteCCDTO initCCDTO = new ExecuteCCDTO.Builder().funcName("init").params(new String[] {"a", "2300", "b", "2400"}).chaincodeID(chaincodeID).policyPath(cxtPath + "policy/chaincodeendorsementpolicy.yaml").build();
+//        ExecuteCCDTO initCCDTO = new ExecuteCCDTO.Builder().funcName("init").params(new String[] {"a", "2300", "b", "2400"}).chaincodeID(chaincodeID).build();
         ApiHandler.initializeChainCode(client, channel, initCCDTO);
 
 
