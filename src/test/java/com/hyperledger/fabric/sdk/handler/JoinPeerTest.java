@@ -46,7 +46,7 @@ public class JoinPeerTest {
         Collection<PeerNodeDTO> peerNodeDTOS = new ArrayList<>();
         peerNodeDTOS.add(new PeerNodeDTO(PEER0_ORG2_NAME, PEER0_ORG2_GRPC_URL, PEER0_ORG2_EVENT_URL));
         peerNodeDTOS.add(new PeerNodeDTO(PEER1_ORG2_NAME, PEER1_ORG2_GRPC_URL, PEER1_ORG2_EVENT_URL));
-        ApiHandler.joinPeers(client, channelName, orderNodeDTOS, peerNodeDTOS);
+        ApiHandler.joinPeers(client, channelName, orderNodeDTOS, peerNodeDTOS, false);
 
 
 
