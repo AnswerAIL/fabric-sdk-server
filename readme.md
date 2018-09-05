@@ -66,6 +66,7 @@
 ### 注意事项
 ```bash
     # 注释掉tls配置
+    cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
     1. vim base/peer-base.yaml
         CORE_PEER_TLS_ENABLED=true 
             改为
@@ -77,7 +78,7 @@
             改为
         ORDERER_GENERAL_TLS_ENABLED=false
     
-    3. vim examples/e2e_cli/docker-compose-cli.yaml
+    3. vim docker-compose-cli.yaml
         CORE_PEER_TLS_ENABLED=true
             改为
         CORE_PEER_TLS_ENABLED=false            
