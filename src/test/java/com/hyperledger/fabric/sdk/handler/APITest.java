@@ -83,7 +83,7 @@ public class APITest {
 
 
 
-        // 6. 转账, 账户a转7 RMVB到账户b
+        // 6. 转账, 账户a转7 RMB到账户b
         ExecuteCCDTO invokeCCDTO = new ExecuteCCDTO.Builder().funcName("invoke").params(new String[] {"a", "b", "7"}).chaincodeID(chaincodeID).build();
         ApiHandler.invokeChainCode(client, channel, invokeCCDTO);
 
