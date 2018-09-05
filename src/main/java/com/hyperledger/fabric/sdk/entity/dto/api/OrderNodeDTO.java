@@ -5,6 +5,8 @@ import java.util.Properties;
 
 /**
  * Created by L.Answer on 2018-09-03 19:04
+ *
+ * order节点DTO
  */
 public class OrderNodeDTO extends NodeDTO implements Serializable {
 

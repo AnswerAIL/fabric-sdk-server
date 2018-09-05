@@ -5,6 +5,8 @@ import java.util.Properties;
 
 /**
  * Created by L.Answer on 2018-09-03 19:03
+ *
+ * peer节点DTO
  */
 public class PeerNodeDTO extends NodeDTO implements Serializable {
 

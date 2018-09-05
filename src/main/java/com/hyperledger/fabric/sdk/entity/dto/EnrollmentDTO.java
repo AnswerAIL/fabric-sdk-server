@@ -7,6 +7,8 @@ import java.security.PrivateKey;
 
 /**
  * Created by L.Answer on 2018-08-28 15:20
+ *
+ * {@link UserContextDTO#enrollment}
  */
 public class EnrollmentDTO implements Enrollment, Serializable {
     private String cert;

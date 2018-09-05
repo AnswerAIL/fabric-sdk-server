@@ -5,6 +5,8 @@ import java.util.Collection;
 
 /**
  * Created by L.Answer on 2018-09-03 14:26
+ *
+ * 创建通道时需要的参数信息DTO
  */
 public class CreateChannelDTO implements Serializable {
 

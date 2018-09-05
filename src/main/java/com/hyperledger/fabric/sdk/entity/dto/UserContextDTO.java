@@ -8,6 +8,10 @@ import java.util.Set;
 
 /**
  * Created by L.Answer on 2018-08-28 15:18
+ *
+ * 操作链码用户信息DTO
+ *
+ * 构建客户端实例时用到
  */
 public class UserContextDTO implements User, Serializable {
 

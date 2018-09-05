@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by L.Answer on 2018-09-03 19:01
+ *
+ * 节点基类
  */
 public class NodeDTO implements Serializable {
 

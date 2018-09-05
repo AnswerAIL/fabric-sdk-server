@@ -9,6 +9,8 @@ import java.util.Collection;
 
 /**
  * Created by L.Answer on 2018-09-04 10:09
+ *
+ * 安装智能合约DTO
  */
 public class InstallCCDTO implements Serializable {
 
