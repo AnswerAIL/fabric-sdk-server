@@ -7,7 +7,7 @@
     - [x] **InvokeTest**: 转账测试案例
     - [x] **QueryTest**: 查询测试案例
     - [x] **UpgradeTest**: 升级智能合约测试案例
-  - [x] **Fabric版本**： release-1.0 
+  - [x] **Fabric版本**： release-1.0  [Fabric Link](https://github.com/hyperledger/fabric)
 
 
 
