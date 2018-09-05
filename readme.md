@@ -1,13 +1,15 @@
-# Fabric-SDK-Java 封装版项目
+# Fabric-SDK-Java 改进版项目 answer-fabric-sdk
   - [x] **适用对象**: 入门 Hyperledger Fabric SDK
   - [x] **缓存说明**: 如需使用缓存请先安装Redis, 配置服务信息请参见: Constants 类
-  - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest
+  - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest | JoinPeerTest
     - [x] **APITest**: 全流程测试案例
     - [x] **BlockChainTest**: 查询块信息测试案例
     - [x] **InvokeTest**: 转账测试案例
     - [x] **QueryTest**: 查询测试案例
     - [x] **UpgradeTest**: 升级智能合约测试案例
-  - [x] **Fabric版本**： release-1.0  [Fabric Link](https://github.com/hyperledger/fabric)
+    - [x] **JoinPeerTest**: 加入新节点测试案例
+  - [x] **测试用例操作建议**: APITest -> JoinPeerTest -> QueryTest -> InvokeTest -> QueryTest -> UpgradeTest -> QueryTest
+  - [x] **Fabric版本**: release-1.0  [Fabric Link](https://github.com/hyperledger/fabric)
 
 
 
@@ -82,7 +84,11 @@
     3. vim docker-compose-cli.yaml
         CORE_PEER_TLS_ENABLED=true
             改为
-        CORE_PEER_TLS_ENABLED=false            
+        CORE_PEER_TLS_ENABLED=false  
+                  
+    4. 如果使用 Fabric V1.0 E2E 测试转账DEMO, 请注释掉 script.sh 脚本所有操作区块链代码
+    cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
+    vim scripts/script.sh                          
 ```
 
 

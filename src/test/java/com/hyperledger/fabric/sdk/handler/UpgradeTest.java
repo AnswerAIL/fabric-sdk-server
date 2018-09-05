@@ -38,21 +38,47 @@ public class UpgradeTest {
         HFClient client = ApiHandler.clientBuild(buildClientDTO);
 
 
-
-        // 2. 创建通道
-        Channel channel = ApiHandler.createChannel(client, channelName, null);
-
-        // 3. 安装新版本智能合约
+        // 2. 安装新版本智能合约
         Collection<PeerNodeDTO> peerNodeDTOS = new ArrayList<>();
         peerNodeDTOS.add(new PeerNodeDTO("peer0.org1.example.com", "grpc://119.23.XXX.XXX:7051", "grpc://119.23.XXX.XXX:7053"));
         peerNodeDTOS.add(new PeerNodeDTO("peer1.org1.example.com", "grpc://119.23.XXX.XXX:8051", "grpc://119.23.XXX.XXX:8053"));
         InstallCCDTO installCCDTO = new InstallCCDTO.Builder().chaincodeID(chaincodeID).chaincodeSourceLocation(cxtPath + "chaincodes/sample").peerNodeDTOS(peerNodeDTOS).build();
         ApiHandler.installChainCode(client, installCCDTO);
 
+
+
+        System.out.println("\n");
+        System.out.println("================================= ↑ ↑ ↑ ↑ ↑ ↑ ↑ Org1MSP ↑ ↑ ↑ ↑ ↑ ↑ =================================");
+        System.out.println("================================= ↑ Org1MSP ↑ 神奇的分割线 ↓ Org2MSP ↓ =================================");
+        System.out.println("================================= ↓ ↓ ↓ ↓ ↓ ↓ ↓ Org2MSP ↓ ↓ ↓ ↓ ↓ ↓ =================================");
+        System.out.println("\n");
+
+
+
+        // 1. 初始化客户端
+        mspPath = "crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/";
+        buildClientDTO = new BuildClientDTO.Builder()
+                .name("org2.example.com").mspId("Org2MSP").mspPath(mspPath).build();
+        client = ApiHandler.clientBuild(buildClientDTO);
+
+        // 2. 安装新版本智能合约
+        peerNodeDTOS = new ArrayList<>();
+        peerNodeDTOS.add(new PeerNodeDTO("peer0.org2.example.com", "grpc://119.23.XXX.XXX:9051", "grpc://119.23.XXX.XXX:9053"));
+        peerNodeDTOS.add(new PeerNodeDTO("peer1.org2.example.com", "grpc://119.23.XXX.XXX:10051", "grpc://119.23.XXX.XXX:10053"));
+        installCCDTO = new InstallCCDTO.Builder().chaincodeID(chaincodeID).chaincodeSourceLocation(cxtPath + "chaincodes/sample").peerNodeDTOS(peerNodeDTOS).build();
+        ApiHandler.installChainCode(client, installCCDTO);
+
+
+
+        System.out.println("\n\n\n");
+        /* 升级智能合约只需要对一个组织进行操作即可, 通道中的其他的组织会进行同步操作 */
+
+        // 3. 创建通道
+        Channel channel = ApiHandler.createChannel(client, channelName, null);
+
         // 4. 升级智能合约
         ExecuteCCDTO upgradeCCDTO = new ExecuteCCDTO.Builder().funcName("init").params(new String[] {"a", "12300", "b", "12400"}).chaincodeID(chaincodeID).build();
         ApiHandler.upgradeChainCode(client, channel, upgradeCCDTO);
-
     }
 
 

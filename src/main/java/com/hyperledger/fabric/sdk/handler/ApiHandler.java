@@ -35,7 +35,8 @@ public class ApiHandler {
     /** 超时时间, 单位: S */
     private static final Integer TIME_OUT = 50;
     /** channel redis中的key的前缀 */
-    public static final String CHANNEL_CACHE = REDIS_PREFIX + "channel:";
+    private static final String CHANNEL_CACHE = REDIS_PREFIX + "channel:";
+    private static final String REDIS_SEPERATOR = "@";
 
     private static Jedis jedis = new Jedis(REDIS_IP);
     static {
@@ -113,13 +114,16 @@ public class ApiHandler {
      * */
     public static Channel createChannel(HFClient client, String channelName, CreateChannelDTO createChannelDTO, boolean useCache) throws Exception {
         debug("创建通道 Start, channelName: %s.", channelName);
+        String mspId = client.getUserContext().getMspId();
+        if (StringUtils.isEmpty(mspId)) throw new FabricSDKException("mspId must not to be empty.");
+        String redisKey = CHANNEL_CACHE + channelName + REDIS_SEPERATOR + mspId;
 
         Channel channel;
         // 优先使用缓存中已缓存的通道对象
         if (useCache) {
-            byte[] bytes = jedis.get((CHANNEL_CACHE + channelName).getBytes());
+            byte[] bytes = jedis.get(redisKey.getBytes());
             if (bytes != null) {
-                warn("缓存中已存在通道名称为: %s 的通道对象, 使用缓存中的通道对象.", channelName);
+                warn("缓存中已存在通道名称为: %s 的通道对象, 使用缓存中的通道对象, 缓存Key: %s.", channelName, redisKey);
                 channel = client.deSerializeChannel(bytes);
                 if (!channel.isInitialized()) channel.initialize();
                 debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
@@ -145,9 +149,8 @@ public class ApiHandler {
         debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
         // 如果已连接redis, 则将 channel 对象存储进缓存
         if (jedis.isConnected()) {
-            String key = CHANNEL_CACHE + channelName;
-            jedis.set(key.getBytes(), channel.serializeChannel());
-            info("通道对象已放入redis缓存, key: %s.", key);
+            jedis.set(redisKey.getBytes(), channel.serializeChannel());
+            info("通道对象已放入redis缓存, 缓存key: %s.", redisKey);
         }
         return channel;
     }
@@ -156,10 +159,69 @@ public class ApiHandler {
     /**
      * Star - 将指定peer节点加入通道
      * @param client 客户端实例
+     * @param channelName 通道名称
+     * @param orderNodeDTOS order节点信息
+     * @param peerNodeDTOS peer节点信息
+     * @throws Exception e
+     * */
+    public static void joinPeers(HFClient client, String channelName, Collection<OrderNodeDTO> orderNodeDTOS, Collection<PeerNodeDTO> peerNodeDTOS) throws Exception {
+        joinPeers(client, channelName, orderNodeDTOS, peerNodeDTOS, true);
+    }
+
+    /**
+     * Star - 将指定peer节点加入通道
+     * @param client 客户端实例
+     * @param channelName 通道名称
+     * @param orderNodeDTOS order节点信息
+     * @param peerNodeDTOS peer节点信息
+     * @param useCache 优先使用缓存
+     * @throws Exception e
+     * */
+    public static void joinPeers(HFClient client, String channelName, Collection<OrderNodeDTO> orderNodeDTOS, Collection<PeerNodeDTO> peerNodeDTOS, boolean useCache) throws Exception {
+        debug("往通道加入新节点 Start, channelName: %s.", channelName);
+        String mspId = client.getUserContext().getMspId();
+        if (StringUtils.isEmpty(mspId)) throw new FabricSDKException("mspId must not to be empty.");
+
+        String redisKey = CHANNEL_CACHE + channelName + REDIS_SEPERATOR + mspId;
+        Channel channel = null;
+        if (useCache) {
+            byte[] bytes = jedis.get(redisKey.getBytes());
+            if (bytes != null) {
+                warn("缓存中已存在通道名称为: %s 的通道对象, 使用缓存中的通道对象, 缓存Key: %s.", channelName, redisKey);
+                channel = client.deSerializeChannel(bytes);
+                if (!channel.isInitialized()) channel.initialize();
+                debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
+            }
+        }
+
+        if (channel == null || channel.isShutdown() || !channel.isInitialized()) {
+            /* 建立通道连接 */
+            channel = client.newChannel(channelName);
+            OrderNodeDTO orderNodeDTO = orderNodeDTOS.iterator().next();
+            Orderer orderer = client.newOrderer(orderNodeDTO.getNodeName(), orderNodeDTO.getGrpcUrl(), orderNodeDTO.getProperties());
+            channel.addOrderer(orderer);
+            channel.initialize();
+        }
+
+
+        // 加入新节点
+        joinPeers(client, channel, peerNodeDTOS);
+
+        // 将已有通道对象加入缓存
+        if (jedis.isConnected()) {
+            jedis.set(redisKey.getBytes(), channel.serializeChannel());
+            info("通道对象已放入redis缓存, 缓存key: %s.", redisKey);
+        }
+        debug("往通道加入新节点 End, channelName: %s.", channelName);
+    }
+
+    /**
+     * Star - 将指定peer节点加入通道
+     * @param client 客户端实例
      * @param channel 通道对象
      * @param peerNodeDTOS 节点信息
      * */
-    public static void joinPeers(HFClient client, Channel channel, Collection<PeerNodeDTO> peerNodeDTOS) throws Exception {
+    private static void joinPeers(HFClient client, Channel channel, Collection<PeerNodeDTO> peerNodeDTOS) throws Exception {
         for (PeerNodeDTO peerNodeDTO : peerNodeDTOS) {
             Peer peer = client.newPeer(peerNodeDTO.getNodeName(), peerNodeDTO.getGrpcUrl(), peerNodeDTO.getProperties());
             channel.joinPeer(peer);
@@ -361,6 +423,7 @@ public class ApiHandler {
      * @return flag boolean
      * */
     private static boolean checkResult(Collection<ProposalResponse> proposalResponses, boolean usePayload) {
+        info("check proposal response info: response result size: %d.", proposalResponses.size());
         boolean flag = true;
         for (ProposalResponse proposalResponse: proposalResponses) {
             String payload;

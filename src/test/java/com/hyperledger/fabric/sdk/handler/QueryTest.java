@@ -42,6 +42,31 @@ public class QueryTest {
         ExecuteCCDTO querybCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"a"}).chaincodeID(chaincodeID).build();
         ApiHandler.queryChainCode(client, channel, querybCCDTO);
 
+
+        System.out.println("\n");
+        System.out.println("================================= ↑ ↑ ↑ ↑ ↑ ↑ ↑ Org1MSP ↑ ↑ ↑ ↑ ↑ ↑ =================================");
+        System.out.println("================================= ↑ Org1MSP ↑ 神奇的分割线 ↓ Org2MSP ↓ =================================");
+        System.out.println("================================= ↓ ↓ ↓ ↓ ↓ ↓ ↓ Org2MSP ↓ ↓ ↓ ↓ ↓ ↓ =================================");
+        System.out.println("\n");
+
+        /** 如需执行以下代码, 需先把组织 Org2MSP 下的peer节点加入通道 {@link JoinPeerTest} */
+
+        // 1. 初始化客户端
+        mspPath = "crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/";
+        buildClientDTO = new BuildClientDTO.Builder()
+                .name("org2.example.com").mspId("Org2MSP").mspPath(mspPath).build();
+        client = ApiHandler.clientBuild(buildClientDTO);
+
+
+
+        // 2. 创建通道
+        channel = ApiHandler.createChannel(client, channelName, null);
+
+
+        // 3. 查询, 账户a的余额
+        querybCCDTO = new ExecuteCCDTO.Builder().funcName("query").params(new String[] {"a"}).chaincodeID(chaincodeID).build();
+        ApiHandler.queryChainCode(client, channel, querybCCDTO);
+
     }
 
 }

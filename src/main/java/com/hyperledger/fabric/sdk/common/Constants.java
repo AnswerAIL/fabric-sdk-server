@@ -15,6 +15,6 @@ public class Constants {
 
 
     /** 交易等待时间, 单位: ms */
-    public static final int PROPOSAL_WAIT_TIME = 30000;
+    public static final int PROPOSAL_WAIT_TIME = 60000;
 
 }
