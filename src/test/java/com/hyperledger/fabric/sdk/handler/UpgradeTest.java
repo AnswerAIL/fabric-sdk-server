@@ -44,8 +44,8 @@ public class UpgradeTest {
 
         // 3. 安装新版本智能合约
         Collection<PeerNodeDTO> peerNodeDTOS = new ArrayList<>();
-        peerNodeDTOS.add(new PeerNodeDTO("peer0.org1.example.com", "grpc://119.23.106.146:7051", "grpc://119.23.106.146:7053"));
-        peerNodeDTOS.add(new PeerNodeDTO("peer1.org1.example.com", "grpc://119.23.106.146:8051", "grpc://119.23.106.146:8053"));
+        peerNodeDTOS.add(new PeerNodeDTO("peer0.org1.example.com", "grpc://119.23.XXX.XXX:7051", "grpc://119.23.XXX.XXX:7053"));
+        peerNodeDTOS.add(new PeerNodeDTO("peer1.org1.example.com", "grpc://119.23.XXX.XXX:8051", "grpc://119.23.XXX.XXX:8053"));
         InstallCCDTO installCCDTO = new InstallCCDTO.Builder().chaincodeID(chaincodeID).chaincodeSourceLocation(cxtPath + "chaincodes/sample").peerNodeDTOS(peerNodeDTOS).build();
         ApiHandler.installChainCode(client, installCCDTO);
 

@@ -257,7 +257,7 @@ public class SDKClient {
         peerProperties0.setProperty("sslProvider", "openSSL");
         peerProperties0.setProperty("negotiationType", "TLS");
         peerProperties0.put("grpc.NettyChannelBuilderOption.maxInboundMessageSize", 9000000);
-        Peer peer0 = client.newPeer("peer0.org1.example.com", "grpc://119.23.106.146:7051", peerProperties0);
+        Peer peer0 = client.newPeer("peer0.org1.example.com", "grpc://119.23.XXX.XXX:7051", peerProperties0);
         peers.add(peer0);
 
         Properties peerProperties1 = new Properties();
@@ -268,7 +268,7 @@ public class SDKClient {
         peerProperties1.setProperty("sslProvider", "openSSL");
         peerProperties1.setProperty("negotiationType", "TLS");
         peerProperties1.put("grpc.NettyChannelBuilderOption.maxInboundMessageSize", 9000000);
-        Peer peer1 = client.newPeer("peer1.org1.example.com", "grpc://119.23.106.146:8051", peerProperties1);
+        Peer peer1 = client.newPeer("peer1.org1.example.com", "grpc://119.23.XXX.XXX:8051", peerProperties1);
         peers.add(peer1);
 
         InstallProposalRequest installProposalRequest = client.newInstallProposalRequest();
@@ -344,7 +344,7 @@ public class SDKClient {
         orderProperties.setProperty("negotiationType", "TLS");
         orderProperties.put("grpc.NettyChannelBuilderOption.keepAliveTime", new Object[] {5L, TimeUnit.MINUTES});
         orderProperties.put("grpc.NettyChannelBuilderOption.keepAliveTimeout", new Object[] {8L, TimeUnit.SECONDS});
-        Orderer orderer = client.newOrderer("orderer.example.com", "grpc://119.23.106.146:7050", orderProperties);
+        Orderer orderer = client.newOrderer("orderer.example.com", "grpc://119.23.XXX.XXX:7050", orderProperties);
 
         Channel channel = client.newChannel(channelName, orderer, channelConfiguration, client.getChannelConfigurationSignature(channelConfiguration, client.getUserContext()));
         System.out.println("通道创建成功");
@@ -359,7 +359,7 @@ public class SDKClient {
         peerProperties0.setProperty("negotiationType", "TLS");
         peerProperties0.put("grpc.NettyChannelBuilderOption.maxInboundMessageSize", 9000000);
 
-        Peer peer0 = client.newPeer("peer0.org1.example.com", "grpc://119.23.106.146:7051", peerProperties0);
+        Peer peer0 = client.newPeer("peer0.org1.example.com", "grpc://119.23.XXX.XXX:7051", peerProperties0);
         channel.joinPeer(peer0);
         System.out.println("peer0 join channel");
 
@@ -372,7 +372,7 @@ public class SDKClient {
         peerProperties1.setProperty("negotiationType", "TLS");
         peerProperties1.put("grpc.NettyChannelBuilderOption.maxInboundMessageSize", 9000000);
 
-        Peer peer1 = client.newPeer("peer1.org1.example.com", "grpc://119.23.106.146:8051", peerProperties1);
+        Peer peer1 = client.newPeer("peer1.org1.example.com", "grpc://119.23.XXX.XXX:8051", peerProperties1);
         channel.joinPeer(peer1);
         System.out.println("peer1 join channel");
 
@@ -392,7 +392,7 @@ public class SDKClient {
         peerHubProperties0.put("grpc.NettyChannelBuilderOption.keepAliveTime", new Object[] {5L, TimeUnit.MINUTES});
         peerHubProperties0.put("grpc.NettyChannelBuilderOption.keepAliveTimeout", new Object[] {8L, TimeUnit.SECONDS});
 
-        EventHub peerHub0 = client.newEventHub("peer0.org1.example.com", "grpc://119.23.106.146:7053", peerHubProperties0);
+        EventHub peerHub0 = client.newEventHub("peer0.org1.example.com", "grpc://119.23.XXX.XXX:7053", peerHubProperties0);
         channel.addEventHub(peerHub0);
         System.out.println("peer0 eventHub join channel");
 
@@ -406,7 +406,7 @@ public class SDKClient {
         peerHubProperties1.put("grpc.NettyChannelBuilderOption.keepAliveTime", new Object[] {5L, TimeUnit.MINUTES});
         peerHubProperties1.put("grpc.NettyChannelBuilderOption.keepAliveTimeout", new Object[] {8L, TimeUnit.SECONDS});
 
-        EventHub peerHub1 = client.newEventHub("peer1.org1.example.com", "grpc://119.23.106.146:8053", peerHubProperties1);
+        EventHub peerHub1 = client.newEventHub("peer1.org1.example.com", "grpc://119.23.XXX.XXX:8053", peerHubProperties1);
         channel.addEventHub(peerHub1);
         System.out.println("peer1 eventHub join channel");
 
