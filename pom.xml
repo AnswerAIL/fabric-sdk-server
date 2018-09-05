@@ -109,15 +109,15 @@
     <!-- 项目开发者列表 -->
     <developers>
         <developer>
-            <id></id>
+            <id>answer</id>
             <name>L.Answer</name>
             <email>answer_ljm@163.com</email>
             <url>https://github.com/AnswerCoder/answer-fabric-sdk</url>
             <roles>
                 <role>developer</role>
             </roles>
-            <organization>xiwei</organization>
-            <organizationUrl>https://www.lrscft.com/</organizationUrl>
+            <organization>BeiJing XiWei</organization>
+            <organizationUrl>https://www.tiannongtech.com/</organizationUrl>
         </developer>
     </developers>
 
