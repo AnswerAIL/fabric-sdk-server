@@ -15,6 +15,24 @@ import static com.hyperledger.fabric.sdk.common.Config.*;
  * 加入新节点测试用例
  *
  * 此测试用例将组织 Org2MSP 下的节点加入通道 mychannel
+ *
+ *
+ * 单个节点逐一加入通道步骤说明:
+ *  1: 注释掉 PEER0_ORG2_NAME 节点代码
+ *      peerNodeDTOS.add(new PeerNodeDTO(PEER0_ORG2_NAME, PEER0_ORG2_GRPC_URL, PEER0_ORG2_EVENT_URL));
+ *      // peerNodeDTOS.add(new PeerNodeDTO(PEER1_ORG2_NAME, PEER1_ORG2_GRPC_URL, PEER1_ORG2_EVENT_URL));
+ *
+ *  2: 运行程序
+ *
+ *  3: 注释掉 PEER0_ORG2_NAME 节点代码
+ *     // peerNodeDTOS.add(new PeerNodeDTO(PEER0_ORG2_NAME, PEER0_ORG2_GRPC_URL, PEER0_ORG2_EVENT_URL));
+ *       peerNodeDTOS.add(new PeerNodeDTO(PEER1_ORG2_NAME, PEER1_ORG2_GRPC_URL, PEER1_ORG2_EVENT_URL));
+ *
+ *  4: ApiHandler.joinPeers(client, channelName, orderNodeDTOS, peerNodeDTOS, false);
+ *           改为
+ *       ApiHandler.joinPeers(client, channelName, orderNodeDTOS, peerNodeDTOS);
+ *
+ *  5: 运行程序
  */
 public class JoinPeerTest {
 
