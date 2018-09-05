@@ -2,12 +2,12 @@ package com.hyperledger.fabric.sdk.handler;
 
 import com.hyperledger.fabric.sdk.entity.dto.api.*;
 import org.hyperledger.fabric.sdk.ChaincodeID;
-import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.HFClient;
-import org.hyperledger.fabric.sdk.Orderer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import static com.hyperledger.fabric.sdk.common.Config.*;
 
 /**
  * Created by L.Answer on 2018-09-05 08:59
@@ -41,11 +41,11 @@ public class JoinPeerTest {
 
         // 2. 加入新节点
         Collection<OrderNodeDTO> orderNodeDTOS = new ArrayList<>();
-        orderNodeDTOS.add(new OrderNodeDTO("orderer.example.com", "grpc://119.23.106.146:7050"));
+        orderNodeDTOS.add(new OrderNodeDTO(ORDER_NAME, ORDER_GRPC_URL));
 
         Collection<PeerNodeDTO> peerNodeDTOS = new ArrayList<>();
-        peerNodeDTOS.add(new PeerNodeDTO("peer0.org2.example.com", "grpc://119.23.106.146:9051", "grpc://119.23.106.146:9053"));
-        peerNodeDTOS.add(new PeerNodeDTO("peer1.org2.example.com", "grpc://119.23.106.146:10051", "grpc://119.23.106.146:10053"));
+        peerNodeDTOS.add(new PeerNodeDTO(PEER0_ORG2_NAME, PEER0_ORG2_GRPC_URL, PEER0_ORG2_EVENT_URL));
+        peerNodeDTOS.add(new PeerNodeDTO(PEER1_ORG2_NAME, PEER1_ORG2_GRPC_URL, PEER1_ORG2_EVENT_URL));
         ApiHandler.joinPeers(client, channelName, orderNodeDTOS, peerNodeDTOS);
 
 

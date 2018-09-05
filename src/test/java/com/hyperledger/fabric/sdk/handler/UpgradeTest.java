@@ -11,6 +11,8 @@ import org.hyperledger.fabric.sdk.HFClient;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.hyperledger.fabric.sdk.common.Config.*;
+
 /**
  * Created by L.Answer on 2018-09-04 17:51
  *
@@ -40,8 +42,8 @@ public class UpgradeTest {
 
         // 2. 安装新版本智能合约
         Collection<PeerNodeDTO> peerNodeDTOS = new ArrayList<>();
-        peerNodeDTOS.add(new PeerNodeDTO("peer0.org1.example.com", "grpc://119.23.XXX.XXX:7051", "grpc://119.23.XXX.XXX:7053"));
-        peerNodeDTOS.add(new PeerNodeDTO("peer1.org1.example.com", "grpc://119.23.XXX.XXX:8051", "grpc://119.23.XXX.XXX:8053"));
+        peerNodeDTOS.add(new PeerNodeDTO(PEER0_ORG1_NAME, PEER0_ORG1_GRPC_URL, PEER0_ORG1_EVENT_URL));
+        peerNodeDTOS.add(new PeerNodeDTO(PEER1_ORG1_NAME, PEER1_ORG1_GRPC_URL, PEER1_ORG1_EVENT_URL));
         InstallCCDTO installCCDTO = new InstallCCDTO.Builder().chaincodeID(chaincodeID).chaincodeSourceLocation(cxtPath + "chaincodes/sample").peerNodeDTOS(peerNodeDTOS).build();
         ApiHandler.installChainCode(client, installCCDTO);
 
@@ -63,8 +65,8 @@ public class UpgradeTest {
 
         // 2. 安装新版本智能合约
         peerNodeDTOS = new ArrayList<>();
-        peerNodeDTOS.add(new PeerNodeDTO("peer0.org2.example.com", "grpc://119.23.XXX.XXX:9051", "grpc://119.23.XXX.XXX:9053"));
-        peerNodeDTOS.add(new PeerNodeDTO("peer1.org2.example.com", "grpc://119.23.XXX.XXX:10051", "grpc://119.23.XXX.XXX:10053"));
+        peerNodeDTOS.add(new PeerNodeDTO(PEER0_ORG2_NAME, PEER0_ORG2_GRPC_URL, PEER0_ORG2_EVENT_URL));
+        peerNodeDTOS.add(new PeerNodeDTO(PEER1_ORG2_NAME, PEER1_ORG2_GRPC_URL, PEER1_ORG2_EVENT_URL));
         installCCDTO = new InstallCCDTO.Builder().chaincodeID(chaincodeID).chaincodeSourceLocation(cxtPath + "chaincodes/sample").peerNodeDTOS(peerNodeDTOS).build();
         ApiHandler.installChainCode(client, installCCDTO);
 

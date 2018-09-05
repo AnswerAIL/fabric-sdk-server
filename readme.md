@@ -9,6 +9,8 @@
     - [x] **UpgradeTest**: 升级智能合约测试案例
     - [x] **JoinPeerTest**: 加入新节点测试案例
   - [x] **测试用例操作建议**: APITest -> JoinPeerTest -> QueryTest -> InvokeTest -> QueryTest -> UpgradeTest -> QueryTest
+    - [x] **友情提示**: 测试前请先配置好服务器信息: Config
+    
   - [x] **Fabric版本**: release-1.0  [Fabric Link](https://github.com/hyperledger/fabric)
 
 

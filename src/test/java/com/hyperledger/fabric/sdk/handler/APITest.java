@@ -1,5 +1,6 @@
 package com.hyperledger.fabric.sdk.handler;
 
+import static com.hyperledger.fabric.sdk.common.Config.*;
 import com.hyperledger.fabric.sdk.entity.dto.api.*;
 import org.hyperledger.fabric.sdk.ChaincodeID;
 import org.hyperledger.fabric.sdk.Channel;
@@ -49,11 +50,11 @@ public class APITest {
 
         // 2. 创建通道
         Collection<OrderNodeDTO> orderNodeDTOS = new ArrayList<>();
-        orderNodeDTOS.add(new OrderNodeDTO("orderer.example.com", "grpc://119.23.XXX.XXX:7050"));
+        orderNodeDTOS.add(new OrderNodeDTO(ORDER_NAME, ORDER_GRPC_URL));
 
         Collection<PeerNodeDTO> peerNodeDTOS = new ArrayList<>();
-        peerNodeDTOS.add(new PeerNodeDTO("peer0.org1.example.com", "grpc://119.23.XXX.XXX:7051", "grpc://119.23.XXX.XXX:7053"));
-        peerNodeDTOS.add(new PeerNodeDTO("peer1.org1.example.com", "grpc://119.23.XXX.XXX:8051", "grpc://119.23.XXX.XXX:8053"));
+        peerNodeDTOS.add(new PeerNodeDTO(PEER0_ORG1_NAME, PEER0_ORG1_GRPC_URL, PEER0_ORG1_EVENT_URL));
+        peerNodeDTOS.add(new PeerNodeDTO(PEER1_ORG1_NAME, PEER1_ORG1_GRPC_URL, PEER1_ORG1_EVENT_URL));
 
         CreateChannelDTO createChannelDTO = new CreateChannelDTO();
         createChannelDTO.setChannelConfigPath(cxtPath + "channel-artifacts/channel.tx");
