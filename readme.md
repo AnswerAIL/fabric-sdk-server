@@ -9,7 +9,7 @@
     - [x] **UpgradeTest**: 升级智能合约测试案例   [UpgradeTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/UpgradeTest.java)
     - [x] **JoinPeerTest**: 加入新节点测试案例   [JoinPeerTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/JoinPeerTest.java)
     
-  - [x] **测试用例操作建议**: APITest -> JoinPeerTest -> QueryTest -> InvokeTest -> QueryTest -> UpgradeTest -> QueryTest
+  - [x] **测试用例操作顺序建议**: APITest -> JoinPeerTest -> QueryTest -> InvokeTest -> QueryTest -> UpgradeTest -> QueryTest
     - [x] **友情提示**: 测试前请先配置好服务器信息: Config
     
   - [x] **适用Fabric版本**: release-1.0  [Fabric Link](https://github.com/hyperledger/fabric)
