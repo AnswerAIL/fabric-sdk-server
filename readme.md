@@ -11,7 +11,7 @@
     
   - [x] **测试用例操作顺序建议**: APITest -> JoinPeerTest -> QueryTest -> InvokeTest -> QueryTest -> UpgradeTest -> QueryTest
     - [x] **日志输出模板** [测试案例日志输出.md](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA.md)
-    - [x] **友情提示**
+    - [x] **使用前置条件**
         - [x] **1.** 测试前请先配置好服务器信息:  [Config](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/common/Config.java)
         - [x] **2.** 使用Redis缓存, 请先安装好redis并配置Redis服务信息 [Constants](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
         - [x] **3.** channel-artifacts 和 crypto-config 目录下替换自己的通道配置及加密文件, 如果不是很熟, 请直接把 examples/e2e_cli 下的 channel-artifacts 和 crypto-config 拷过来替换掉. <br>
