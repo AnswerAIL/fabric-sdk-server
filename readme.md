@@ -10,8 +10,11 @@
     - [x] **JoinPeerTest**: 加入新节点测试案例   [JoinPeerTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/JoinPeerTest.java)
     
   - [x] **测试用例操作顺序建议**: APITest -> JoinPeerTest -> QueryTest -> InvokeTest -> QueryTest -> UpgradeTest -> QueryTest
-    - [x] **友情提示**: 测试前请先配置好服务器信息: Config [链接](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/common/Config.java)
-    
+    - [x] **友情提示**
+        - [x] **1.** 测试前请先配置好服务器信息:  [Config](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/common/Config.java)
+        - [x] **2.** 使用Redis缓存, 请先安装好redis并配置Redis服务信息 [Constants](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
+        - [x] **3.** channel-artifacts 和 crypto-config 目录下替换自己的文件
+        
   - [x] **适用Fabric版本**: release-1.0  [Hyperledger-Fabric Link](https://github.com/hyperledger/fabric)
   
   - [x] **官方SDK**: [hyperledger](https://github.com/hyperledger)
