@@ -5,9 +5,11 @@ package com.hyperledger.fabric.sdk.common;
  */
 public class Constants {
 
+    /** Redis服务器IP地址 */
     public static final String REDIS_IP = "127.0.0.1";
     /** 需要指定redis端口请指定具体端口值, 否则设为-1使用默认端口: 6379 */
     public static final int REDIS_PORT = -1;
+    /** Redis库索引号 */
     public static final int REDIS_INDEX = 0;
     public static final String REDIS_PASSWD = "";
     /** redis缓存中key的前缀 */
