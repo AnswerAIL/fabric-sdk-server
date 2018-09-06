@@ -12,7 +12,7 @@
   - [x] **测试用例操作顺序建议**: APITest -> JoinPeerTest -> QueryTest -> InvokeTest -> QueryTest -> UpgradeTest -> QueryTest
     - [x] **友情提示**: 测试前请先配置好服务器信息: Config [链接](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/common/Config.java)
     
-  - [x] **适用Fabric版本**: release-1.0  [Fabric Link](https://github.com/hyperledger/fabric)
+  - [x] **适用Fabric版本**: release-1.0  [Hyperledger-Fabric Link](https://github.com/hyperledger/fabric)
   
   - [x] **官方SDK**: [hyperledger](https://github.com/hyperledger)
     - [x] **fabric-sdk-java**: [fabric-sdk-java](https://github.com/hyperledger/fabric-sdk-java)
