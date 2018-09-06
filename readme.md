@@ -146,6 +146,8 @@
 ```
 
 ***
-> Created By L.Answer At 2018-08-28 09:23:24 [https://github.com/AnswerCoder](https://github.com/AnswerCoder)
+> Created By **L.Answer At 2018-08-28 09:23:24** <br>
+> GitHub: [https://github.com/AnswerCoder](https://github.com/AnswerCoder) <br>
+> Contact me By Email **answer_ljm@163.com**
 
 
