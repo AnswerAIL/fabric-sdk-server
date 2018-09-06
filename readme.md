@@ -13,7 +13,8 @@
     - [x] **友情提示**
         - [x] **1.** 测试前请先配置好服务器信息:  [Config](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/common/Config.java)
         - [x] **2.** 使用Redis缓存, 请先安装好redis并配置Redis服务信息 [Constants](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
-        - [x] **3.** channel-artifacts 和 crypto-config 目录下替换自己的文件
+        - [x] **3.** channel-artifacts 和 crypto-config 目录下替换自己的通道配置及加密文件, 如果不是很熟, 请直接把 examples/e2e_cli 下的 channel-artifacts 和 crypto-config 拷过来替换掉. <br>
+                        (注意放在test下的resources目录, 测试用例都是放在test下的)
         
   - [x] **适用Fabric版本**: release-1.0  [Hyperledger-Fabric Link](https://github.com/hyperledger/fabric)
   
