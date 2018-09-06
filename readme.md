@@ -19,7 +19,7 @@
   
   - [x] **Redis缓存使用**: 如需使用缓存请先安装Redis, 配置服务信息请参见: [Constants](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
         
-  - [x] **适用Fabric版本**: Hyperledger-Fabric_release-1.0  [Hyperledger-Fabric Link](https://github.com/hyperledger/fabric)
+  - [x] **对应Fabric版本**: Hyperledger-Fabric_release-1.0  [Hyperledger-Fabric Link](https://github.com/hyperledger/fabric)
   
   - [x] **官方SDK**: [hyperledger](https://github.com/hyperledger)
     - [x] **fabric-sdk-java**: [fabric-sdk-java](https://github.com/hyperledger/fabric-sdk-java)
