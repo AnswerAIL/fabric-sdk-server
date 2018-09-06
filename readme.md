@@ -22,7 +22,7 @@
 
 
 
-### resources 目录结构说明
+### 1. resources 目录结构说明
 ```bash
     # 1. 链码存放目录
     chaincodes
@@ -44,7 +44,7 @@
 ```
 
 
-### Fabric V1.0 通道配置信息及证书手动生成
+### 2. Fabric V1.0 通道配置信息及证书手动生成
 ```bash
     # 加入脚本目录
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
@@ -65,7 +65,7 @@
 ```
 
 
-### 关闭每次重启fabric服务重新生成通道及配置文件信息
+### 3. 关闭每次重启fabric服务重新生成通道及配置文件信息
 ```bash
     # 首次启动 network_setup.sh 脚本后, 修改以下代码, 重启 Fabric 服务
     vim network_setup.sh
@@ -75,7 +75,7 @@
 ```
 
 
-### 注释掉tls配置
+### 4. 注释掉tls配置
 ```bash
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
     1. vim base/peer-base.yaml
@@ -100,7 +100,7 @@
 ```
 
 
-### 附录 - APITest 测试用例运行日志
+### 5. 附录 - APITest 测试用例运行日志
 ```bash
     [DEBUG] 2018-09-05 14:38:28.651 com.hyperledger.fabric.sdk.handler.ApiHandler:[60] 构建Hyperledger Fabric客户端实例 Start...
     log4j:WARN No appenders could be found for logger (org.hyperledger.fabric.sdk.helper.Config).
