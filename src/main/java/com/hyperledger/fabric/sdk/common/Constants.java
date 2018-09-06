@@ -11,6 +11,7 @@ public class Constants {
     public static final int REDIS_PORT = -1;
     /** Redis库索引号 */
     public static final int REDIS_INDEX = 0;
+    /** 如果需要密码登录, 请设置密码, 否则请置空 */
     public static final String REDIS_PASSWD = "";
     /** redis缓存中key的前缀 */
     public static final String REDIS_PREFIX = "hyperledger:fabric:cache:";
