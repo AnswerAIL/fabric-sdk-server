@@ -73,17 +73,18 @@
 ```
 
 
-### 说明3. 关闭每次重启fabric服务重新生成通道及配置文件信息
+### 说明3. 关闭每次重启fabric网络时重新生成通道及加密配置文件信息(建议)
 ```bash
     # 首次启动 network_setup.sh 脚本后, 修改以下代码, 重启 Fabric 服务
     vim network_setup.sh
     # 删除以下脚本代码
-    #    function networkUp   -> source generateArtifacts.sh $CH_NAME
+    #    function networkUp   -> source generateArtifacts.sh $CH_NAME   # 删除 else 整个片段的代码
     #    function networkDown -> rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config
 ```
+`如果不关闭的话, 重启Fabric网络时, 客户端需要重新替换通道相关文件信息`
 
 
-### 说明4. 注释掉tls配置
+### 说明4. 注释掉tls配置(必须)
 ```bash
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
     1. vim base/peer-base.yaml
@@ -121,7 +122,6 @@
 > Created By **L.Answer At 2018-08-28 09:23:24** <br>
 > GitHub: [https://github.com/AnswerCoder](https://github.com/AnswerCoder) <br>
 > Contact me By Email **answer_ljm@163.com** or By QQ **1072594307** <br>
-> **To You** 好用请**Star Star Star**, 不好用请弃置 <br>
+> **To Everyone: Star Star Star For Project** `answer-fabric-sdk` <br>
 > End.
-
-
+***
