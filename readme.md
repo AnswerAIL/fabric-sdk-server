@@ -102,7 +102,15 @@
                   
     4. 如果使用 Fabric V1.0 E2E 测试转账DEMO, 请注释掉 script.sh 脚本所有操作区块链代码
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
-    vim scripts/script.sh                          
+    vim scripts/script.sh        
+        # 注释块起始位置(包含以下部分)  
+            ## Create channel
+            echo "Creating channel..."
+            createChannel
+        # 注释块截至位置(包含以下部分)
+            #Query on chaincode on Peer3/Org2, check if the result is 90
+            echo "Querying chaincode on org2/peer3..."
+            chaincodeQuery 3 90                                                    
 ```
 
 
