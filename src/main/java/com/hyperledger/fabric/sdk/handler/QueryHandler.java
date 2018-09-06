@@ -16,7 +16,7 @@ import static org.hyperledger.fabric.sdk.BlockInfo.EnvelopeType.TRANSACTION_ENVE
 /**
  * Created by L.Answer on 2018-09-04 15:54
  *
- * 链码区块信息查询
+ * 链码区块|账本信息查询
  *
  * 单元测试类: BlockChainTest
  */
@@ -55,7 +55,7 @@ public class QueryHandler {
                 info("EnvelopeInfo -> Timestamp: %s.", SDF.format(envelopeInfo.getTimestamp()));
                 info("EnvelopeInfo -> Epoch: %s.", envelopeInfo.getEpoch());
 
-                /* TRANSACTION_ENVELOPE: 交易块, ENVELOPE: 传世纪块 */
+                /* TRANSACTION_ENVELOPE: 交易块, ENVELOPE: 创世纪块 */
                 if (envelopeInfo.getType() == TRANSACTION_ENVELOPE) {
                     BlockInfo.TransactionEnvelopeInfo transactionEnvelopeInfo = (BlockInfo.TransactionEnvelopeInfo) envelopeInfo;
 

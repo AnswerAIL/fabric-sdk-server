@@ -2,12 +2,12 @@
   - [x] **适用对象**: 入门 Hyperledger Fabric SDK
   - [x] **缓存说明**: 如需使用缓存请先安装Redis, 配置服务信息请参见: Constants 类
   - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest | JoinPeerTest
-    - [x] **APITest**: 全流程测试案例
-    - [x] **BlockChainTest**: 查询块信息测试案例
-    - [x] **InvokeTest**: 转账测试案例
-    - [x] **QueryTest**: 查询测试案例
-    - [x] **UpgradeTest**: 升级智能合约测试案例
-    - [x] **JoinPeerTest**: 加入新节点测试案例
+    - [x] **APITest**: 全流程测试案例   [APITest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/APITest.java)
+    - [x] **BlockChainTest**: 查询块信息测试案例   [BlockChainTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/BlockChainTest.java)
+    - [x] **InvokeTest**: 转账测试案例   [InvokeTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/InvokeTest.java)
+    - [x] **QueryTest**: 查询测试案例   [QueryTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/QueryTest.java)
+    - [x] **UpgradeTest**: 升级智能合约测试案例   [UpgradeTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/UpgradeTest.java)
+    - [x] **JoinPeerTest**: 加入新节点测试案例   [JoinPeerTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/JoinPeerTest.java)
     
   - [x] **测试用例操作建议**: APITest -> JoinPeerTest -> QueryTest -> InvokeTest -> QueryTest -> UpgradeTest -> QueryTest
     - [x] **友情提示**: 测试前请先配置好服务器信息: Config
@@ -30,10 +30,10 @@
             chaincodePath: github.com/chaincode_example02
             chaincodeSourceLocation: .../chaincodes/sample
     
-    # 2. 通道配置信息目录
+    # 2. 通道配置信息、锚节点及创世纪块文件存放目录
     channel-artifacts
     
-    # 3. 证书信息目录
+    # 3. 证书、签名密钥信息文件存放目录
     crypto-config
     
     # 4. 背书策略目录
