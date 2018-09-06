@@ -16,6 +16,7 @@
         - [x] **2.** 使用Redis缓存, 请先安装好redis并配置Redis服务信息 [Constants](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
         - [x] **3.** channel-artifacts 和 crypto-config 目录下替换自己的通道配置及加密文件, 如果不是很熟, 请直接把 examples/e2e_cli 下的 channel-artifacts 和 crypto-config 拷过来替换掉. <br>
                         **特别注意: 所有配置文件是放在test下的resources目录, 测试用例都是放在test下的**
+        - [x] **4. `请仔细阅读以下1 2 3 4点说明`** 
   
   - [x] **Redis缓存使用**: 如需使用缓存请先安装Redis, 配置服务信息请参见: [Constants](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
         
@@ -29,7 +30,7 @@
 
 
 
-### 1. resources 目录结构说明
+### 说明1. resources 目录结构说明
 ```bash
     # 1. 链码存放目录
     chaincodes
@@ -51,7 +52,7 @@
 ```
 
 
-### 2. Fabric V1.0 通道配置信息及证书手动生成
+### 说明2. Fabric V1.0 通道配置信息及证书手动生成
 ```bash
     # 加入脚本目录
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
@@ -72,7 +73,7 @@
 ```
 
 
-### 3. 关闭每次重启fabric服务重新生成通道及配置文件信息
+### 说明3. 关闭每次重启fabric服务重新生成通道及配置文件信息
 ```bash
     # 首次启动 network_setup.sh 脚本后, 修改以下代码, 重启 Fabric 服务
     vim network_setup.sh
@@ -82,7 +83,7 @@
 ```
 
 
-### 4. 注释掉tls配置
+### 说明4. 注释掉tls配置
 ```bash
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
     1. vim base/peer-base.yaml
