@@ -1,0 +1,23 @@
+channel:
+  channelName: mychannel
+  channelFile: channel-artifacts/channel.tx
+
+user:
+  name: org1.example.com
+  mspid:  Org1MSP
+  mspPath:  crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/
+
+orderNodes:
+  - orderName: orderer.example.com
+    grpcUrl: grpc://119.23.XXX.XXX:7050
+    pemFile: crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+
+peerNodes:
+  - peerName: peer0.org1.example.com
+    grpcUrl:  grpc://119.23.XXX.XXX:7051
+    evenHubUrl: grpc://119.23.XXX.XXX:7053
+    pemFile:  crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+  - peerName: peer1.org1.example.com
+    grpcUrl:  grpc://119.23.XXX.XXX:8051
+    evenHubUrl: grpc://119.23.XXX.XXX:8053
+    pemFile:  crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/server.crt
