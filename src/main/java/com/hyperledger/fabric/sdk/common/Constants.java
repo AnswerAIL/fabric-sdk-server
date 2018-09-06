@@ -6,7 +6,7 @@ package com.hyperledger.fabric.sdk.common;
 public class Constants {
 
     public static final String REDIS_IP = "127.0.0.1";
-    /** 需要指定redis端口请指定具体端口值, 否则设为-1使用默认端口 */
+    /** 需要指定redis端口请指定具体端口值, 否则设为-1使用默认端口: 6379 */
     public static final int REDIS_PORT = -1;
     public static final int REDIS_INDEX = 0;
     public static final String REDIS_PASSWD = "";
