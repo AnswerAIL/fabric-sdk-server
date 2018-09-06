@@ -38,7 +38,7 @@ public class ApiHandler {
     private static final String CHANNEL_CACHE = REDIS_PREFIX + "channel:";
     private static final String REDIS_SEPERATOR = "@";
 
-    private static Jedis jedis = new Jedis(REDIS_IP);
+    private static Jedis jedis;
     static {
         jedis = (REDIS_PORT <= 0) ? new Jedis(REDIS_IP) : new Jedis(REDIS_IP, REDIS_PORT);
 
