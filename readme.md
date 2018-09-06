@@ -5,7 +5,7 @@
   
   - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest | JoinPeerTest
     - [x] **全流程** [APITest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/APITest.java)
-    - [x] **查询块信息** [BlockChainTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/BlockChainTest.java)
+    - [x] **查询块|账本信息** [BlockChainTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/BlockChainTest.java)
     - [x] **转账操作** [InvokeTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/InvokeTest.java)
     - [x] **查询智能合约** [QueryTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/QueryTest.java)
     - [x] **升级智能合约** [UpgradeTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/UpgradeTest.java)
