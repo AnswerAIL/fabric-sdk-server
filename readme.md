@@ -145,9 +145,7 @@
     [DEBUG] 2018-09-05 14:39:02.440 com.hyperledger.fabric.sdk.handler.ApiHandler:[296] 查询智能合约 End, channelName: mychannel, fcn: query, args: [a]
 ```
 
-
 ***
-`Created By L.Answer At 2018-08-28 09:23:24`
-***
+> Created By L.Answer At 2018-08-28 09:23:24 [https://github.com/AnswerCoder](https://github.com/AnswerCoder)
 
 
