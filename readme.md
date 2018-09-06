@@ -34,7 +34,7 @@
     chaincodes
         EG: /resources/chaincodes/sample/src/github.com/chaincode_example02/chaincode_example02.go
             chaincodePath: github.com/chaincode_example02
-            chaincodeSourceLocation: .../chaincodes/sample
+            chaincodeSourceLocation: .../chaincodes/sample  # ... 请补全绝对路径信息
     
     # 2. 通道配置信息、锚节点及创世纪块文件存放目录
     channel-artifacts
