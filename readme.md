@@ -1,5 +1,5 @@
 # Fabric-SDK-Java 改进版项目 answer-fabric-sdk
-  - [x] **适用对象**: 入门 Hyperledger Fabric SDK
+  - [x] **适用对象**: 入门 Hyperledger-Fabric_release-1.0 Java版SDK
   
   - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest | JoinPeerTest
     - [x] **全流程** [APITest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/APITest.java)
