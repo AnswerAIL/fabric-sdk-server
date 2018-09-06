@@ -1,6 +1,6 @@
 # Fabric-SDK-Java 改进版项目 answer-fabric-sdk
   - [x] **适用对象**: 入门 Hyperledger Fabric SDK
-  - [x] **缓存说明**: 如需使用缓存请先安装Redis, 配置服务信息请参见: Constants 类
+  - [x] **缓存说明**: 如需使用缓存请先安装Redis, 配置服务信息请参见: [Constants](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
   - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest | JoinPeerTest
     - [x] **APITest**: 全流程测试案例   [APITest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/APITest.java)
     - [x] **BlockChainTest**: 查询块信息测试案例   [BlockChainTest](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/BlockChainTest.java)
