@@ -21,7 +21,7 @@ public class QueryTest {
 
          /* 智能合约配置信息 */
         String chaincodeName = "mycc";
-        String chaincodeVersion = "1.2";
+        String chaincodeVersion = "1.0";
         String chaincodePath = "github.com/chaincode_example02";
         ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(chaincodeName).setVersion(chaincodeVersion).setPath(chaincodePath).build();
 
