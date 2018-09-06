@@ -5,19 +5,19 @@ package com.hyperledger.fabric.sdk.entity;
  */
 public enum ExecuteTypeEnum {
     /** 创建通道 */
-    CREATE_CHANNEL("createChannel"),
+    CREATE_CHANNEL("CreateChannel"),
     /** 部署/安装智能合约 */
-    INSTALL_CC("installChainCode"),
+    INSTALL_CC("InstallChainCode"),
     /** 加入节点 */
-    JOIN_NODE("joinNode"),
+    JOIN_NODE("JoinNode"),
     /** 初始化智能合约 */
-    INITITAL_CC("inititalChainCode"),
+    INITITAL_CC("InititalChainCode"),
     /** 查询智能合约 */
-    QUERY_CC("queryChainCode"),
+    QUERY_CC("QueryChainCode"),
     /** 操作智能合约 */
-    INVOKE_CC("invokeChainCode"),
+    INVOKE_CC("InvokeChainCode"),
     /** 升级智能合约 */
-    UPGRADE_CC("upgradeChainCode");
+    UPGRADE_CC("UpgradeChainCode");
 
 
     private String name;
