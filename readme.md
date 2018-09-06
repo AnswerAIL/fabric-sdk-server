@@ -75,9 +75,8 @@
 ```
 
 
-### 注意事项
+### 注释掉tls配置
 ```bash
-    # 注释掉tls配置
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
     1. vim base/peer-base.yaml
         CORE_PEER_TLS_ENABLED=true 
