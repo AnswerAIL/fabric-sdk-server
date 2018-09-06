@@ -106,7 +106,7 @@
 ```
 
 
-### 5. 附录 - APITest 测试用例运行日志
+### 5. 附录 - 全流程测试用例 APITest 运行日志
 ```bash
     [DEBUG] 2018-09-05 14:38:28.651 com.hyperledger.fabric.sdk.handler.ApiHandler:[60] 构建Hyperledger Fabric客户端实例 Start...
     log4j:WARN No appenders could be found for logger (org.hyperledger.fabric.sdk.helper.Config).
