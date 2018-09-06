@@ -163,6 +163,8 @@
 ***
 > Created By **L.Answer At 2018-08-28 09:23:24** <br>
 > GitHub: [https://github.com/AnswerCoder](https://github.com/AnswerCoder) <br>
-> Contact me By Email **answer_ljm@163.com** or By QQ **1072594307**
+> Contact me By Email **answer_ljm@163.com** or By QQ **1072594307** <br>
+> **To You** 好用请**Star Star Star**, 不好用请弃置 <br>
+> End.
 
 
