@@ -18,8 +18,6 @@
                         **特别注意: 所有配置文件是放在test下的resources目录, 测试用例都是放在test下的**
         - [x] **4. `请仔细阅读以下1 2 3 4点说明`** 
   
-  - [x] **Redis缓存使用**: 如需使用缓存请先安装Redis, 配置服务信息请参见: [Constants](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
-        
   - [x] **对应Fabric版本**: Hyperledger-Fabric_release-1.0  [Hyperledger-Fabric Link](https://github.com/hyperledger/fabric)
   
   - [x] **官方SDK列表**: [hyperledger](https://github.com/hyperledger)
