@@ -1,13 +1,9 @@
 # 接入Fabric E2E案例流程说明 - 前提: Fabric 1.0网络已经搭建成功
   - [x] **fabric项目服务器路径**: /opt/gopath/src/github.com/hyperledger/fabric       **`视个人项目路径而定`**
-  - [x] **说明**: 以下所有步骤没特别说明, 均在 **/opt/gopath/src/github.com/hyperledger/fabric/** 目录下操作
+  - [x] **说明**: 以下所有步骤没特别说明, 均在 **/opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli/** 目录下操作
 
 ### 1.  关闭tls配置
 ```bash
-    # 进入fabric e2e_cli目录
-    cd examples/e2e_cli/
-    
-    # 1. 
     vim base/peer-base.yaml
         CORE_PEER_TLS_ENABLED=true          # 在18行左右
             改为
