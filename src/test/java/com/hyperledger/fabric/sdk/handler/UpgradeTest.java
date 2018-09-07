@@ -76,7 +76,7 @@ public class UpgradeTest {
         /* 升级智能合约只需要对一个组织进行操作即可, 通道中的其他的组织会进行同步操作 */
 
         // 3. 创建通道
-        Channel channel = ApiHandler.createChannel(client, channelName, null);
+        Channel channel = ApiHandler.createChannel(client, channelName);
 
         // 4. 升级智能合约
         ExecuteCCDTO upgradeCCDTO = new ExecuteCCDTO.Builder().funcName("init").params(new String[] {"a", "12300", "b", "12400"}).chaincodeID(chaincodeID).build();

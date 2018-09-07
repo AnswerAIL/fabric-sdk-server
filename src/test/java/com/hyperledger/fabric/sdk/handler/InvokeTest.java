@@ -33,7 +33,7 @@ public class InvokeTest {
 
 
         // 2. 创建通道
-        Channel channel = ApiHandler.createChannel(client, channelName, null);
+        Channel channel = ApiHandler.createChannel(client, channelName);
 
         // 3. 转账, 账户a转7 RMVB到账户b
         ExecuteCCDTO invokeCCDTO = new ExecuteCCDTO.Builder().funcName("invoke").params(new String[] {"a", "b", "7"}).chaincodeID(chaincodeID).build();

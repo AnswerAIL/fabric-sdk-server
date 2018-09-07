@@ -25,7 +25,7 @@ public class BlockChainTest {
 
 
         // 2. 创建通道
-        Channel channel = ApiHandler.createChannel(client, channelName, null);
+        Channel channel = ApiHandler.createChannel(client, channelName);
 
 
         QueryHandler.queryBlockChain(channel);

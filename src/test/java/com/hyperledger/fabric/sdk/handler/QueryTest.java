@@ -35,7 +35,7 @@ public class QueryTest {
 
 
         // 2. 创建通道
-        Channel channel = ApiHandler.createChannel(client, channelName, null);
+        Channel channel = ApiHandler.createChannel(client, channelName);
 
 
         // 3. 查询, 账户a的余额
@@ -60,7 +60,7 @@ public class QueryTest {
 
 
         // 2. 创建通道
-        channel = ApiHandler.createChannel(client, channelName, null);
+        channel = ApiHandler.createChannel(client, channelName);
 
 
         // 3. 查询, 账户a的余额

@@ -91,15 +91,14 @@ public class ApiHandler {
 
 
     /**
-     * Star - 创建通道
+     * Star - 创建通道 - 使用缓存 channel 对象
      * @param client 客户端实例
      * @param channelName 通道名称
-     * @param createChannelDTO {@link CreateChannelDTO}
      * @return {@link Channel}
      * @throws Exception e
      * */
-    public static Channel createChannel(HFClient client, String channelName, CreateChannelDTO createChannelDTO) throws Exception {
-        return createChannel(client, channelName, createChannelDTO, true);
+    public static Channel createChannel(HFClient client, String channelName) throws Exception {
+        return createChannel(client, channelName, null, true);
     }
 
 
