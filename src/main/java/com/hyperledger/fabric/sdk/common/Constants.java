@@ -2,6 +2,13 @@ package com.hyperledger.fabric.sdk.common;
 
 /**
  * Created by L.Answer on 2018-09-03 14:36
+ *
+ * 以下常量
+ *      REDIS_PREFIX
+ *      PROPOSAL_WAIT_TIME
+ *      SERIAL_CHANNEL_TO_FILE
+ *      CHANNEL_SERIAL_PATH
+ *  没有特殊情况或强迫症患者, 可无需修改其值
  */
 public class Constants {
 
@@ -19,5 +26,10 @@ public class Constants {
 
     /** 交易等待时间, 单位: ms */
     public static final int PROPOSAL_WAIT_TIME = 60000;
+
+    /** 是否将通道序列化到本地磁盘文件 */
+    public static final boolean SERIAL_CHANNEL_TO_FILE = false;
+    /** 将通道对象序列化到本地磁盘文件路径, 为空时默认路径: 当前项目根目录下 */
+    public static final String CHANNEL_SERIAL_PATH = "";
 
 }

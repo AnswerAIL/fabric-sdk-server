@@ -11,6 +11,7 @@ import com.hyperledger.fabric.sdk.entity.dto.EnrollmentDTO;
 import com.hyperledger.fabric.sdk.entity.dto.UserContextDTO;
 import com.hyperledger.fabric.sdk.entity.dto.api.*;
 import com.hyperledger.fabric.sdk.exception.FabricSDKException;
+import com.hyperledger.fabric.sdk.utils.HFSDKUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.fabric.sdk.*;
@@ -151,6 +152,7 @@ public class ApiHandler {
             jedis.set(redisKey.getBytes(), channel.serializeChannel());
             info("通道对象已放入redis缓存, 缓存key: %s.", redisKey);
         }
+        HFSDKUtils.serialize2File(channel, mspId);
         return channel;
     }
 
@@ -211,6 +213,7 @@ public class ApiHandler {
             jedis.set(redisKey.getBytes(), channel.serializeChannel());
             info("通道对象已放入redis缓存, 缓存key: %s.", redisKey);
         }
+        HFSDKUtils.serialize2File(channel, mspId);
         debug("往通道加入新节点 End, channelName: %s.", channelName);
     }
 

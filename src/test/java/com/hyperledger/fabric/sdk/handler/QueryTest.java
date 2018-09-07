@@ -11,7 +11,6 @@ import org.hyperledger.fabric.sdk.HFClient;
  *
  * 查询智能合约测试用例
  *
- * 注意修改 chaincodeVersion 的版本号
  */
 public class QueryTest {
 
@@ -49,7 +48,7 @@ public class QueryTest {
         System.out.println("================================= ↓ ↓ ↓ ↓ ↓ ↓ ↓ Org2MSP ↓ ↓ ↓ ↓ ↓ ↓ =================================");
         System.out.println("\n");
 
-        /** 如需执行以下代码, 需先把组织 Org2MSP 下的peer节点加入通道 {@link JoinPeerTest} */
+        /* TODO: Answer 如需执行以下代码, 需先把组织 Org2MSP 下的peer节点加入通道 {@link JoinPeerTest} */
 
         // 1. 初始化客户端
         mspPath = "crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/";
