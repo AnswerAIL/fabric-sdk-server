@@ -11,7 +11,6 @@ import org.hyperledger.fabric.sdk.security.CryptoSuite;
 import redis.clients.jedis.Jedis;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.Security;
 import java.util.*;
@@ -299,7 +298,7 @@ public class SDKClient {
 
         String mspPath = "crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/";
         InputStream certFileIS = new FileInputStream(getFile(mspPath + "signcerts", null));
-        String cert = new String(IOUtils.toByteArray(certFileIS), StandardCharsets.UTF_8);
+        String cert = new String(IOUtils.toByteArray(certFileIS), UTF_8);
 
         InputStream keyFileIS = new FileInputStream(getFile(mspPath + "keystore", "_sk"));
         PrivateKey key = getPrivateKeyFromBytes(IOUtils.toByteArray(keyFileIS));
