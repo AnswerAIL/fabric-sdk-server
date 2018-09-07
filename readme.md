@@ -26,7 +26,7 @@
     - [x] **fabric-sdk-go**: [fabric-sdk-go](https://github.com/hyperledger/fabric-sdk-go)
     - [x] **fabric-sdk-python**: [fabric-sdk-python](https://github.com/hyperledger/fabric-sdk-py)                      
 
-
+  - [x] **好评加Star, 后期推出http请求操作链码项目**
 
 ### 说明1. resources 目录结构说明
 ```bash
@@ -115,7 +115,7 @@
 ```
 
 
-### 5. About L.Answer
+### 5. About Project
 ***
 > Project `answer-fabric-sdk` Created By **L.Answer At 2018-08-27** <br>
 > GitHub: [https://github.com/AnswerCoder](https://github.com/AnswerCoder) <br>
