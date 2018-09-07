@@ -15,7 +15,7 @@
         - [x] **2.** 使用Redis缓存, 请先安装好redis并配置Redis服务信息 [Constants](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
         - [x] **3.** channel-artifacts 和 crypto-config 目录下替换自己的通道配置及加密文件, 如果不是很熟, 请直接把 examples/e2e_cli 下的 channel-artifacts 和 crypto-config 拷过来替换掉. <br>
                         **特别注意: 所有配置文件是放在test下的resources目录, 测试用例都是放在test下的**
-        - [x] **4. [接入Fabric E2E案例流程说明.md](1) 或 `请仔细阅读以下1 2 3 4点说明`** 
+        - [x] **4. [接入Fabric E2E案例流程说明.md](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/%E6%8E%A5%E5%85%A5Fabric%20E2E%E6%A1%88%E4%BE%8B%E6%B5%81%E7%A8%8B%E8%AF%B4%E6%98%8E.md) 或 `请仔细阅读以下1 2 3 4点说明`** 
     - [x] **日志输出模板** [测试案例日志输出.md](https://github.com/AnswerCoder/answer-fabric-sdk/blob/master/%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA.md)        
   
   - [x] **JDK版本**: JDK 1.8 
