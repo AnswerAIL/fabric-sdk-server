@@ -120,7 +120,7 @@
 > Created By **L.Answer At 2018-08-28 09:23:24** <br>
 > GitHub: [https://github.com/AnswerCoder](https://github.com/AnswerCoder) <br>
 > Contact me By Email **answer_ljm@163.com** or By QQ **1072594307** <br>
-> **To Everyone: Star Star Star For Project** `answer-fabric-sdk` <br>
-> **郑重说明**: `此项目仅提供学习交流， 不得用于商业用途， 如有其他用途请先联系作者。` <br> 
+> To Everyone: **Star Star Star** For Project `answer-fabric-sdk` <br>
+> **郑重说明**: `此项目仅提供学习交流， 禁止用于任何商业用途， 如有其他用途请先联系作者。` <br> 
 > End.
 ***

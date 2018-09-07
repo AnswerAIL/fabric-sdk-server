@@ -14,9 +14,7 @@ import java.util.Collection;
  *
  * SDK-API 测试用例
  *
- * 测试时需要把resources目录复制到test目录下
- *
- * 若报错: 初始化智能合约失败 解决方案
+ * 若报错: 初始化智能合约失败 在不需要重启Fabric网络的情况下的解决方案
  *  1: Channel channel = ApiHandler.createChannel(client, channelName, createChannelDTO, false);
  *          改为
  *     Channel channel = ApiHandler.createChannel(client, channelName, createChannelDTO);
