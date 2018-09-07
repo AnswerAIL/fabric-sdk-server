@@ -79,7 +79,7 @@
 ### 3. 下载 channel-artifacts和crypto-config 目录到本地, 并将项目 src/test/resources 目录下的 channel-artifacts和crypto-config 替换掉
 
 
-### 4. 每次重启Farbci网络都会重新生成通道配置信息和证书, 如果不进行此步骤操作, 每次重启Fabric网络时都【重新需要操作步骤3】
+### 4. 可选-每次重启Farbci网络都会重新生成通道配置信息和证书, 如果不进行此步骤操作, 每次重启Fabric网络时都【需要重新操作步骤3】
 ```bash
     # 编辑启动脚本 network_setup.sh
     vim network_setup.sh
