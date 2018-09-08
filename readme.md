@@ -1,5 +1,5 @@
 # Fabric-SDK-Java 改进版项目 answer-fabric-sdk
-  - [x] **前言**: 前各位仔细阅读此文档,　按照文档要求进行操作并运行项目　
+  - [x] **前言**: 请各位务必仔细阅读此文档,　按照文档要求进行操作并运行项目　
   - [x] **适用对象**: 入门 Hyperledger-Fabric_release-1.0 Java版SDK
   
   - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest | JoinPeerTest
