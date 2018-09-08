@@ -26,7 +26,7 @@
     - [x] **fabric-sdk-go**: [fabric-sdk-go](https://github.com/hyperledger/fabric-sdk-go)
     - [x] **fabric-sdk-python**: [fabric-sdk-python](https://github.com/hyperledger/fabric-sdk-py)                      
 
-  - [x] **好评加Star, 后期推出http请求操作链码项目**
+  - [x] **欢迎加Star收藏**
 
 ### 说明1. resources 目录结构说明
 ```bash
