@@ -5,6 +5,7 @@ import com.hyperledger.fabric.sdk.entity.dto.api.*;
 import org.hyperledger.fabric.sdk.ChaincodeID;
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.HFClient;
+import org.hyperledger.fabric.sdk.helper.Config;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +26,8 @@ public class APITest {
 
     public static void main(String[] args) throws Exception {
         String cxtPath = APITest.class.getClassLoader().getResource("").getPath();
-
+        // 加载配置文件
+        System.setProperty(Config.ORG_HYPERLEDGER_FABRIC_SDK_CONFIGURATION, cxtPath + "config.properties");
 
         /* 通道名称 */
         String channelName = "mychannel";
