@@ -105,6 +105,7 @@
 ### 附录. 报错说明
 ```bash
     # SDK启动报错信息
+:<<annotation
     Exception in thread "main" org.hyperledger.fabric.sdk.exception.TransactionException: org.hyperledger.fabric.sdk.exception.EventHubException: UNAVAILABLE
     	at org.hyperledger.fabric.sdk.Channel.initialize(Channel.java:742)
     	at com.hyperledger.fabric.sdk.handler.ApiHandler.joinPeers(ApiHandler.java:238)
@@ -145,8 +146,9 @@
     	... 11 more
     
     Process finished with exit code 1
+annotation
     
-    解决方案: 拉取的镜像修改为对应的版本即可
+    # 解决方案: 拉取的镜像修改为对应的版本即可
         vim base/peer-base.yaml
             image: hyperledger/fabric-peer      =>  image: hyperledger/fabric-peer:x86_64-1.0.5
         
