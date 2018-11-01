@@ -99,3 +99,62 @@
 ```bash
     ./network_setup.sh restart
 ```
+
+
+
+### 附录. 报错说明
+```bash
+    # SDK启动报错信息
+    Exception in thread "main" org.hyperledger.fabric.sdk.exception.TransactionException: org.hyperledger.fabric.sdk.exception.EventHubException: UNAVAILABLE
+    	at org.hyperledger.fabric.sdk.Channel.initialize(Channel.java:742)
+    	at com.hyperledger.fabric.sdk.handler.ApiHandler.joinPeers(ApiHandler.java:238)
+    	at com.hyperledger.fabric.sdk.handler.ApiHandler.createChannel(ApiHandler.java:147)
+    	at com.hyperledger.fabric.sdk.handler.APITest.main(APITest.java:63)
+    Caused by: org.hyperledger.fabric.sdk.exception.EventHubException: UNAVAILABLE
+    	at org.hyperledger.fabric.sdk.EventHub.connect(EventHub.java:301)
+    	at org.hyperledger.fabric.sdk.Channel.initialize(Channel.java:724)
+    	... 3 more
+    Caused by: io.grpc.StatusRuntimeException: UNAVAILABLE
+    	at io.grpc.Status.asRuntimeException(Status.java:526)
+    	at io.grpc.stub.ClientCalls$StreamObserverToCallListenerAdapter.onClose(ClientCalls.java:385)
+    	at io.grpc.ForwardingClientCallListener.onClose(ForwardingClientCallListener.java:41)
+    	at io.grpc.internal.CensusTracingModule$TracingClientInterceptor$1$1.onClose(CensusTracingModule.java:339)
+    	at io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:443)
+    	at io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:63)
+    	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl.close(ClientCallImpl.java:525)
+    	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl.access$600(ClientCallImpl.java:446)
+    	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:557)
+    	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+    	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:107)
+    	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+    	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    	at java.lang.Thread.run(Thread.java:748)
+    Caused by: io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: /119.23.106.146:7053
+    	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+    	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:717)
+    	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:323)
+    	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:340)
+    	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:633)
+    	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:580)
+    	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:497)
+    	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:459)
+    	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858)
+    	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:138)
+    	... 1 more
+    Caused by: java.net.ConnectException: Connection refused: no further information
+    	... 11 more
+    
+    Process finished with exit code 1
+    
+    解决方案: 拉取的镜像修改为对应的版本即可
+        vim base/peer-base.yaml
+            image: hyperledger/fabric-peer      =>  image: hyperledger/fabric-peer:x86_64-1.0.5
+        
+        vim base/docker-compose-base.yaml
+            image: hyperledger/fabric-orderer   =>  image: hyperledger/fabric-orderer:x86_64-1.0.5
+            
+        vim docker-compose-cli.yaml
+            image: hyperledger/fabric-tools     =>  image: hyperledger/fabric-tools:x86_64-1.0.5                    
+             
+    
+```
