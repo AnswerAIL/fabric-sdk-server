@@ -48,6 +48,9 @@
     
     # 5. 协议文件目录(此版本暂无用到)
     protocol
+    
+    # 6. 配置文件
+    config.properties
 ```
 
 
