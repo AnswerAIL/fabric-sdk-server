@@ -129,6 +129,7 @@ public class ApiHandler {
                 debug("创建通道 End, channelName: %s, isInitialized: %b.", channelName, channel.isInitialized());
                 return channel;
             }
+            throw new FabricSDKException("缓存数据为空, 操作缓存失败. key=" + redisKey);
         }
 
         File channelFile = new File(createChannelDTO.getChannelConfigPath());
