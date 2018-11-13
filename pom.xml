@@ -14,7 +14,7 @@
     <properties>
         <fabric.sdk.version>1.0.2-SNAPSHOT</fabric.sdk.version>
         <commons.lang.version>3.1</commons.lang.version>
-        <alibaba.fastjson.version>1.2.16</alibaba.fastjson.version>
+        <alibaba.fastjson.version>1.2.31</alibaba.fastjson.version>
     </properties>
 
 
