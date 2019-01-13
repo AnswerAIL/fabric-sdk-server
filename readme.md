@@ -4,17 +4,25 @@
   
   - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest | JoinPeerTest
     - [x] **全流程** [APITest](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/APITest.java)
+    
     - [x] **查询区块|账本信息** [BlockChainTest](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/BlockChainTest.java)
+    
     - [x] **转账操作** [InvokeTest](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/InvokeTest.java)
+    
     - [x] **查询智能合约** [QueryTest](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/QueryTest.java)
+    
     - [x] **升级智能合约** [UpgradeTest](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/UpgradeTest.java)
+    
     - [x] **加入新节点** [JoinPeerTest](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/JoinPeerTest.java)
     
   - [x] **测试用例执行顺序建议**: **APITest** -> **JoinPeerTest** -> **QueryTest** -> **InvokeTest** -> **QueryTest** -> **UpgradeTest** -> **QueryTest**
     - [x] **使用前置条件**
         - [x] **1.** 测试前请先配置好服务器信息:  [Config](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/common/Config.java)
+        
         - [x] **2.** 使用Redis缓存, 请先安装好redis并配置Redis服务信息 [Constants](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/main/java/com/hyperledger/fabric/sdk/common/Constants.java) 类
+        
         - [x] **3. 查阅 [接入Fabric E2E案例流程说明.md](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/%E6%8E%A5%E5%85%A5Fabric%20E2E%E6%A1%88%E4%BE%8B%E6%B5%81%E7%A8%8B%E8%AF%B4%E6%98%8E.md) 或 `请仔细阅读以下1 2 3 4点说明` 均可** 
+        
     - [x] **日志输出模板** [测试案例日志输出.md](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA.md)        
   
   - [x] **JDK版本**: JDK 1.8 
@@ -23,8 +31,11 @@
   
   - [x] **官方SDK列表**: [hyperledger](https://github.com/hyperledger)
     - [x] **fabric-sdk-java**: [fabric-sdk-java](https://github.com/hyperledger/fabric-sdk-java)
+    
     - [x] **fabric-sdk-node**: [fabric-sdk-node](https://github.com/hyperledger/fabric-sdk-node)
+    
     - [x] **fabric-sdk-go**: [fabric-sdk-go](https://github.com/hyperledger/fabric-sdk-go)
+    
     - [x] **fabric-sdk-python**: [fabric-sdk-python](https://github.com/hyperledger/fabric-sdk-py)                      
 
   - [x] **欢迎加Star收藏 OR [微信打赏](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg)     [支付宝打赏](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/zfb.png)**
