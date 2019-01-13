@@ -15,6 +15,7 @@
     
     - [x] **加入新节点** [JoinPeerTest](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/JoinPeerTest.java)
     
+    
   - [x] **测试用例执行顺序建议**: **APITest** -> **JoinPeerTest** -> **QueryTest** -> **InvokeTest** -> **QueryTest** -> **UpgradeTest** -> **QueryTest**
     - [x] **使用前置条件**
         - [x] **1.** 测试前请先配置好服务器信息:  [Config](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/common/Config.java)
@@ -25,9 +26,12 @@
         
     - [x] **日志输出模板** [测试案例日志输出.md](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA.md)        
   
+  
   - [x] **JDK版本**: JDK 1.8 
   
+  
   - [x] **对应Fabric版本**: Hyperledger-Fabric_release-1.0  [Hyperledger-Fabric Link](https://github.com/hyperledger/fabric)
+  
   
   - [x] **官方SDK列表**: [hyperledger](https://github.com/hyperledger)
     - [x] **fabric-sdk-java**: [fabric-sdk-java](https://github.com/hyperledger/fabric-sdk-java)
@@ -37,6 +41,7 @@
     - [x] **fabric-sdk-go**: [fabric-sdk-go](https://github.com/hyperledger/fabric-sdk-go)
     
     - [x] **fabric-sdk-python**: [fabric-sdk-python](https://github.com/hyperledger/fabric-sdk-py)                      
+
 
   - [x] **欢迎加Star收藏 OR [微信打赏](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg)     [支付宝打赏](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/zfb.png)**
 
