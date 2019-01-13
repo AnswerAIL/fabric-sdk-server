@@ -139,6 +139,7 @@
 
 ***
 ### 请简单粗暴地支持我
+***
 ##### [微信](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg)
 <img src="https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg"  height="230" width="240">
 
