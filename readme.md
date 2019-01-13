@@ -1,4 +1,4 @@
-# Fabric-SDK-Java 改进版项目 fabric-sdk-server
+# Fabric-SDK-Java 封装版项目 fabric-sdk-server
   - [x] **前言**: 请各位务必仔细阅读此文档,　按照文档要求进行操作并运行项目　
   - [x] **适用对象**: 入门 Hyperledger-Fabric_release-1.0 Java版SDK
   
@@ -122,7 +122,8 @@
 ### 5. About Project
 ***
 > Project `fabric-sdk-server` Created By **L.Answer At 2018-08-27** <br>
-> GitHub: [https://github.com/AnswerAICode](https://github.com/AnswerAICode) <br>
+> GitHub: [https://github.com/AnswerProgramer](https://github.com/AnswerProgramer) <br>
+> 此项目为基础入门版本， 如需要进行源码改造支持节点的高可用以及启动TLS请私聊 <br>
 > Contact me By Email **answer_ljm@163.com** or By QQ **1072594307** <br>
 > **郑重说明**: `此项目仅提供学习交流， 禁止用于任何商业用途， 如有其他用途请先联系作者。` <br> 
 > End.
