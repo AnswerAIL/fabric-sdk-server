@@ -27,7 +27,9 @@
     - [x] **fabric-sdk-go**: [fabric-sdk-go](https://github.com/hyperledger/fabric-sdk-go)
     - [x] **fabric-sdk-python**: [fabric-sdk-python](https://github.com/hyperledger/fabric-sdk-py)                      
 
-  - [x] **欢迎加Star收藏**
+  - [x] **欢迎加Star收藏 OR 打赏支持**
+
+&nbsp;
 
 ### 说明1. resources 目录结构说明
 ```bash
@@ -53,6 +55,7 @@
     config.properties
 ```
 
+&nbsp;
 
 ### 说明2. Fabric V1.0 通道配置信息及证书手动生成
 ```bash
@@ -74,6 +77,7 @@
     ll crypto-config                 
 ```
 
+&nbsp;
 
 ### 说明3. 关闭每次重启fabric网络时重新生成通道及加密配置文件信息(建议)
 ```bash
@@ -85,6 +89,7 @@
 ```
 `如果不关闭的话, 重启Fabric网络时, 客户端需要重新替换通道相关文件信息`
 
+&nbsp;
 
 ### 说明4. 注释掉tls配置(必须)
 ```bash
@@ -118,13 +123,19 @@
             chaincodeQuery 3 90                                                    
 ```
 
+&nbsp;
 
 ### 5. About Project
 ***
 > Project `fabric-sdk-server` Created By **L.Answer At 2018-08-27** <br>
 > GitHub: [https://github.com/AnswerAIL](https://github.com/AnswerAIL) <br>
-> 此项目为基础入门版本， 如需要进行接入SpringBoot、源码改造支持节点的高可用以及启动TLS请私聊 <br>
+> 此项目为基础入门版本， 如需要进行**接入SpringBoot**、**源码改造支持节点的高可用**以及**启动TLS**请私聊 <br>
 > Contact me By Email **answer_ljm@163.com** or By QQ **1072594307** <br>
 > **郑重说明**: `此项目仅提供学习交流， 禁止用于任何商业用途， 如有其他用途请先联系作者。` <br> 
 > End.
 ***
+
+&nbsp;
+
+### 请简单粗暴地支持我
+<img src="https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg"  height="230" width="240">
