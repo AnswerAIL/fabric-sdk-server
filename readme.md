@@ -27,7 +27,7 @@
     - [x] **fabric-sdk-go**: [fabric-sdk-go](https://github.com/hyperledger/fabric-sdk-go)
     - [x] **fabric-sdk-python**: [fabric-sdk-python](https://github.com/hyperledger/fabric-sdk-py)                      
 
-  - [x] **欢迎加Star收藏 OR 打赏支持**
+  - [x] **欢迎加Star收藏 OR [打赏支持](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg)**
 
 &nbsp;
 
