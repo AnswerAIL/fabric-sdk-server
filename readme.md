@@ -145,7 +145,7 @@
 ***
 > Project `fabric-sdk-server` Created By **L.Answer At 2018-08-27** <br>
 > GitHub: [https://github.com/AnswerAIL](https://github.com/AnswerAIL) <br>
-> <font color=red>此项目为基础入门版本， 如需要进行 **`接入SpringBoot`**、**`源码改造支持节点的高可用`** **`共识最快OR最新通知机制`** 以及 **`启用TLS`** 请私聊</font> <br>
+> $\color{red}此项目为基础入门版本， 如需要进行 **`接入SpringBoot`**、**`源码改造支持节点的高可用`** **`共识最快OR最新通知机制`** 以及 **`启用TLS`** 请私聊$ <br>
 > Contact me By Email **answer_ljm@163.com** or By QQ **1072594307** <br>
 > **郑重说明**: `此项目仅提供学习交流， 禁止用于任何商业用途， 如有其他用途请先联系作者。` <br> 
 > End.
