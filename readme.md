@@ -1,7 +1,5 @@
 # Fabric-SDK-Java 封装版项目 fabric-sdk-server
-  - [x] **前言**: 请各位务必仔细阅读此文档,　按照文档要求进行操作并运行项目
-  
-  此项目仅为Fabric爱好者基础入门版本SDK， 如有 **`接入SpringBoot`**、**`源码改造支持节点的高可用`** **`共识最快OR最新通知机制`** **`多智能合约部署`** **`接入CouchDB`** 以及 **`启用TLS`** 等功能需求的请联系作者， <a name="5. About Project">获取联系方式</a>
+  - [x] **前言**: 请各位务必仔细阅读此文档,　按照文档要求进行操作并运行项目。 此项目仅为Fabric爱好者基础入门版本SDK， 如有 **`接入SpringBoot`**、**`源码改造支持节点的高可用`** **`共识最快OR最新通知机制`** **`多智能合约部署`** **`接入CouchDB`** 以及 **`启用TLS`** 等功能需求的请联系作者， <a href="answerail">获取联系方式</a>
   
   - [x] **适用对象**: 入门 Hyperledger-Fabric_release-1.0 Java版SDK
   
@@ -144,7 +142,7 @@
 
 &nbsp;
 
-### 5. About Project
+### <a name="answerail">5. About Project</a>
 ***
 > Project `fabric-sdk-server` Created By **L.Answer At 2018-08-27** <br>
 > GitHub: [https://github.com/AnswerAIL](https://github.com/AnswerAIL) <br>
