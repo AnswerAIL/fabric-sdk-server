@@ -44,7 +44,7 @@
     - [x] **fabric-sdk-python**: [fabric-sdk-python](https://github.com/hyperledger/fabric-sdk-py)                      
 
 
-  - [x] **欢迎加Star收藏 OR <a href="#reward">微信打赏</a>     <a href="#reward">支付宝打赏]</a>**
+  - [x] **欢迎加Star收藏 OR <a href="#reward">微信打赏</a>     <a href="#reward">支付宝打赏</a>**
 
 &nbsp;
 
