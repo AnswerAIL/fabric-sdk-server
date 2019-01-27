@@ -154,7 +154,7 @@
 &nbsp;
 
 ***
-### 如果觉得该项目对你有帮助， 请随意打赏， 谢谢支持
+### 该项目如果对你有所帮助， 请随意打赏， 谢谢支持
 ***
 ##### ☞ [微信](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg)
 <img src="https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg"  height="230" width="240">
