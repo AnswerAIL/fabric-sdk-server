@@ -44,7 +44,7 @@
     - [x] **fabric-sdk-python**: [fabric-sdk-python](https://github.com/hyperledger/fabric-sdk-py)                      
 
 
-  - [x] **欢迎加Star收藏 OR <a href="#reward">微信打赏</a> OR  <a href="#reward">支付宝打赏</a>**
+  - [x] **欢迎加星收藏**
 
 &nbsp;
 
@@ -150,16 +150,3 @@
 > **郑重说明**: `此项目仅提供学习交流， 禁止用于任何商业用途， 如有其他用途请先联系作者。` <br> 
 > End.
 ***
-
-&nbsp;
-
-***
-### <a name="reward">该项目如果对你有所帮助， 请随意打赏， 谢谢支持</a>
-***
-##### ☞ [微信](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg)
-<img src="https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/wx.jpg"  height="230" width="240">
-
-&nbsp;
-
-##### ☞ [支付宝](https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/zfb.png)
-<img src="https://github.com/AnswerAIL/answer-ai-repositories/blob/master/pay/zfb.png"  height="230" width="240">
