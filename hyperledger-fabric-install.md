@@ -51,8 +51,8 @@
     # 拉取fabric代码
     git clone https://github.com/hyperledger/fabric.git
     
-    # 切换到1.1分支上
-    git checkout -b release-1.1 origin/release-1.1
+    # 切换到1.0分支上
+    git checkout -b release-1.0 origin/release-1.0
     
     # 拉取 Docker 镜像(时间较长)及一些可执行文件
     cd /opt/gopath/src/github.com/hyperledger/fabric/scripts
