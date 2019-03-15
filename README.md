@@ -141,6 +141,7 @@
             echo "Querying chaincode on org2/peer3..."
             chaincodeQuery 3 90                                                    
 ```
+`说明： 由于该项目sdk端不对tls进行支持， 因此区块链网络端必须关闭tls`
 
 &nbsp;
 
