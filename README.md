@@ -1,7 +1,7 @@
 # Fabric-SDK-Java 封装版项目 fabric-sdk-server
   - [x] **前言**: 请各位务必仔细阅读此文档,　按照文档要求进行操作并运行项目。 此项目仅为Fabric爱好者基础入门版本SDK， 该版本不对 **`接入SpringBoot`**、**`源码改造支持节点的高可用`** **`共识最快OR最新通知机制`** **`多智能合约部署`** **`支持富查询`** **`支持CA`** 以及 **`启用TLS`** 等功能进行支持。
   
-  - [x] **区块链网络部署方案** [fabric-network deploy](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/hyperledger-fabric-install.md)
+  - [x] **区块链网络部署方案** [fabric-network deploy](https://github.com/AnswerAIL/fabric-sdk-server/blob/release-1.1/hyperledger-fabric-install.md)
   
   - [x] **适用对象**: 入门 Hyperledger-Fabric_release-1.1 Java版SDK
   
