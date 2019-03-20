@@ -3,7 +3,7 @@
   
   - [x] **区块链网络部署方案** [fabric-network deploy](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/hyperledger-fabric-install.md)
   
-  - [x] **适用对象**: 入门 Hyperledger-Fabric_release-1.0 Java版SDK
+  - [x] **适用对象**: 入门 Hyperledger-Fabric_release-1.1 Java版SDK
   
   - [x] **测试用例**: APITest | BlockChainTest | InvokeTest | QueryTest | UpgradeTest | JoinPeerTest
     - [x] **全流程** [APITest](https://github.com/AnswerAIL/fabric-sdk-server/blob/master/src/test/java/com/hyperledger/fabric/sdk/handler/APITest.java)
@@ -33,7 +33,7 @@
   - [x] **JDK版本**: JDK 1.8 
   
   
-  - [x] **对应Fabric版本**: Hyperledger-Fabric_release-1.0  [Hyperledger-Fabric Link](https://github.com/hyperledger/fabric)
+  - [x] **对应Fabric版本**: Hyperledger-Fabric_release-1.1  [Hyperledger-Fabric Link](https://github.com/hyperledger/fabric)
   
   
   - [x] **官方SDK列表**: [hyperledger](https://github.com/hyperledger)
