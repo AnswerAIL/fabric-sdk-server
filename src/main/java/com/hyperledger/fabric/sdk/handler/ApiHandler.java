@@ -230,10 +230,6 @@ public class ApiHandler {
             Peer peer = client.newPeer(peerNodeDTO.getNodeName(), peerNodeDTO.getGrpcUrl(), peerNodeDTO.getProperties());
             channel.joinPeer(peer);
             debug("peer节点: %s 已成功加入通道.", peerNodeDTO.getNodeName());
-
-            EventHub eventHub = client.newEventHub(peerNodeDTO.getNodeName(), peerNodeDTO.getEvenHubUrl(), peerNodeDTO.getProperties());
-            channel.addEventHub(eventHub);
-            debug("eventHub节点: %s 已成功加入通道.", peerNodeDTO.getNodeName());
         }
         if (!channel.isInitialized()) {
             channel.initialize();
