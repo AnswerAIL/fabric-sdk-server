@@ -76,7 +76,7 @@
 
 &nbsp;
 
-### 说明2. Fabric V1.0 通道配置信息及证书手动生成
+### 说明2. Fabric V1.1 通道配置信息及证书手动生成
 ```bash
     # 加入脚本目录
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
@@ -129,7 +129,7 @@
             改为
         CORE_PEER_TLS_ENABLED=false  
                   
-    4. 如果使用 Fabric V1.0 E2E 测试转账DEMO, 请注释掉 script.sh 脚本所有操作区块链代码
+    4. 如果使用 Fabric V1.1 E2E 测试转账DEMO, 请注释掉 script.sh 脚本所有操作区块链代码
     cd /opt/gopath/src/github.com/hyperledger/fabric/examples/e2e_cli
     vim scripts/script.sh        
         # 注释块起始位置(包含以下部分)  
