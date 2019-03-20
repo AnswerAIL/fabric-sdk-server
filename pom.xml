@@ -12,7 +12,7 @@
     <description>Hyperledger-Fabric-SDK-Java</description>
 
     <properties>
-        <fabric.sdk.version>1.0.2-SNAPSHOT</fabric.sdk.version>
+        <fabric.sdk.version>1.1.0</fabric.sdk.version>
         <commons.lang.version>3.1</commons.lang.version>
         <alibaba.fastjson.version>1.2.31</alibaba.fastjson.version>
     </properties>
