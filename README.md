@@ -157,5 +157,5 @@
 
 &nbsp;
 
-<table><tr><td bgcolor=#45B6F7><font face="微软雅黑" color="#FFFFFF" size="5">[遇到问题请提Issues](https://github.com/AnswerAIL/fabric-sdk-server/issues)</font></td></tr></table>
+<table><tr><td bgcolor=#45B6F7><font face="微软雅黑" color="#FFFFFF" size="5"><a href="https://github.com/AnswerAIL/fabric-sdk-server/issues">有问题请提Issues</a></font></td></tr></table>
 
