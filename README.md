@@ -35,3 +35,16 @@ data/
         └── root        # 对应目录： crypto-config/peerOrganizations/org1.aiqkl.com/peers/peer0.org1.aiqkl.com
 
 ```
+
+&nbsp;
+
+```bash
+# 启动区块链环境
+docker-compose -f docker-compose.yaml up -d
+# 删除区块链环境
+docker-compose -f docker-compose.yaml down
+
+# 区块链环境用到的相关证书请自行创建， 依照官方创建步骤进行创建, e.g
+https://github.com/hyperledger/fabric-sdk-java/tree/release-1.4/src/test/fixture/sdkintegration/e2e-2Orgs/v1.3
+
+```
