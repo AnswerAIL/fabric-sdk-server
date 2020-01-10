@@ -11,7 +11,7 @@ client:
 
 # 通道信息
 channels:
-  mychannel:
+  xwchannel:
     orderers:
       - orderer1.aiqkl.com
 
@@ -21,14 +21,14 @@ channels:
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: true
-      jaemon.org1.aiqkl.com:
+      hbut.org1.aiqkl.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: false
 
     chaincodes:
-      - mycc:v1
+      - xwcc:v1
 
 # 组织信息
 organizations:
@@ -36,7 +36,7 @@ organizations:
     mspid: Org1MSP
     peers:
       - root.org1.aiqkl.com
-      - jaemon.org1.aiqkl.com
+      - hbut.org1.aiqkl.com
     adminPrivateKey:
       path: C:/data/poc/fabric_official/msp/keystore/adminkeystore_sk
     signedCert:
@@ -65,7 +65,7 @@ peers:
       sslProvider: openSSL
       hostnameOverride: root.org1.aiqkl.com
 
-  jaemon.org1.aiqkl.com:
+  hbut.org1.aiqkl.com:
     url: grpc://192.168.1.1:8051
     # Fbric 1.2 版本已经剔除掉 eventUrl
 #    eventUrl: grpc://192.168.1.1:8053
@@ -73,4 +73,4 @@ peers:
       grpc.http2.keepalive_time: 15
       negotiationType: TLS
       sslProvider: openSSL
-      hostnameOverride: jaemon.org1.aiqkl.com
+      hostnameOverride: hbut.org1.aiqkl.com

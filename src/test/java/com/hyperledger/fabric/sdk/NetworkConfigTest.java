@@ -28,7 +28,7 @@ import static org.hyperledger.fabric.sdk.BlockInfo.EnvelopeType.TRANSACTION_ENVE
 public class NetworkConfigTest {
 
     public static void main(String[] args) throws Exception {
-        String channelName = "mychannel";
+        String channelName = "xwchannel";
         // 使用admin 用户证书登录
         String certPath = "src/test/resources/signcerts/Admin@org1.aiqkl.com-cert.pem";
         String keyPath = "src/test/resources/keystore/adminkeystore_sk";
@@ -88,10 +88,11 @@ public class NetworkConfigTest {
 
 
     private static void query(HFClient hfClient, Channel mychannel) throws Exception {
-        ChaincodeID chaincodeId = ChaincodeID.newBuilder().setName("mycc").setVersion("1.0").setPath("github.com/chaincode_example02").build();
+        // mycc - github.com/chaincode_example02
+        ChaincodeID chaincodeId = ChaincodeID.newBuilder().setName("xwcc").setVersion("1.0").setPath("github.com/chaincode_xwqkl").build();
         QueryByChaincodeRequest queryByChaincodeRequest = hfClient.newQueryProposalRequest();
         // 设置查询的 key
-        queryByChaincodeRequest.setArgs("answer");
+        queryByChaincodeRequest.setArgs("xwanswer");
         queryByChaincodeRequest.setFcn(OptTypeEnum.QUERY.getName());
         queryByChaincodeRequest.setChaincodeID(chaincodeId);
         queryByChaincodeRequest.setProposalWaitTime(30000);

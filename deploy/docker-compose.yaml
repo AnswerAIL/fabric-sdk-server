@@ -66,18 +66,18 @@ services:
       - 7051:7051
       - 7053:7053
 
-  jaemon.org1.aiqkl.com:
-    container_name: jaemon.org1.aiqkl.com
+  hbut.org1.aiqkl.com:
+    container_name: hbut.org1.aiqkl.com
     image: hyperledger/fabric-peer:1.4.0
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     networks:
       - basic
     environment:
-      - CORE_PEER_ID=jaemon.org1.aiqkl.com
-      - CORE_PEER_ADDRESS=jaemon.org1.aiqkl.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=jaemon.org1.aiqkl.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=jaemon.org1.aiqkl.com:7051
+      - CORE_PEER_ID=hbut.org1.aiqkl.com
+      - CORE_PEER_ADDRESS=hbut.org1.aiqkl.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=hbut.org1.aiqkl.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=hbut.org1.aiqkl.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_PEER_TLS_ENABLED=false
@@ -93,8 +93,8 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - /etc/localtime:/etc/localtime:ro
-      - ./data/peers/org1/jaemon/msp:/etc/hyperledger/fabric/msp
-      - ./data/peers/org1/jaemon/tls:/etc/hyperledger/fabric/tls
+      - ./data/peers/org1/hbut/msp:/etc/hyperledger/fabric/msp
+      - ./data/peers/org1/hbut/tls:/etc/hyperledger/fabric/tls
     ports:
       - 8051:7051
       - 8053:7053

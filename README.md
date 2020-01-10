@@ -11,7 +11,7 @@
  - 替换 `src/test/resources/msp` 目录下的用户证书文件
    - e.g. org1组织的用户证书对应目录： `crypto-config/peerOrganizations/org1.aiqkl.com/users/` 下的任何一个用户证书
 
-> 注意： 当前测试所用的 通道名称为： mychannel， 智能合约名称为： mycc
+> 注意： 当前测试所用的 通道名称为： xwchannel， 智能合约名称为： xwcc
 
 ### 区块链网络目录结构
 ```bash
