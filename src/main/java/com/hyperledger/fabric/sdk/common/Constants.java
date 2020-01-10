@@ -1,5 +1,7 @@
 package com.hyperledger.fabric.sdk.common;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by L.Answer on 2018-09-03 14:36
  *
@@ -11,6 +13,7 @@ package com.hyperledger.fabric.sdk.common;
  *  没有特殊情况或强迫症患者, 可无需修改其值
  */
 public class Constants {
+    public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     /** Redis服务器IP地址 */
     public static final String REDIS_IP = "127.0.0.1";

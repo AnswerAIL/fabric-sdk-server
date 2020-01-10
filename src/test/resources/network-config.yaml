@@ -1,0 +1,76 @@
+---
+# https://github.com/hyperledger/fabric-sdk-java/tree/release-1.4/src/test/fixture/sdkintegration/network_configs
+
+name: "Network-Config-Jaemon"
+x-type: "hlfv1"
+description: "Load channel From Network-config.yaml file"
+version: 1.0.0
+
+client:
+  organization: Org1
+
+# 通道信息
+channels:
+  mychannel:
+    orderers:
+      - orderer1.aiqkl.com
+
+    peers:
+      root.org1.aiqkl.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      jaemon.org1.aiqkl.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: false
+
+    chaincodes:
+      - mycc:v1
+
+# 组织信息
+organizations:
+  Org1:
+    mspid: Org1MSP
+    peers:
+      - root.org1.aiqkl.com
+      - jaemon.org1.aiqkl.com
+    adminPrivateKey:
+      path: C:/data/poc/fabric_official/msp/keystore/adminkeystore_sk
+    signedCert:
+      path: C:/data/poc/fabric_official/msp/signcerts/Admin@org1.aiqkl.com-cert.pem
+
+# orderer 节点具体信息
+orderers:
+  orderer1.aiqkl.com:
+    url: grpc://192.168.1.1:7050
+    grpcOptions:
+      sslProvider: openSSL
+      negotiationType: TLS
+      hostnameOverride: orderer1.aiqkl.com
+      grpc-max-send-message-length: 15
+      grpc.keepalive_time_ms: 360000
+      grpc.keepalive_timeout_ms: 180000
+
+# peer 节点具体信息
+peers:
+  root.org1.aiqkl.com:
+    url: grpc://192.168.1.1:7051
+#    eventUrl: grpc://192.168.1.1:7053
+    grpcOptions:
+      grpc.http2.keepalive_time: 15
+      negotiationType: TLS
+      sslProvider: openSSL
+      hostnameOverride: root.org1.aiqkl.com
+
+  jaemon.org1.aiqkl.com:
+    url: grpc://192.168.1.1:8051
+    # Fbric 1.2 版本已经剔除掉 eventUrl
+#    eventUrl: grpc://192.168.1.1:8053
+    grpcOptions:
+      grpc.http2.keepalive_time: 15
+      negotiationType: TLS
+      sslProvider: openSSL
+      hostnameOverride: jaemon.org1.aiqkl.com

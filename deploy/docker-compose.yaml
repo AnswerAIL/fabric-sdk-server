@@ -1,0 +1,134 @@
+version: '3'
+
+networks:
+  basic:
+
+services:
+  orderer1.aiqkl.com:
+    container_name: orderer1.aiqkl.com
+    image: hyperledger/fabric-orderer:1.4.0
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    networks:
+      - basic
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=false
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+    volumes:
+      - /var/run/:/host/var/run/
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/orderers/orderer1/orderer.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ./data/orderers/orderer1/msp:/var/hyperledger/orderer/msp
+      - ./data/orderers/orderer1/tls:/var/hyperledger/orderer/tls
+    ports:
+      - 7050:7050
+
+  root.org1.aiqkl.com:
+    container_name: root.org1.aiqkl.com
+    image: hyperledger/fabric-peer:1.4.0
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    networks:
+      - basic
+    environment:
+      - CORE_PEER_ID=root.org1.aiqkl.com
+      - CORE_PEER_ADDRESS=root.org1.aiqkl.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=root.org1.aiqkl.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=root.org1.aiqkl.com:7051
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      - CORE_PEER_NETWORKID=aipeercc
+      - CORE_LOGGING_LEVEL=warn
+      - CORE_PEER_ADDRESSAUTODETECT=true
+    volumes:
+      - /var/run/:/host/var/run/
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/peers/org1/root/msp:/etc/hyperledger/fabric/msp
+      - ./data/peers/org1/root/tls:/etc/hyperledger/fabric/tls
+    ports:
+      - 7051:7051
+      - 7053:7053
+
+  jaemon.org1.aiqkl.com:
+    container_name: jaemon.org1.aiqkl.com
+    image: hyperledger/fabric-peer:1.4.0
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    networks:
+      - basic
+    environment:
+      - CORE_PEER_ID=jaemon.org1.aiqkl.com
+      - CORE_PEER_ADDRESS=jaemon.org1.aiqkl.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=jaemon.org1.aiqkl.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=jaemon.org1.aiqkl.com:7051
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      - CORE_PEER_NETWORKID=aipeercc
+      - CORE_LOGGING_LEVEL=warn
+      - CORE_PEER_ADDRESSAUTODETECT=true
+    volumes:
+      - /var/run/:/host/var/run/
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/peers/org1/jaemon/msp:/etc/hyperledger/fabric/msp
+      - ./data/peers/org1/jaemon/tls:/etc/hyperledger/fabric/tls
+    ports:
+      - 8051:7051
+      - 8053:7053
+
+  answer.org1.aiqkl.com:
+    container_name: answer.org1.aiqkl.com
+    image: hyperledger/fabric-peer:1.4.0
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    networks:
+      - basic
+    environment:
+      - CORE_PEER_ID=answer.org1.aiqkl.com
+      - CORE_PEER_ADDRESS=answer.org1.aiqkl.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=answer.org1.aiqkl.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=answer.org1.aiqkl.com:7051
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      - CORE_PEER_NETWORKID=aipeercc
+      - CORE_LOGGING_LEVEL=warn
+      - CORE_PEER_ADDRESSAUTODETECT=true
+    volumes:
+      - /var/run/:/host/var/run/
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/peers/org1/answer/msp:/etc/hyperledger/fabric/msp
+      - ./data/peers/org1/answer/tls:/etc/hyperledger/fabric/tls
+    ports:
+      - 9051:7051
+      - 9053:7053
+
